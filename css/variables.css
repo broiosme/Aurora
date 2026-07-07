@@ -1,0 +1,50 @@
+:root {
+
+    /* COLORS */
+
+    --bg: #050816;
+
+    --surface: #10172D;
+
+    --primary: #FF5EA8;
+
+    --secondary: #7C5CFF;
+
+    --accent: #6FAEFF;
+
+    --gold: #FFD166;
+
+    --text: #F7F9FC;
+
+    --muted: #A8B3CF;
+
+    /* FONT */
+
+    --display-font: "Cormorant Garamond", serif;
+
+    --body-font: "Manrope", sans-serif;
+
+    --accent-font: "Great Vibes", cursive;
+
+    /* RADIUS */
+
+    --radius-sm: 12px;
+
+    --radius-md: 20px;
+
+    --radius-lg: 32px;
+
+    /* SHADOW */
+
+    --shadow-primary:
+        0 20px 80px rgba(124, 92, 255, .25);
+
+    /* TRANSITION */
+
+    --fast: .25s;
+
+    --medium: .5s;
+
+    --slow: .8s;
+
+}

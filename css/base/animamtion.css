@@ -1,0 +1,11 @@
+:root{
+
+    --ease:cubic-bezier(.22,.61,.36,1);
+
+    --fast:.3s;
+
+    --normal:.6s;
+
+    --slow:1s;
+
+}

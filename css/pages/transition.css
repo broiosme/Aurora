@@ -1,0 +1,53 @@
+/* ==========================================
+   TRANSITION SECTION
+========================================== */
+
+.transition {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 80px 24px;
+
+}
+
+.transition__content{
+
+    max-width:720px;
+
+}
+
+.transition__title{
+
+    font-family: var(--display-font);
+
+    font-size: clamp(2.8rem,6vw,5rem);
+
+    line-height:1.2;
+
+}
+
+.transition__title span{
+
+    color:var(--primary);
+
+}
+
+.transition__desc{
+
+    margin-top:28px;
+
+    color:rgba(255,255,255,.72);
+
+    line-height:2;
+
+    font-size:1.1rem;
+
+}

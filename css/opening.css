@@ -1,0 +1,83 @@
+/* ===================================
+   OPENING SCREEN
+=================================== */
+
+.opening{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(5,8,22,.55);
+
+    backdrop-filter:blur(12px);
+
+    z-index:9999;
+
+}
+
+.opening-content{
+
+    text-align:center;
+
+}
+
+.line{
+
+    opacity:0;
+
+    font-size:1.1rem;
+
+    color:var(--muted);
+
+    letter-spacing:4px;
+
+    margin-bottom:12px;
+
+}
+
+.name{
+
+    margin-top:30px;
+
+    font-size:5rem;
+
+    font-family:var(--display-font);
+
+    color:white;
+
+    opacity:0;
+
+}
+
+.click-anywhere{
+
+    margin-top:70px;
+
+    opacity:0;
+
+    font-size:.9rem;
+
+    color:rgba(255,255,255,.5);
+
+    letter-spacing:3px;
+
+    animation:blink 2s infinite;
+
+}
+
+@keyframes blink{
+
+50%{
+
+opacity:.25;
+
+}
+
+}

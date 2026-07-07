@@ -1,0 +1,56 @@
+/* =====================================
+   CONSTELLATION
+===================================== */
+
+.constellation{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+}
+
+.star{
+
+    position:absolute;
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:0 0 18px white;
+
+}
+
+.s1{top:18%;left:28%;}
+.s2{top:8%;left:43%;}
+.s3{top:15%;right:24%;}
+.s4{top:52%;left:34%;}
+.s5{top:44%;right:20%;}
+
+.constellation__lines{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+}
+
+.constellation__lines line{
+
+    stroke:rgba(255,255,255,.18);
+
+    stroke-width:1.2;
+
+    stroke-linecap:round;
+
+}
