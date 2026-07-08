@@ -1,53 +1,225 @@
-/* ==========================================
-   CONSTELLATION MEMORIES
-========================================== */
+.memories {
 
-.memories{
+    position: relative;
 
-    min-height:200vh;
+    min-height: 100vh;
 
-    position:relative;
+    display: flex;
 
-    padding:180px 0;
+    justify-content: center;
 
-}
+    align-items: center;
 
-.memories__canvas{
-
-    position:sticky;
-
-    top:0;
-
-    width:100%;
-
-    height:100vh;
+    overflow: hidden;
 
 }
 
-.memory{
+.sky {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100vh;
+
+}
+
+/* ==========================
+   MEMORY STAR
+========================== */
+
+.memory-star {
+
+    position: absolute;
+
+    width: 12px;
+
+    height: 12px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    background: #FFE29A;
+
+    box-shadow:
+        0 0 18px rgba(255,226,154,.8),
+        0 0 50px rgba(255,226,154,.25);
+
+    transform: translate(-50%, -50%);
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+
+}
+
+.memory-star:hover {
+
+    transform: translate(-50%, -50%) scale(1.8);
+
+    box-shadow:
+        0 0 28px rgba(255,226,154,1),
+        0 0 90px rgba(255,226,154,.8);
+
+}
+
+.constellation-lines{
 
     position:absolute;
 
-    max-width:340px;
+    inset:0;
 
-    color:white;
+    width:100%;
+
+    height:100%;
+
+    pointer-events:none;
+
+}
+
+.constellation-lines line{
+
+    stroke:#ffffff55;
+
+    stroke-width:1.5;
+
+    stroke-linecap:round;
+
+}
+
+.memory-modal{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(10px);
 
     opacity:0;
 
-}
+    visibility:hidden;
 
-.memory__title{
+    transition:.45s;
 
-    font-size:1.8rem;
-
-    margin-bottom:18px;
+    z-index:99999;
 
 }
 
-.memory__text{
+.memory-modal.show{
 
-    color:rgba(255,255,255,.72);
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.memory-card{
+
+    width:420px;
+
+    max-width:90%;
+
+    background:#0b1220;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    color:white;
+
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+
+    transform:translateY(40px);
+
+    transition:.45s;
+
+}
+
+.memory-modal.show .memory-card{
+
+    transform:translateY(0);
+
+}
+
+.memory-card img{
+
+    width:100%;
+
+    height:250px;
+
+    object-fit:cover;
+
+}
+
+.memory-card h2{
+
+    font-size:2rem;
+
+    margin:25px 30px 10px;
+
+}
+
+.memory-card .date{
+
+    margin:0 30px;
+
+    color:#f5c76d;
+
+    font-size:.95rem;
+
+}
+
+.memory-card .quote{
+
+    margin:20px 30px;
+
+    font-style:italic;
+
+    opacity:.8;
+
+}
+
+.memory-card .story{
+
+    margin:0 30px 30px;
 
     line-height:1.8;
+
+    opacity:.9;
+
+}
+
+.memory-card .close{
+
+    margin:0 30px 30px;
+
+    width:calc(100% - 60px);
+
+    height:48px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#7c5cff;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:1rem;
 
 }

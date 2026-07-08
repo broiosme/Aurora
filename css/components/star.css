@@ -1,0 +1,57 @@
+.memory-star{
+
+    position:absolute;
+
+    width:12px;
+
+    height:12px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    background:#FFE29A;
+
+    box-shadow:
+
+        0 0 18px rgba(255,226,154,.9),
+
+        0 0 45px rgba(255,226,154,.35);
+
+    transition:
+
+        transform .4s,
+
+        box-shadow .4s;
+
+}
+
+.memory-star--special{
+
+    width:18px;
+
+    height:18px;
+
+    background:#FFF4B5;
+
+    box-shadow:
+
+        0 0 25px rgba(255,230,150,.95),
+
+        0 0 80px rgba(255,230,150,.6);
+
+}
+
+.memory-star:hover{
+
+    transform:scale(1.8);
+
+    box-shadow:
+
+        0 0 28px rgba(255,226,154,1),
+
+        0 0 90px rgba(255,226,154,.7);
+
+}
