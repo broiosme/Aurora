@@ -3,51 +3,65 @@
 ========================================== */
 
 .transition {
-
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     text-align: center;
-
     padding: 80px 24px;
-
 }
 
-.transition__content{
-
-    max-width:720px;
-
+.transition__content {
+    max-width: 720px;
 }
 
-.transition__title{
-
+.transition__title {
     font-family: var(--display-font);
-
-    font-size: clamp(2.8rem,6vw,5rem);
-
-    line-height:1.2;
-
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.2;
 }
 
-.transition__title span{
-
-    color:var(--primary);
-
+.transition__title span {
+    color: var(--primary);
 }
 
-.transition__desc{
+.transition__desc {
+    margin-top: 28px;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 2;
+    font-size: 1.1rem;
+}
 
-    margin-top:28px;
+/* ===============================
+   RESPONSIVE: TRANSITION
+=============================== */
 
-    color:rgba(255,255,255,.72);
+@media (max-width: 768px) {
+    .transition {
+        min-height: 70vh;
+        padding: 60px 20px;
+    }
 
-    line-height:2;
+    .transition__title {
+        font-size: clamp(2rem, 7vw, 2.8rem);
+    }
 
-    font-size:1.1rem;
+    .transition__desc {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+}
 
+@media (max-width: 480px) {
+    .transition {
+        padding: 40px 16px;
+    }
+
+    .transition__title {
+        font-size: clamp(1.6rem, 8vw, 2rem);
+    }
+
+    .transition__desc {
+        font-size: 0.9rem;
+    }
 }

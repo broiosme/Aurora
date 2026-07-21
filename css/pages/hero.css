@@ -3,125 +3,131 @@
 =================================================== */
 
 .hero {
-
     position: relative;
-
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     text-align: center;
-
     padding-inline: 24px;
-
     will-change: transform;
-
 }
 
 .hero__content {
-
     max-width: 850px;
-
     z-index: 5;
-
     position: relative;
-
     will-change: transform;
-
 }
 
 .hero__eyebrow {
-
     color: var(--muted);
-
     text-transform: uppercase;
-
     letter-spacing: 8px;
-
-    font-size: .85rem;
-
+    font-size: 0.85rem;
     margin-bottom: 20px;
-
+    font-weight: 500;
 }
 
 .hero__title {
-
     font-family: var(--display-font);
-
     font-size: clamp(4.5rem, 11vw, 8rem);
-
-    line-height: .95;
-
+    line-height: 0.95;
     font-weight: 700;
-
     margin-bottom: 18px;
-
     text-shadow:
-        0 0 12px rgba(255,255,255,.08),
-        0 0 28px rgba(255,255,255,.04);
-
+        0 0 12px rgba(255, 255, 255, 0.08),
+        0 0 28px rgba(255, 255, 255, 0.04);
 }
 
 .hero__title span {
-
     color: var(--primary);
-
 }
 
 .hero__subtitle {
-
     max-width: 620px;
-
     margin: 0 auto;
-
-    color: rgba(255,255,255,.72);
-
+    color: rgba(255, 255, 255, 0.72);
     font-size: 1.15rem;
-
     line-height: 2;
-
     font-weight: 300;
-
-    letter-spacing: .3px;
-
+    letter-spacing: 0.3px;
 }
 
 .hero__scroll {
-
     position: absolute;
-
-    bottom: 100px;
-
+    bottom: 50px;
     left: 50%;
-
     transform: translateX(-50%);
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     gap: 10px;
-
-    color: rgba(255,255,255,.5);
-
-    font-size: .85rem;
-
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
     letter-spacing: 3px;
-
 }
 
 .hero__scroll span {
-
     width: 2px;
-
     height: 45px;
+    background: rgba(255, 255, 255, 0.25);
+    animation: scrollPulse 2s ease-in-out infinite;
+}
 
-    background: rgba(255,255,255,.25);
+@keyframes scrollPulse {
+    0%, 100% {
+        transform: scaleY(0.6);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
 
+/* ===============================
+   RESPONSIVE: HERO
+=============================== */
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 90vh;
+        padding-inline: 20px;
+    }
+
+    .hero__eyebrow {
+        font-size: 0.75rem;
+        letter-spacing: 6px;
+        margin-bottom: 16px;
+    }
+
+    .hero__title {
+        font-size: clamp(3rem, 12vw, 4.5rem);
+    }
+
+    .hero__subtitle {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .hero__scroll {
+        bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 85vh;
+        padding-inline: 16px;
+    }
+
+    .hero__title {
+        font-size: clamp(2.5rem, 14vw, 3rem);
+    }
+
+    .hero__subtitle {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
 }

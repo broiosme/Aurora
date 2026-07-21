@@ -1,225 +1,185 @@
+/* =====================================
+   MEMORIES SECTION
+===================================== */
+
 .memories {
-
     position: relative;
-
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     overflow: hidden;
-
+    padding: 40px 0;
 }
 
+/* ==========================
+   SKY CONTAINER
+=========================== */
+
 .sky {
-
     position: relative;
-
     width: 100%;
-
     height: 100vh;
-
+    min-height: 500px;
 }
 
 /* ==========================
    MEMORY STAR
-========================== */
+=========================== */
 
 .memory-star {
-
     position: absolute;
-
-    width: 12px;
-
-    height: 12px;
-
+    width: 14px;
+    height: 14px;
     border: none;
-
     border-radius: 50%;
-
     cursor: pointer;
-
     background: #FFE29A;
-
     box-shadow:
-        0 0 18px rgba(255,226,154,.8),
-        0 0 50px rgba(255,226,154,.25);
-
+        0 0 18px rgba(255, 226, 154, 0.8),
+        0 0 50px rgba(255, 226, 154, 0.25);
     transform: translate(-50%, -50%);
-
     transition:
-        transform .35s ease,
-        box-shadow .35s ease;
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.35s ease;
+    will-change: transform;
+    z-index: 2;
+}
 
+.memory-star::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.memory-star:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+.memory-star--special {
+    width: 20px;
+    height: 20px;
+    background: #FFF4B5;
+    box-shadow:
+        0 0 25px rgba(255, 230, 150, 1),
+        0 0 80px rgba(255, 230, 150, 0.6);
 }
 
 .memory-star:hover {
-
-    transform: translate(-50%, -50%) scale(1.8);
-
+    transform: translate(-50%, -50%) scale(2);
     box-shadow:
-        0 0 28px rgba(255,226,154,1),
-        0 0 90px rgba(255,226,154,.8);
-
+        0 0 28px rgba(255, 226, 154, 1),
+        0 0 90px rgba(255, 226, 154, 0.8);
 }
 
-.constellation-lines{
+/* ==========================
+   CONSTELLATION LINES
+=========================== */
 
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-
-    height:100%;
-
-    pointer-events:none;
-
+.constellation-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.constellation-lines line{
-
-    stroke:#ffffff55;
-
-    stroke-width:1.5;
-
-    stroke-linecap:round;
-
+.constellation-lines line {
+    stroke: rgba(255, 255, 255, 0.25);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    filter: blur(0.5px);
 }
 
-.memory-modal{
+/* ==========================
+   STAR LABEL ON HOVER
+=========================== */
 
-    position:fixed;
-
-    inset:0;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:rgba(0,0,0,.65);
-
-    backdrop-filter:blur(10px);
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transition:.45s;
-
-    z-index:99999;
-
+.star-tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
 }
 
-.memory-modal.show{
-
-    opacity:1;
-
-    visibility:visible;
-
+.star-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.memory-card{
+/* ==========================
+   RESPONSIVE
+=========================== */
 
-    width:420px;
+@media (max-width: 768px) {
+    .memories {
+        min-height: 70vh;
+        padding: 20px 0;
+    }
 
-    max-width:90%;
+    .sky {
+        height: 70vh;
+        min-height: 400px;
+    }
 
-    background:#0b1220;
+    .memory-star {
+        width: 10px;
+        height: 10px;
+    }
 
-    border:1px solid rgba(255,255,255,.08);
+    .memory-star--special {
+        width: 16px;
+        height: 16px;
+    }
 
-    border-radius:28px;
-
-    overflow:hidden;
-
-    color:white;
-
-    box-shadow:0 30px 80px rgba(0,0,0,.45);
-
-    transform:translateY(40px);
-
-    transition:.45s;
-
+    .memory-star::after {
+        display: none;
+    }
 }
 
-.memory-modal.show .memory-card{
+@media (max-width: 480px) {
+    .memories {
+        min-height: 60vh;
+    }
 
-    transform:translateY(0);
+    .sky {
+        height: 60vh;
+        min-height: 350px;
+    }
 
-}
+    .memory-star {
+        width: 8px;
+        height: 8px;
+    }
 
-.memory-card img{
-
-    width:100%;
-
-    height:250px;
-
-    object-fit:cover;
-
-}
-
-.memory-card h2{
-
-    font-size:2rem;
-
-    margin:25px 30px 10px;
-
-}
-
-.memory-card .date{
-
-    margin:0 30px;
-
-    color:#f5c76d;
-
-    font-size:.95rem;
-
-}
-
-.memory-card .quote{
-
-    margin:20px 30px;
-
-    font-style:italic;
-
-    opacity:.8;
-
-}
-
-.memory-card .story{
-
-    margin:0 30px 30px;
-
-    line-height:1.8;
-
-    opacity:.9;
-
-}
-
-.memory-card .close{
-
-    margin:0 30px 30px;
-
-    width:calc(100% - 60px);
-
-    height:48px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:#7c5cff;
-
-    color:white;
-
-    cursor:pointer;
-
-    font-size:1rem;
-
+    .memory-star--special {
+        width: 12px;
+        height: 12px;
+    }
 }

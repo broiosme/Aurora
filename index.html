@@ -22,25 +22,15 @@
     <!-- CSS -->
 
     <link rel="stylesheet" href="css/variables.css">
-
     <link rel="stylesheet" href="css/reset.css">
-
     <link rel="stylesheet" href="css/base.css">
-
+    <link rel="stylesheet" href="css/base/animation.css">
     <link rel="stylesheet" href="css/layout.css">
-
     <link rel="stylesheet" href="css/aurora.css">
-
     <link rel="stylesheet" href="css/opening.css">
-
     <link rel="stylesheet" href="css/pages/hero.css">
-
     <link rel="stylesheet" href="css/pages/transition.css">
-
     <link rel="stylesheet" href="css/pages/memories.css">
-
-    <link rel="stylesheet" href="css/base/design-system.css">
-
     <link rel="stylesheet" href="css/components/modal.css">
 
 </head>
@@ -182,6 +172,24 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
 
     <!-- App -->
+
+    <script>
+        // Lenis initialization (must run before GSAP)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            smoothWheel: true,
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+    </script>
 
     <script type="module" src="js/app.js"></script>
 

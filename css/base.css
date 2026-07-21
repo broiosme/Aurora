@@ -16,6 +16,46 @@ body {
 
     position: relative;
 
-    z-index: 10;
+    z-index: var(--z-content);
 
+}
+
+/* ===============================
+   CUSTOM CURSOR
+=============================== */
+
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: border-color 0.3s ease;
+    mix-blend-mode: difference;
+}
+
+.custom-cursor__dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .custom-cursor,
+    .custom-cursor__dot {
+        display: none !important;
+    }
 }

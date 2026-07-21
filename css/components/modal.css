@@ -1,71 +1,199 @@
+/* =====================================
+   MEMORY MODAL
+===================================== */
+
 .memory-modal {
-
     position: fixed;
-
     inset: 0;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
-    background: rgba(0, 0, 0, .45);
-
+    background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(12px);
-
+    -webkit-backdrop-filter: blur(12px);
     opacity: 0;
-
     pointer-events: none;
-
-    transition: .45s;
-
-    z-index: 999;
-
+    transition: opacity 0.5s ease;
+    z-index: var(--z-modal);
+    padding: 20px;
 }
 
 .memory-modal.show {
-
     opacity: 1;
-
     pointer-events: auto;
-
 }
 
+/* ===========================
+   MEMORY CARD
+=========================== */
+
 .memory-card {
-
-    width: min(720px, 92vw);
-
-    padding: 45px;
-
-    border-radius: 32px;
-
-    background: rgba(255, 255, 255, .08);
-
+    width: min(520px, 92vw);
+    max-height: 85vh;
+    border-radius: var(--radius-lg);
+    background: rgba(11, 18, 32, 0.92);
     backdrop-filter: blur(30px);
-
-    border: 1px solid rgba(255, 255, 255, .15);
-
-    animation: popup .7s cubic-bezier(.18, .89, .32, 1.28);
-
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    animation: popup 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 @keyframes popup {
-
     from {
-
         opacity: 0;
-
-        transform: translateY(100px) scale(.92);
-
+        transform: translateY(100px) scale(0.92);
     }
-
     to {
-
         opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
-        transform: none;
+/* --- Image --- */
 
+.memory-card__image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.memory-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.memory-card__image-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.memory-card__image-fallback span {
+    animation: floatY 4s ease-in-out infinite;
+}
+
+/* --- Body --- */
+
+.memory-card__body {
+    padding: 28px 30px 30px;
+    overflow-y: auto;
+    max-height: calc(85vh - 220px);
+}
+
+.memory-card__title {
+    font-family: var(--display-font);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 6px;
+}
+
+.memory-card__date {
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    font-weight: 500;
+}
+
+.memory-card__quote {
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin-bottom: 18px;
+    padding-left: 16px;
+    border-left: 2px solid var(--primary);
+}
+
+.memory-card__story {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.9;
+    white-space: pre-line;
+    margin-bottom: 24px;
+}
+
+.memory-card__close {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    font-family: var(--body-font);
+}
+
+.memory-card__close:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 30px rgba(124, 92, 255, 0.35);
+}
+
+.memory-card__close:active {
+    transform: translateY(0);
+}
+
+/* --- Scrollbar --- */
+
+.memory-card__body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.memory-card__body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.memory-card__body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+/* ===========================
+   RESPONSIVE: MODAL
+=========================== */
+
+@media (max-width: 600px) {
+    .memory-card {
+        max-height: 90vh;
     }
 
+    .memory-card__image {
+        height: 160px;
+    }
+
+    .memory-card__body {
+        padding: 20px;
+        max-height: calc(90vh - 160px);
+    }
+
+    .memory-card__title {
+        font-size: 1.6rem;
+    }
+
+    .memory-card__quote {
+        font-size: 0.9rem;
+    }
+
+    .memory-card__story {
+        font-size: 0.88rem;
+    }
 }

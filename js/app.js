@@ -6,16 +6,27 @@ import "./hero.js";
 
 import "./parallax.js";
 import "./cursor-light.js";
-import "./transition.js";
 
-// import "./sections/memories.js";
 import { createStars } from "./ui/stars.js";
-import { connectStars } from "./ui/constellation.js"; 
+import { connectStars } from "./ui/constellation.js";
+import { initScrollAnimations } from "./scroll.js";
+import "./cursor.js";
 
 console.clear();
 
-console.log("✨ Constellation of Us");
+console.log("✨ Aurora — For Mazyyatul");
 
-createStars();
+// Initialize after DOM is ready and all elements exist
+document.addEventListener("DOMContentLoaded", () => {
+    createStars();
+    connectStars();
 
-connectStars();
+    // Scroll-triggered animations for constellation & stars
+    // Must run AFTER stars are created so GSAP can find the elements
+    initScrollAnimations();
+
+    // Refresh ScrollTrigger to detect newly created elements
+    if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+    }
+});
