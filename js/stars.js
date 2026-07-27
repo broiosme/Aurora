@@ -73,17 +73,7 @@ function animate() {
         if (star.y < 0) star.y = canvas.height;
         if (star.y > canvas.height) star.y = 0;
 
-        // Glow
-        if (star.glow) {
-
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = star.color;
-
-        } else {
-
-            ctx.shadowBlur = 0;
-
-        }
+        // Draw Star (fast canvas render)
 
         ctx.beginPath();
 

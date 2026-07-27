@@ -76,7 +76,17 @@
     background: #FFF4B5;
     box-shadow:
         0 0 25px rgba(255, 230, 150, 1),
-        0 0 80px rgba(255, 230, 150, 0.6);
+        0 0 50px rgba(255, 230, 150, 0.5);
+    animation: starPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes starPulse {
+    0% {
+        box-shadow: 0 0 20px rgba(255, 230, 150, 0.8), 0 0 40px rgba(255, 230, 150, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 35px rgba(255, 230, 150, 1), 0 0 70px rgba(255, 230, 150, 0.7);
+    }
 }
 
 .memory-star:hover {
@@ -100,17 +110,15 @@
 }
 
 .constellation-lines line {
-    stroke: rgba(255, 226, 154, 0.35);
+    stroke: rgba(255, 226, 154, 0.45);
     stroke-width: 1.8;
     stroke-linecap: round;
-    filter: drop-shadow(0 0 5px rgba(255, 226, 154, 0.5));
-    transition: stroke 0.4s ease, stroke-width 0.4s ease, filter 0.4s ease;
+    transition: stroke 0.3s ease, stroke-width 0.3s ease;
 }
 
 .constellation-lines line.line-active {
-    stroke: rgba(255, 245, 210, 0.95);
+    stroke: rgba(255, 245, 210, 1);
     stroke-width: 2.8;
-    filter: drop-shadow(0 0 12px rgba(255, 230, 150, 0.95));
 }
 
 /* ==========================
@@ -120,10 +128,8 @@
 .star-tooltip {
     position: fixed;
     pointer-events: none;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 15, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: white;
     padding: 8px 16px;
     border-radius: 10px;
@@ -131,7 +137,7 @@
     z-index: 100;
     opacity: 0;
     transform: translateY(6px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
     white-space: nowrap;
 }
 

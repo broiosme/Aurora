@@ -45,14 +45,7 @@ export function initScrollAnimations() {
         }
     );
 
-    // --- Special stars pulse glow ---
-    gsap.to(".memory-star--special", {
-        boxShadow: "0 0 40px rgba(255, 230, 150, 1), 0 0 100px rgba(255, 230, 150, 0.5)",
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-    });
+    // --- Special stars pulse glow is handled via hardware-accelerated CSS keyframes in memories.css ---
 
     // --- Parallax for sky on scroll ---
     const sky = document.querySelector(".sky");

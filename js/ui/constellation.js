@@ -37,29 +37,26 @@ export function connectStars() {
     });
 
     // ==========================================
-    // UPDATE POSISI GARIS (Precise Bounding Box Center)
+    // UPDATE POSISI GARIS (Fast Percentage Calculation)
     // ==========================================
 
     function updateLines() {
 
-        const skyRect = sky.getBoundingClientRect();
-        if (!skyRect.width || !skyRect.height) return;
+        const w = sky.clientWidth;
+        const h = sky.clientHeight;
+        if (!w || !h) return;
 
         lines.forEach(({ line, fromIdx, toIdx }) => {
 
-            const a = memories[fromIdx]?.element;
-            const b = memories[toIdx]?.element;
+            const memA = memories[fromIdx];
+            const memB = memories[toIdx];
 
-            if (!a || !b) return;
+            if (!memA || !memB) return;
 
-            const aRect = a.getBoundingClientRect();
-            const bRect = b.getBoundingClientRect();
-
-            // Hitung koordinat relatif terhadap container .sky
-            const x1 = aRect.left + aRect.width / 2 - skyRect.left;
-            const y1 = aRect.top + aRect.height / 2 - skyRect.top;
-            const x2 = bRect.left + bRect.width / 2 - skyRect.left;
-            const y2 = bRect.top + bRect.height / 2 - skyRect.top;
+            const x1 = (memA.x / 100) * w;
+            const y1 = (memA.y / 100) * h;
+            const x2 = (memB.x / 100) * w;
+            const y2 = (memB.y / 100) * h;
 
             line.setAttribute("x1", x1);
             line.setAttribute("y1", y1);
@@ -88,15 +85,11 @@ export function connectStars() {
         });
     });
 
-    // Update bertahap agar aman setelah layout & GSAP selesai
-    requestAnimationFrame(() => {
-        updateLines();
-        setTimeout(updateLines, 100);
-        setTimeout(updateLines, 400);
-    });
+    // Initial updates
+    updateLines();
+    setTimeout(updateLines, 200);
 
-    // Event listener resize & scroll
-    window.addEventListener("resize", updateLines);
-    window.addEventListener("scroll", updateLines, { passive: true });
+    // Event listener resize saja (bebas lag scroll)
+    window.addEventListener("resize", updateLines, { passive: true });
 
 }
