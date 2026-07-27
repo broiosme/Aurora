@@ -73,11 +73,14 @@ export function createStars() {
         // Touch support for mobile
         star.addEventListener("touchstart", (e) => {
             e.preventDefault();
+            e.stopPropagation();
             openMemory(memory.id);
-        });
+        }, { passive: false });
 
         // Click Star
-        star.addEventListener("click", () => {
+        star.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (typeof openMemory === "function") {
                 openMemory(memory.id);
             } else {

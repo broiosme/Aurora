@@ -1,6 +1,7 @@
 import { memories } from "../data/memories.js";
 
 const modal = document.querySelector(".memory-modal");
+let lastOpenedTime = 0;
 
 export function openMemory(id) {
 
@@ -11,7 +12,7 @@ export function openMemory(id) {
     // Image fallback: use gradient placeholder if no image
     let imageHtml = "";
     if (memory.image) {
-        imageHtml = `<img src="${memory.image}" alt="${memory.title}" onerror="this.parentElement.innerHTML='<div class=\\'memory-card__image-fallback\' style=\\'background:${memory.fallbackColor}\'><span>✦</span></div>'" />`;
+        imageHtml = `<img src="${memory.image}" alt="${memory.title}" onerror="this.parentElement.innerHTML='<div class=\\'memory-card__image-fallback\\' style=\\'background:${memory.fallbackColor}\\'><span>✦</span></div>'" />`;
     } else {
         imageHtml = `<div class="memory-card__image-fallback" style="background: ${memory.fallbackColor}"><span>✦</span></div>`;
     }
@@ -32,14 +33,12 @@ export function openMemory(id) {
     `;
 
     modal.classList.add("show");
+    lastOpenedTime = Date.now();
 
-    gsap.from(".memory-card", {
-        y: 80,
-        opacity: 0,
-        scale: 0.92,
-        duration: 0.7,
-        ease: "power3.out"
-    });
+    gsap.fromTo(".memory-card", 
+        { y: 80, opacity: 0, scale: 0.92 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }
+    );
 
     // Lock body scroll
     document.body.style.overflow = "hidden";
@@ -48,12 +47,25 @@ export function openMemory(id) {
 
 export function closeMemory() {
     if (!modal.classList.contains("show")) return;
-    modal.classList.remove("show");
-    document.body.style.overflow = "";
+    
+    gsap.to(".memory-card", {
+        y: 40,
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+            modal.classList.remove("show");
+            document.body.style.overflow = "";
+        }
+    });
 }
 
 // Click overlay or close button to close
 modal.addEventListener("click", (e) => {
+    // Prevent immediate close from synthetic click events right after opening
+    if (Date.now() - lastOpenedTime < 350) return;
+
     if (
         e.target.classList.contains("memory-card__close") ||
         e.target.classList.contains("memory-modal")
