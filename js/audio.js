@@ -14,12 +14,12 @@ const NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
 
 export function initAudio() {
     createAudioControlUI();
-    
+
     // Check if user provided an mp3 in assets/audio/bgm.mp3
     bgmAudio = new Audio();
     bgmAudio.src = "assets/audio/bgm.mp3";
     bgmAudio.loop = true;
-    bgmAudio.volume = 0.5;
+    bgmAudio.volume = 1.0;
 
     // Handle error if file doesn't exist -> fallback to Web Audio Synth
     bgmAudio.onerror = () => {
