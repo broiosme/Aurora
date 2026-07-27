@@ -43,7 +43,10 @@ export function createStars() {
             });
 
             // Show tooltip
-            tooltip.textContent = `${memory.title} — ${memory.date}`;
+            const labelText = memory.starName 
+                ? `${memory.title} (${memory.starName}) — ${memory.date}` 
+                : `${memory.title} — ${memory.date}`;
+            tooltip.textContent = labelText;
             tooltip.classList.add("visible");
         });
 
