@@ -15,16 +15,17 @@ const NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
 export function initAudio() {
     createAudioControlUI();
 
-    // Check if user provided an mp3 in assets/audio/bgm.mp3
-    bgmAudio = new Audio();
-    bgmAudio.src = "assets/audio/bgm.mp3";
-    bgmAudio.loop = true;
-    bgmAudio.volume = 1.0;
-
-    // Handle error if file doesn't exist -> fallback to Web Audio Synth
-    bgmAudio.onerror = () => {
-        bgmAudio = null;
-    };
+    // Check or create audio element
+    bgmAudio = document.getElementById("bgm-player");
+    if (!bgmAudio) {
+        bgmAudio = document.createElement("audio");
+        bgmAudio.id = "bgm-player";
+        bgmAudio.src = "assets/audio/bgm.mp3";
+        bgmAudio.loop = true;
+        bgmAudio.volume = 1.0;
+        bgmAudio.preload = "auto";
+        document.body.appendChild(bgmAudio);
+    }
 }
 
 function createAudioControlUI() {
@@ -59,13 +60,17 @@ export function startAudioOnOpening() {
 function playAudio() {
     if (isPlaying) return;
 
-    // Try HTML Audio element first if available
-    if (bgmAudio && bgmAudio.src) {
+    if (!bgmAudio) {
+        bgmAudio = document.getElementById("bgm-player");
+    }
+
+    if (bgmAudio) {
         bgmAudio.play().then(() => {
             isPlaying = true;
             updateAudioUI(true);
-        }).catch(() => {
-            // Audio play blocked or file missing -> fallback to synth
+        }).catch((err) => {
+            console.warn("BGM Play prevented or waiting for user interaction:", err);
+            // Fallback to synth audio if MP3 playback is blocked or fails
             playSynthMelody();
         });
     } else {
@@ -121,8 +126,21 @@ function playSineNote() {
 }
 
 export function toggleAudio() {
+    if (!bgmAudio) {
+        bgmAudio = document.getElementById("bgm-player");
+    }
+
     if (!isPlaying) {
-        playAudio();
+        if (bgmAudio) {
+            bgmAudio.play().then(() => {
+                isPlaying = true;
+                updateAudioUI(true);
+            }).catch(() => {
+                playAudio();
+            });
+        } else {
+            playAudio();
+        }
     } else {
         pauseAudio();
     }
@@ -130,7 +148,15 @@ export function toggleAudio() {
 
 function pauseAudio() {
     isPlaying = false;
-    if (bgmAudio) bgmAudio.pause();
+    if (bgmAudio) {
+        bgmAudio.pause();
+    }
+
+    const htmlAudio = document.getElementById("bgm-player");
+    if (htmlAudio) {
+        htmlAudio.pause();
+    }
+
     if (synthInterval) clearInterval(synthInterval);
     if (audioCtx && audioCtx.state === "running") audioCtx.suspend();
     updateAudioUI(false);
