@@ -10,6 +10,9 @@ import "./cursor-light.js";
 import { createStars } from "./ui/stars.js";
 import { connectStars } from "./ui/constellation.js";
 import { initScrollAnimations } from "./scroll.js";
+import { initAudio } from "./audio.js";
+import { initLetter } from "./letter.js";
+import { initGallery } from "./gallery.js";
 import "./cursor.js";
 
 console.clear();
@@ -18,8 +21,12 @@ console.log("✨ Aurora — For Mazyyatul");
 
 // Initialize after DOM is ready and all elements exist
 document.addEventListener("DOMContentLoaded", () => {
+    initAudio();
     createStars();
     connectStars();
+
+    initLetter();
+    initGallery();
 
     // Scroll-triggered animations for constellation & stars
     // Must run AFTER stars are created so GSAP can find the elements
@@ -29,4 +36,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof ScrollTrigger !== "undefined") {
         ScrollTrigger.refresh();
     }
-});
+});

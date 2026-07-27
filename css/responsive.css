@@ -1,0 +1,98 @@
+/* =========================================
+   COMPREHENSIVE RESPONSIVE POLISH
+   ========================================= */
+
+/* Tablet & Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+    .audio-control {
+        top: 16px;
+        right: 16px;
+        padding: 6px 12px;
+    }
+
+    .audio-label {
+        font-size: 0.68rem;
+    }
+
+    .hero__title {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .hero__subtitle {
+        font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+        padding: 0 15px;
+    }
+
+    .transition__title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+
+    .transition__desc {
+        font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+        padding: 0 20px;
+    }
+
+    .envelope-wrapper {
+        height: 280px;
+    }
+
+    .envelope__flap {
+        height: 150px;
+    }
+
+    .envelope__seal {
+        top: 130px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        padding: 10px;
+    }
+
+    .polaroid-card__image-wrap {
+        height: 200px;
+    }
+}
+
+/* Small Mobile Screens (<= 480px) */
+@media (max-width: 480px) {
+    .opening-content .name {
+        font-size: clamp(2.2rem, 8vw, 3rem);
+    }
+
+    .letter-section, .gallery-section {
+        padding: 60px 15px;
+    }
+
+    .letter-paper {
+        padding: 25px 18px;
+    }
+
+    .letter-paper__greeting {
+        font-size: 2rem;
+    }
+
+    .letter-paper__signature {
+        font-size: 1.6rem;
+    }
+
+    .secret-toast {
+        width: 88vw;
+        padding: 12px 20px;
+        font-size: 0.85rem;
+        bottom: 24px;
+    }
+}
+
+/* Touch device enhancements */
+@media (hover: none) and (pointer: coarse) {
+    .audio-control:active,
+    .envelope-wrapper:active,
+    .polaroid-card:active {
+        transform: scale(0.98);
+    }
+}

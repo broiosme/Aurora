@@ -31,7 +31,11 @@
     <link rel="stylesheet" href="css/pages/hero.css">
     <link rel="stylesheet" href="css/pages/transition.css">
     <link rel="stylesheet" href="css/pages/memories.css">
+    <link rel="stylesheet" href="css/pages/letter.css">
+    <link rel="stylesheet" href="css/pages/gallery.css">
     <link rel="stylesheet" href="css/components/modal.css">
+    <link rel="stylesheet" href="css/components/audio.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
 </head>
 
@@ -157,9 +161,77 @@
 
         </section>
 
+        <!-- =========================================
+             BIRTHDAY LETTER SECTION
+        ========================================== -->
+        <section class="letter-section">
+            <div class="letter-header">
+                <p class="letter-header__subtitle">A Special Message</p>
+                <h2 class="letter-header__title">Pesan Khusus Untukmu<span>.</span></h2>
+            </div>
+
+            <div class="envelope-wrapper">
+                <div class="envelope">
+                    <div class="envelope__flap"></div>
+                    <div class="envelope__seal">❤️</div>
+                    <div class="envelope__prompt">Klik Amplop Untuk Membuka Surat ✨</div>
+                </div>
+            </div>
+
+            <div class="letter-paper">
+                <h3 class="letter-paper__greeting">Dear Mazyyatul,</h3>
+                <div class="letter-paper__body"></div>
+                <p class="letter-paper__signature">With all my love 💫</p>
+            </div>
+        </section>
+
+        <!-- =========================================
+             COSMIC POLAROID GALLERY
+        ========================================== -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <p class="gallery-header__subtitle">Cosmic Moments</p>
+                <h2 class="gallery-header__title">Galeri Kenangan Indah<span>.</span></h2>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="polaroid-card">
+                    <div class="polaroid-card__image-wrap">
+                        <img src="assets/images/memory1.png" alt="Senyum Pertamamu">
+                    </div>
+                    <p class="polaroid-card__caption">Senyum Pertamamu</p>
+                    <p class="polaroid-card__date">Momen Berharga</p>
+                </div>
+
+                <div class="polaroid-card">
+                    <div class="polaroid-card__image-wrap">
+                        <img src="assets/images/memory2.png" alt="Malam Di Bawah Bintang">
+                    </div>
+                    <p class="polaroid-card__caption">Malam Di Bawah Bintang</p>
+                    <p class="polaroid-card__date">Kenangan Abadi</p>
+                </div>
+
+                <div class="polaroid-card">
+                    <div class="polaroid-card__image-wrap">
+                        <img src="assets/images/memory3.png" alt="Cahaya Favoritku">
+                    </div>
+                    <p class="polaroid-card__caption">Cahaya Favoritku</p>
+                    <p class="polaroid-card__date">Hari Bahagia</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <div class="memory-modal"></div>
+
+    <div class="gallery-lightbox">
+        <div class="gallery-lightbox__content">
+            <button class="gallery-lightbox__close">&times;</button>
+            <img class="gallery-lightbox__img" src="" alt="Gallery Preview">
+            <p class="gallery-lightbox__caption"></p>
+        </div>
+    </div>
 
     <!-- GSAP -->
 
