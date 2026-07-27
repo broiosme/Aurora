@@ -2,6 +2,7 @@ import { memories } from "../data/memories.js";
 
 const modal = document.querySelector(".memory-modal");
 let lastOpenedTime = 0;
+let isMouseDownOnBackdrop = false;
 
 export function openMemory(id) {
 
@@ -19,6 +20,7 @@ export function openMemory(id) {
 
     modal.innerHTML = `
     <div class="memory-card">
+        <button class="memory-card__close-icon" title="Tutup">✕</button>
         <div class="memory-card__image">
             ${imageHtml}
         </div>
@@ -34,10 +36,28 @@ export function openMemory(id) {
 
     modal.classList.add("show");
     lastOpenedTime = Date.now();
+    isMouseDownOnBackdrop = false;
+
+    // Prevent clicks inside card from bubbling to modal backdrop
+    const cardEl = modal.querySelector(".memory-card");
+    if (cardEl) {
+        cardEl.addEventListener("click", (e) => {
+            // Allow close buttons to trigger
+            if (!e.target.classList.contains("memory-card__close") && 
+                !e.target.classList.contains("memory-card__close-icon")) {
+                e.stopPropagation();
+            }
+        });
+    }
+
+    // Pause Lenis smooth scroll while card is open
+    if (window.lenis) {
+        window.lenis.stop();
+    }
 
     gsap.fromTo(".memory-card", 
-        { y: 80, opacity: 0, scale: 0.92 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }
+        { y: 60, opacity: 0, scale: 0.92 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }
     );
 
     // Lock body scroll
@@ -57,19 +77,36 @@ export function closeMemory() {
         onComplete: () => {
             modal.classList.remove("show");
             document.body.style.overflow = "";
+
+            // Resume Lenis smooth scroll
+            if (window.lenis) {
+                window.lenis.start();
+            }
         }
     });
 }
 
+// Track where mousedown started to avoid closing when selecting text or dragging
+modal.addEventListener("mousedown", (e) => {
+    isMouseDownOnBackdrop = (e.target === modal);
+});
+
 // Click overlay or close button to close
 modal.addEventListener("click", (e) => {
-    // Prevent immediate close from synthetic click events right after opening
-    if (Date.now() - lastOpenedTime < 350) return;
-
+    // 1. Explicit close buttons
     if (
         e.target.classList.contains("memory-card__close") ||
-        e.target.classList.contains("memory-modal")
+        e.target.classList.contains("memory-card__close-icon")
     ) {
+        closeMemory();
+        return;
+    }
+
+    // 2. Prevent backdrop close within 500ms of opening (prevents double-clicks / tap releases from closing)
+    if (Date.now() - lastOpenedTime < 500) return;
+
+    // 3. Only close if click AND mousedown both occurred directly on backdrop overlay
+    if (e.target === modal && isMouseDownOnBackdrop) {
         closeMemory();
     }
 });
