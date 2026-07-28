@@ -92,13 +92,12 @@ function renderCurrentChapter() {
     if (rightTitle) rightTitle.textContent = `${chapter.title} (Lanjutan)`;
     if (rightBody) rightBody.textContent = rightContent;
 
-    const leftPageNum = (currentIndex * 2) + 1;
-    const rightPageNum = (currentIndex * 2) + 2;
-    const totalPages = total * 2;
+    // Clean Linear Page Numbering (1 -> 2 -> 3 -> 4...)
+    const pageNum = currentIndex + 1;
 
-    if (leftFooterPage) leftFooterPage.textContent = `Hal. ${leftPageNum}`;
-    if (rightFooterPage) rightFooterPage.textContent = `Hal. ${rightPageNum}`;
-    if (pageIndicator) pageIndicator.textContent = `Bab ${currentIndex + 1} dari ${total} (Hal ${leftPageNum}-${rightPageNum} dari ${totalPages})`;
+    if (leftFooterPage) leftFooterPage.textContent = `Halaman ${pageNum}`;
+    if (rightFooterPage) rightFooterPage.textContent = `Halaman ${pageNum} (Lanjutan)`;
+    if (pageIndicator) pageIndicator.textContent = `Halaman ${pageNum} dari ${total} — Bab ${chapter.chapterNumber || pageNum}`;
 
     // Update prev/next button state
     const prevBtn = document.querySelector("#prev-page-btn");

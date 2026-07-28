@@ -1,6 +1,6 @@
 /* =========================================
    AURORA NOVEL / STORYBOOK PAGE STYLES
-   Ultra Responsive & Polished Design
+   Ultra Responsive, Sleek & Mobile Polish
 ========================================== */
 
 /* Outer Page Container */
@@ -42,75 +42,81 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 50% 20%, rgba(124, 92, 255, 0.18), transparent 70%),
-                radial-gradient(circle at 80% 80%, rgba(255, 94, 168, 0.12), transparent 60%);
+    background: radial-gradient(circle at 50% 15%, rgba(124, 92, 255, 0.2), transparent 70%),
+                radial-gradient(circle at 85% 85%, rgba(255, 94, 168, 0.15), transparent 60%);
 }
 
-/* Top Header Bar */
+/* =========================================
+   SLEEK HEADER NAVBAR (DESKTOP & MOBILE)
+========================================== */
 .book-nav-header {
-    position: relative;
-    z-index: 100;
+    position: sticky;
+    top: 0;
+    z-index: 500;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 24px;
+    padding: 12px 24px;
     background: rgba(16, 23, 45, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    flex-wrap: wrap;
-    gap: 12px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .book-nav-header__back {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     color: var(--text);
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     padding: 8px 14px;
-    border-radius: 20px;
+    border-radius: 30px;
     background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.25s ease;
     white-space: nowrap;
+    touch-action: manipulation;
 }
 
 .book-nav-header__back:hover,
 .book-nav-header__back:active {
     background: rgba(255, 94, 168, 0.25);
     border-color: var(--primary);
-    transform: translateX(-3px);
+    transform: translateX(-2px);
 }
 
 .book-nav-header__title {
     font-family: var(--display-font);
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-size: 1.4rem;
     font-weight: 600;
     color: var(--gold);
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-align: center;
+    margin: 0;
 }
 
 .book-nav-header__actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .book-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     background: rgba(255, 209, 102, 0.15);
     border: 1px solid rgba(255, 209, 102, 0.4);
     color: var(--gold);
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 8px 14px;
+    border-radius: 30px;
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
     white-space: nowrap;
     touch-action: manipulation;
 }
@@ -123,7 +129,9 @@
     box-shadow: 0 0 15px rgba(255, 209, 102, 0.4);
 }
 
-/* Book Stage & Reader Layout */
+/* =========================================
+   BOOK STAGE & NOVEL SHEET LAYOUT
+========================================== */
 .book-stage {
     position: relative;
     z-index: 10;
@@ -137,7 +145,6 @@
     width: 100%;
 }
 
-/* 3D Book Container */
 .book-wrapper {
     position: relative;
     width: 100%;
@@ -145,7 +152,7 @@
     min-height: 560px;
     background: rgba(16, 23, 45, 0.95);
     border-radius: 20px;
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8),
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.85),
                 0 0 60px rgba(124, 92, 255, 0.2);
     display: flex;
     overflow: hidden;
@@ -173,7 +180,7 @@
     z-index: 20;
 }
 
-/* Left & Right Pages (Parchment Feel) */
+/* Left & Right Pages */
 .book-page-sheet {
     flex: 1;
     width: 50%;
@@ -197,7 +204,6 @@
     border-left: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Page Header Info */
 .book-sheet-header {
     display: flex;
     justify-content: space-between;
@@ -220,7 +226,6 @@
     color: var(--muted);
 }
 
-/* Novel Typography */
 .book-sheet-title {
     font-family: var(--display-font);
     font-size: clamp(1.8rem, 4vw, 2.4rem);
@@ -249,7 +254,6 @@
     max-height: 380px;
 }
 
-/* Custom Scrollbar for Book Text Body */
 .book-sheet-body::-webkit-scrollbar {
     width: 4px;
 }
@@ -270,7 +274,9 @@
     color: var(--muted);
 }
 
-/* Navigation Controls Bar */
+/* =========================================
+   BOTTOM PAGE CONTROLS BAR
+========================================== */
 .book-controls {
     display: flex;
     align-items: center;
@@ -299,7 +305,7 @@
     justify-content: center;
     font-size: 1.1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
     touch-action: manipulation;
 }
 
@@ -324,8 +330,11 @@
     text-align: center;
 }
 
-/* Chapter Table of Contents Drawer/Modal */
-.book-toc-modal {
+/* =========================================
+   MODALS (TOC & ADD CHAPTER)
+========================================== */
+.book-toc-modal,
+.book-add-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -344,19 +353,21 @@
     box-sizing: border-box;
 }
 
-.book-toc-modal.is-visible {
+.book-toc-modal.is-visible,
+.book-add-modal.is-visible {
     opacity: 1;
     pointer-events: auto;
 }
 
-.book-toc-content {
+.book-toc-content,
+.book-add-content {
     background: rgba(16, 23, 45, 0.95);
     border: 1px solid rgba(255, 209, 102, 0.35);
     border-radius: var(--radius-lg);
-    padding: 32px 24px;
+    padding: 28px 20px;
     width: 100%;
-    max-width: 480px;
-    max-height: 80vh;
+    max-width: 500px;
+    max-height: 82vh;
     overflow-y: auto;
     box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7);
     -webkit-overflow-scrolling: touch;
@@ -409,64 +420,38 @@
     color: var(--muted);
 }
 
-/* Add Chapter Modal */
-.book-add-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(5, 8, 22, 0.88);
-    backdrop-filter: blur(24px);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    padding: 16px;
-    box-sizing: border-box;
-}
-
-.book-add-modal.is-visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.book-add-content {
-    background: rgba(16, 23, 45, 0.95);
-    border: 1px solid rgba(255, 209, 102, 0.4);
-    border-radius: var(--radius-lg);
-    padding: 28px 20px;
-    width: 100%;
-    max-width: 520px;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 80px rgba(255, 209, 102, 0.25);
-    -webkit-overflow-scrolling: touch;
-}
-
 /* =========================================
-   RESPONSIVE POLISH (MOBILE & TABLET)
+   MOBILE RESPONSIVE CUSTOM STYLING (HP)
 ========================================== */
-
 @media (max-width: 768px) {
     .book-nav-header {
-        padding: 12px 16px;
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .book-nav-header__back {
+        font-size: 0.78rem;
+        padding: 6px 12px;
+    }
+
+    .book-nav-header__back span {
+        font-size: 0.9rem;
     }
 
     .book-nav-header__title {
-        order: 3;
-        width: 100%;
-        margin-top: 4px;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    .book-action-btn {
+        padding: 6px 10px;
+        font-size: 0.78rem;
     }
 
     .book-stage {
-        padding: 16px 12px 70px 12px;
+        padding: 16px 10px 70px 10px;
     }
 
-    /* On mobile, stack page sheets into one seamless long sheet */
     .book-wrapper {
         flex-direction: column;
         min-height: auto;
@@ -479,7 +464,7 @@
 
     .book-page-sheet {
         width: 100%;
-        padding: 28px 20px;
+        padding: 24px 18px;
     }
 
     .book-page-sheet--left {
@@ -489,23 +474,23 @@
 
     .book-page-sheet--right {
         border-left: none;
-        padding-top: 24px;
+        padding-top: 20px;
     }
 
     .book-sheet-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 
     .book-sheet-body {
-        font-size: 1.05rem;
-        line-height: 1.7;
-        max-height: 280px;
+        font-size: 1.02rem;
+        line-height: 1.65;
+        max-height: 300px;
     }
 
     .book-controls {
-        gap: 12px;
-        padding: 8px 18px;
-        width: 90%;
+        gap: 10px;
+        padding: 8px 16px;
+        width: 95%;
         box-sizing: border-box;
     }
 
@@ -515,18 +500,16 @@
 }
 
 @media (max-width: 480px) {
-    .book-action-btn {
-        padding: 6px 12px;
-        font-size: 0.8rem;
+    .book-nav-header__title {
+        font-size: 0.95rem;
     }
 
-    .book-nav-header__back {
-        padding: 6px 12px;
-        font-size: 0.82rem;
+    .book-action-btn span.btn-label {
+        display: none; /* Shows clean icons on very small screens */
     }
 
     .book-sheet-body {
-        font-size: 1rem;
-        line-height: 1.65;
+        font-size: 0.98rem;
+        line-height: 1.6;
     }
 }
