@@ -8,12 +8,15 @@ export function initAddMemoryModal() {
     const closeBtn = modal.querySelector(".modal-add__close");
     const form = modal.querySelector("#add-memory-form");
 
-    function openModal() {
+    function openModal(e) {
+        if (e) e.preventDefault();
         modal.classList.add("is-visible");
+        document.body.style.overflow = "hidden"; // Prevent background scroll when modal open
     }
 
     function closeModal() {
         modal.classList.remove("is-visible");
+        document.body.style.overflow = "";
         if (form) form.reset();
     }
 
@@ -59,8 +62,19 @@ export function initAddMemoryModal() {
             };
 
             saveCustomMemory(newMemory);
-            appendCustomMemoryToTimeline(newMemory);
+            const newCard = appendCustomMemoryToTimeline(newMemory);
             closeModal();
+
+            // Scroll to the newly added memory
+            if (newCard) {
+                setTimeout(() => {
+                    if (window.lenis) {
+                        window.lenis.scrollTo(newCard, { offset: -50, duration: 1.2 });
+                    } else {
+                        newCard.scrollIntoView({ behavior: "smooth" });
+                    }
+                }, 300);
+            }
 
             // Notification / Feedback
             alert("✨ Kenangan indah baru berhasil disimpan di perjalanan kalian!");
@@ -99,10 +113,14 @@ function loadCustomMemories() {
 
 function appendCustomMemoryToTimeline(item) {
     const container = document.querySelector("#journey .journey-timeline");
-    if (!container) return;
+    if (!container) return null;
+
+    const existingCards = container.querySelectorAll(".journey-card");
+    const count = existingCards.length;
+    const isEven = count % 2 === 0;
 
     const card = document.createElement("div");
-    card.className = "journey-card journey-card--custom";
+    card.className = `journey-card ${isEven ? 'journey-card--left' : 'journey-card--right'} journey-card--custom`;
     card.innerHTML = `
         <div class="journey-card__node">
             <span class="journey-card__icon">${item.icon}</span>
@@ -121,4 +139,5 @@ function appendCustomMemoryToTimeline(item) {
     `;
 
     container.appendChild(card);
+    return card;
 }
