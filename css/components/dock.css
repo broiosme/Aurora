@@ -84,6 +84,18 @@
     margin: 0 4px;
 }
 
+.dock-item--book {
+    background: rgba(124, 92, 255, 0.2);
+    color: var(--secondary);
+    border: 1px solid rgba(124, 92, 255, 0.4);
+}
+
+.dock-item--book:hover,
+.dock-item--book:active {
+    background: var(--secondary);
+    color: white;
+}
+
 .dock-item--add {
     background: rgba(255, 209, 102, 0.25);
     color: var(--gold);

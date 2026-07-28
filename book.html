@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buku Cerita Kita — Aurora</title>
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/pages/book.css">
+
+</head>
+
+<body class="book-page-body">
+
+    <!-- Background Cosmic Engine -->
+    <div class="book-bg-engine">
+        <canvas id="book-stars-canvas"></canvas>
+        <div class="book-aurora-glow"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="book-nav-header">
+        <a href="index.html" class="book-nav-header__back">
+            <span>🌌</span> Kembali ke Aurora
+        </a>
+
+        <div class="book-nav-header__title">
+            Buku Cerita Kita 📖
+        </div>
+
+        <div class="book-nav-header__actions">
+            <button type="button" class="book-action-btn" id="toc-btn">📖 Daftar Isi</button>
+            <button type="button" class="book-action-btn" id="add-chapter-btn">✨ Tulis Bab Baru</button>
+        </div>
+    </header>
+
+    <!-- Book Stage -->
+    <main class="book-stage">
+
+        <div class="book-wrapper">
+
+            <!-- Left Page Sheet -->
+            <div class="book-page-sheet book-page-sheet--left">
+                <div>
+                    <div class="book-sheet-header">
+                        <span class="book-sheet-header__chapter" id="left-header-chapter">Bab 1</span>
+                        <span class="book-sheet-header__date" id="left-header-date">13 Juli 2024</span>
+                    </div>
+
+                    <h1 class="book-sheet-title" id="left-sheet-title">Pertemuan di Bawah Langit Malam</h1>
+                    <p class="book-sheet-author" id="left-sheet-author">Ditulis oleh: Kamu & Mazyyatul</p>
+
+                    <div class="book-sheet-body" id="left-sheet-body">
+                        <!-- Left story text rendered via JS -->
+                    </div>
+                </div>
+
+                <div class="book-sheet-footer">
+                    <span>Aurora Storybook</span>
+                    <span id="left-footer-page">Hal. 1</span>
+                </div>
+            </div>
+
+            <!-- Right Page Sheet -->
+            <div class="book-page-sheet book-page-sheet--right">
+                <div>
+                    <div class="book-sheet-header">
+                        <span class="book-sheet-header__chapter">Lanjutan Cerita</span>
+                        <span class="book-sheet-header__date">🔮 Aurora</span>
+                    </div>
+
+                    <h2 class="book-sheet-title" id="right-sheet-title" style="font-size: 1.5rem;">Pertemuan di Bawah Langit Malam (Lanjutan)</h2>
+
+                    <div class="book-sheet-body" id="right-sheet-body">
+                        <!-- Right story text rendered via JS -->
+                    </div>
+                </div>
+
+                <div class="book-sheet-footer">
+                    <span>Bersama Selamanya</span>
+                    <span id="right-footer-page">Hal. 2</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Page Turning Controls -->
+        <div class="book-controls">
+            <button type="button" class="book-control-btn" id="prev-page-btn" title="Bab Sebelumnya">
+                &larr;
+            </button>
+
+            <span class="book-page-indicator" id="page-indicator">
+                Bab 1 dari 3 (Halaman 1-2)
+            </span>
+
+            <button type="button" class="book-control-btn" id="next-page-btn" title="Bab Selanjutnya">
+                &rarr;
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Table of Contents Modal -->
+    <div class="book-toc-modal" id="toc-modal">
+        <div class="book-toc-content">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="book-toc-title" style="margin-bottom: 0;">Daftar Isi Novel</h3>
+                <button type="button" class="book-modal-close" style="background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 20px;">Pilih bab cerita yang ingin kamu baca:</p>
+
+            <ul class="book-toc-list" id="toc-list">
+                <!-- Chapter list items rendered via JS -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Add Chapter Modal -->
+    <div class="book-add-modal" id="add-chapter-modal">
+        <div class="book-add-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="font-family: var(--display-font); font-size: 1.8rem; color: var(--gold); margin: 0;">Tulis Bab Novel Baru ✨</h3>
+                <button type="button" class="book-modal-close" style="background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 20px;">Tuliskan cerita kenangan atau perjalanan kalian sepanjang apapun yang kamu mau secara bebas</p>
+
+            <form id="add-chapter-form">
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Judul Bab</label>
+                    <input type="text" id="chap-title" placeholder="Contoh: Bab 4: Petualangan Ke Kota Seribu Lampu" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 12px; color: white; box-sizing: border-box;" required>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Penulis</label>
+                        <select id="chap-author" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 12px; color: white; box-sizing: border-box;">
+                            <option value="Kamu & Mazyyatul">Kamu & Mazyyatul</option>
+                            <option value="Kamu">Dari: Kamu</option>
+                            <option value="Mazyyatul">Dari: Mazyyatul</option>
+                        </select>
+                    </div>
+
+                    <div style="flex: 1;">
+                        <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Tanggal</label>
+                        <input type="text" id="chap-date" placeholder="Contoh: 28 Juli 2026" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 12px; color: white; box-sizing: border-box;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Isi Cerita Novel (Bebas & Panjang)</label>
+                    <textarea id="chap-content" rows="10" placeholder="Tuliskan cerita panjang kalian di sini... Gunakan enter 2 kali untuk membuat paragraf baru." style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 14px; color: white; font-family: var(--display-font); font-size: 1.1rem; line-height: 1.6; box-sizing: border-box;" required></textarea>
+                </div>
+
+                <button type="submit" style="width: 100%; background: linear-gradient(135deg, var(--gold), var(--primary)); border: none; border-radius: 8px; padding: 14px; color: #050816; font-weight: 700; font-size: 1rem; cursor: pointer;">Simpan Bab Novel ✨</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+    <!-- App Script -->
+    <script type="module" src="js/bookApp.js"></script>
+
+</body>
+
+</html>
