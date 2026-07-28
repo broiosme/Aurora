@@ -29,7 +29,20 @@ function initBookApp() {
     document.querySelectorAll(".book-modal-close").forEach(btn => {
         btn.addEventListener("click", (e) => {
             const modal = e.target.closest(".book-toc-modal, .book-add-modal");
-            if (modal) modal.classList.remove("is-visible");
+            if (modal) {
+                modal.classList.remove("is-visible");
+                document.body.style.overflow = "";
+            }
+        });
+    });
+
+    // Close modal on backdrop click
+    document.querySelectorAll(".book-toc-modal, .book-add-modal").forEach(modal => {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.remove("is-visible");
+                document.body.style.overflow = "";
+            }
         });
     });
 
@@ -85,7 +98,7 @@ function renderCurrentChapter() {
 
     if (leftFooterPage) leftFooterPage.textContent = `Hal. ${leftPageNum}`;
     if (rightFooterPage) rightFooterPage.textContent = `Hal. ${rightPageNum}`;
-    if (pageIndicator) pageIndicator.textContent = `Bab ${currentIndex + 1} dari ${total} (Halaman ${leftPageNum}-${rightPageNum} dari ${totalPages})`;
+    if (pageIndicator) pageIndicator.textContent = `Bab ${currentIndex + 1} dari ${total} (Hal ${leftPageNum}-${rightPageNum} dari ${totalPages})`;
 
     // Update prev/next button state
     const prevBtn = document.querySelector("#prev-page-btn");
@@ -117,9 +130,9 @@ function animatePageFlip(callback) {
     const bookWrapper = document.querySelector(".book-wrapper");
     if (typeof gsap !== "undefined" && bookWrapper) {
         gsap.to(bookWrapper, {
-            opacity: 0.5,
+            opacity: 0.4,
             scale: 0.98,
-            duration: 0.25,
+            duration: 0.2,
             onComplete: () => {
                 callback();
                 gsap.to(bookWrapper, {
@@ -155,15 +168,20 @@ function openTocModal() {
             currentIndex = index;
             renderCurrentChapter();
             tocModal.classList.remove("is-visible");
+            document.body.style.overflow = "";
         });
     });
 
     tocModal.classList.add("is-visible");
+    document.body.style.overflow = "hidden";
 }
 
 function openAddChapterModal() {
     const addModal = document.querySelector("#add-chapter-modal");
-    if (addModal) addModal.classList.add("is-visible");
+    if (addModal) {
+        addModal.classList.add("is-visible");
+        document.body.style.overflow = "hidden";
+    }
 }
 
 function handleAddChapterSubmit(e) {
@@ -193,7 +211,10 @@ function handleAddChapterSubmit(e) {
     renderCurrentChapter();
 
     const addModal = document.querySelector("#add-chapter-modal");
-    if (addModal) addModal.classList.remove("is-visible");
+    if (addModal) {
+        addModal.classList.remove("is-visible");
+        document.body.style.overflow = "";
+    }
     form.reset();
 
     alert("✨ Bab cerita novel baru berhasil ditambahkan!");
