@@ -1,0 +1,194 @@
+/* =========================================
+   SECRET VAULT SECTION STYLES
+========================================== */
+
+.vault-section {
+    position: relative;
+    padding: 120px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.vault-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.vault-header__subtitle {
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 12px;
+}
+
+.vault-header__title {
+    font-family: var(--display-font);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: var(--text);
+}
+
+.vault-header__title span {
+    color: var(--secondary);
+}
+
+/* Vault Lock Screen */
+.vault-lock-screen {
+    background: rgba(16, 23, 45, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(124, 92, 255, 0.25);
+    border-radius: var(--radius-lg);
+    padding: 60px 30px;
+    text-align: center;
+    box-shadow: 0 20px 80px rgba(124, 92, 255, 0.2);
+    position: relative;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.vault-lock-screen.is-hidden {
+    display: none;
+}
+
+.vault-lock-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    filter: drop-shadow(0 0 20px var(--secondary));
+}
+
+.vault-lock-prompt {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 30px;
+}
+
+.vault-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    max-width: 380px;
+    margin: 0 auto 20px auto;
+}
+
+.vault-input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    font-family: var(--body-font);
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    text-align: center;
+    color: var(--text);
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.vault-input:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+}
+
+.vault-btn {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px 24px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+}
+
+.vault-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(124, 92, 255, 0.4);
+}
+
+.vault-feedback {
+    font-size: 0.9rem;
+    min-height: 24px;
+}
+
+.vault-feedback--error {
+    color: #FF5E5E;
+}
+
+.vault-feedback--warning {
+    color: #FFD166;
+}
+
+.vault-feedback--success {
+    color: #4EFEAA;
+}
+
+.vault-hint-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-top: 15px;
+    text-decoration: underline;
+}
+
+.vault-hint-popup {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-top: 8px;
+}
+
+.vault-hint-popup.is-visible {
+    display: block;
+}
+
+/* Vault Content Screen (Unlocked state) */
+.vault-content-screen {
+    background: rgba(16, 23, 45, 0.8);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 50px 36px;
+    box-shadow: 0 20px 80px rgba(255, 209, 102, 0.15);
+}
+
+.vault-content-screen.is-hidden {
+    display: none;
+}
+
+.vault-unlocked-badge {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.vault-secret-paper {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 36px;
+}
+
+.vault-secret-greeting {
+    font-family: var(--display-font);
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.vault-secret-body {
+    font-family: var(--body-font);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text);
+}

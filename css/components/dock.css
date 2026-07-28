@@ -1,0 +1,105 @@
+/* =========================================
+   COSMIC FLOATING DOCK NAVBAR
+========================================== */
+
+.cosmic-dock {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 23, 45, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 16px;
+    border-radius: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(124, 92, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dock-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1.2rem;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.dock-item:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px) scale(1.1);
+}
+
+.dock-item.is-active {
+    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 0 20px rgba(255, 94, 168, 0.5);
+}
+
+.dock-item__tooltip {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: rgba(10, 15, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.dock-item:hover .dock-item__tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dock-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 0 4px;
+}
+
+.dock-item--add {
+    background: rgba(255, 209, 102, 0.2);
+    color: var(--gold);
+    border: 1px solid rgba(255, 209, 102, 0.4);
+}
+
+.dock-item--add:hover {
+    background: var(--gold);
+    color: #050816;
+}
+
+@media (max-width: 600px) {
+    .cosmic-dock {
+        bottom: 16px;
+        padding: 6px 10px;
+        gap: 4px;
+    }
+
+    .dock-item {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+}

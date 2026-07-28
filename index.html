@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>For you</title>
+    <title>Aurora — Our Cosmic Sanctuary</title>
 
     <!-- Google Fonts -->
 
@@ -33,8 +33,13 @@
     <link rel="stylesheet" href="css/pages/memories.css">
     <link rel="stylesheet" href="css/pages/letter.css">
     <link rel="stylesheet" href="css/pages/gallery.css">
+    <link rel="stylesheet" href="css/pages/journey.css">
+    <link rel="stylesheet" href="css/pages/bucketlist.css">
+    <link rel="stylesheet" href="css/pages/vault.css">
     <link rel="stylesheet" href="css/components/modal.css">
     <link rel="stylesheet" href="css/components/audio.css">
+    <link rel="stylesheet" href="css/components/dock.css">
+    <link rel="stylesheet" href="css/components/modal-add.css">
     <link rel="stylesheet" href="css/responsive.css">
 
 </head>
@@ -79,7 +84,7 @@
 
             <p class="click-anywhere">
 
-                Klik di mana saja untuk memulai
+                Klik di mana saja untuk memasuki ruang kita ✨
 
             </p>
 
@@ -93,15 +98,15 @@
     <main id="app">
 
         <!-- =========================================
-         THE BEGINNING
+         HERO SECTION
     ========================================== -->
 
-        <section class="hero">
+        <section class="hero" id="hero">
 
             <div class="hero__content">
 
                 <p class="hero__eyebrow">
-                    HAPPY BIRTHDAY
+                    OUR COSMIC SANCTUARY
                 </p>
 
                 <h1 class="hero__title">
@@ -111,7 +116,7 @@
                 <p class="hero__subtitle">
                     Not every star shines the same.
                     <br>
-                    Somehow, you became my favorite.
+                    Somehow, you became my favorite galaxy.
                 </p>
 
             </div>
@@ -128,30 +133,25 @@
             <div class="transition__content">
 
                 <h2 class="transition__title">
-
                     Every star has a story<span>.</span>
-
                 </h2>
 
                 <p class="transition__desc">
-
                     Some stories fade with time.
-
                     <br>
-
                     Some stay forever.
-
                     <br><br>
-
                     Ours belongs to the second one.
-
                 </p>
 
             </div>
 
         </section>
 
-        <section class="memories">
+        <!-- =========================================
+             CONSTELLATION MEMORIES SECTION
+        ========================================== -->
+        <section class="memories" id="memories">
 
             <div class="sky">
 
@@ -162,9 +162,23 @@
         </section>
 
         <!-- =========================================
-             BIRTHDAY LETTER SECTION
+             JOURNEY TIMELINE SECTION
         ========================================== -->
-        <section class="letter-section">
+        <section class="journey-section" id="journey">
+            <div class="journey-header">
+                <p class="journey-header__subtitle">Our Story</p>
+                <h2 class="journey-header__title">Garis Waktu Perjalanan Kita<span>.</span></h2>
+            </div>
+
+            <div class="journey-timeline">
+                <!-- Milestones rendered via JS -->
+            </div>
+        </section>
+
+        <!-- =========================================
+             SPECIAL LETTER SECTION
+        ========================================== -->
+        <section class="letter-section" id="letter">
             <div class="letter-header">
                 <p class="letter-header__subtitle">A Special Message</p>
                 <h2 class="letter-header__title">Pesan Khusus Untukmu<span>.</span></h2>
@@ -188,7 +202,7 @@
         <!-- =========================================
              COSMIC POLAROID GALLERY
         ========================================== -->
-        <section class="gallery-section">
+        <section class="gallery-section" id="gallery">
             <div class="gallery-header">
                 <p class="gallery-header__subtitle">Cosmic Moments</p>
                 <h2 class="gallery-header__title">Galeri Kenangan Indah<span>.</span></h2>
@@ -221,7 +235,150 @@
             </div>
         </section>
 
+        <!-- =========================================
+             COSMIC BUCKET LIST SECTION
+        ========================================== -->
+        <section class="bucket-section" id="bucket-list">
+            <div class="bucket-header">
+                <p class="bucket-header__subtitle">Our Future Dreams</p>
+                <h2 class="bucket-header__title">Impian & Harapan Bersama<span>.</span></h2>
+            </div>
+
+            <div class="bucket-progress-wrapper">
+                <div class="bucket-progress__info">
+                    <span class="bucket-progress__text">0% Impian Terwujud!</span>
+                    <span class="bucket-progress__count">0 dari 8 impian selaras</span>
+                </div>
+                <div class="bucket-progress__bar">
+                    <div class="bucket-progress__fill"></div>
+                </div>
+            </div>
+
+            <div class="bucket-grid">
+                <!-- Bucket list cards rendered via JS -->
+            </div>
+        </section>
+
+        <!-- =========================================
+             SECRET MEMORY VAULT SECTION
+        ========================================== -->
+        <section class="vault-section" id="secret-vault">
+            <div class="vault-header">
+                <p class="vault-header__subtitle">Private Chamber</p>
+                <h2 class="vault-header__title">Kubah Rahasia Kita<span>.</span></h2>
+            </div>
+
+            <div class="vault-lock-screen">
+                <div class="vault-lock-icon">🔒</div>
+                <p class="vault-lock-prompt">Masukkan PIN Rahasia untuk Membuka Pesan Rahasia Eksklusif</p>
+                <div class="vault-input-group">
+                    <input type="password" id="vault-pin" class="vault-input" placeholder="• • • •" maxlength="8">
+                    <button id="vault-unlock-btn" class="vault-btn">Buka Kubah ✨</button>
+                </div>
+                <div class="vault-feedback"></div>
+                <button class="vault-hint-btn">💡 Butuh Petunjuk PIN?</button>
+                <p class="vault-hint-popup">Petunjuk: Masukkan tanggal momen pertama bertemu kita (Contoh: 1307)</p>
+            </div>
+
+            <div class="vault-content-screen is-hidden">
+                <div class="vault-unlocked-badge">🔓 Kubah Rahasia Terbuka! 💖</div>
+                <div class="vault-secret-paper">
+                    <h3 class="vault-secret-greeting">Pesan Rahasia Dari Dalam Hati...</h3>
+                    <div class="vault-secret-body">
+                        <p>Jika kamu berhasil membuka ruang ini, berarti kamu ingat momen manis kita.</p>
+                        <p>Terima kasih sudah menjadi bagian terindah dalam hidupku. Setiap detik yang kita lalui bersama, dari tawa kecil hingga percakapan larut malam, adalah harta karun yang paling berharga.</p>
+                        <p>Di ruang rahasia ini, aku ingin kamu tahu bahwa dimanapun kamu berada, kamu selalu punya tempat terbaik di hatiku. Mari kita terus mengukir cerita indah ini bersama! 🌌✨</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- =========================================
+         COSMIC FLOATING DOCK NAVBAR
+    ========================================== -->
+    <nav class="cosmic-dock">
+        <button class="dock-item is-active" data-target="#hero">
+            🏠
+            <span class="dock-item__tooltip">Home</span>
+        </button>
+        <button class="dock-item" data-target="#memories">
+            🌌
+            <span class="dock-item__tooltip">Rasi Bintang</span>
+        </button>
+        <button class="dock-item" data-target="#journey">
+            ⏳
+            <span class="dock-item__tooltip">Perjalanan Kita</span>
+        </button>
+        <button class="dock-item" data-target="#letter">
+            💌
+            <span class="dock-item__tooltip">Surat Cinta</span>
+        </button>
+        <button class="dock-item" data-target="#gallery">
+            🖼️
+            <span class="dock-item__tooltip">Galeri</span>
+        </button>
+        <button class="dock-item" data-target="#bucket-list">
+            🎯
+            <span class="dock-item__tooltip">Bucket List</span>
+        </button>
+        <button class="dock-item" data-target="#secret-vault">
+            🔒
+            <span class="dock-item__tooltip">Vault Rahasia</span>
+        </button>
+        <div class="dock-divider"></div>
+        <button class="dock-item dock-item--add" id="add-memory-btn">
+            ✨
+            <span class="dock-item__tooltip">Tambah Kenangan</span>
+        </button>
+    </nav>
+
+    <!-- =========================================
+         ADD MEMORY MODAL
+    ========================================== -->
+    <div class="modal-add" id="add-memory-modal">
+        <div class="modal-add__content">
+            <button class="modal-add__close">&times;</button>
+            <h3 class="modal-add__title">Abadikan Kenangan Baru ✨</h3>
+            <p class="modal-add__subtitle">Tambahkan momen manis baru ke perjalanan kalian berdua</p>
+
+            <form id="add-memory-form">
+                <div class="modal-add__field">
+                    <label for="memory-title">Judul Kenangan</label>
+                    <input type="text" id="memory-title" placeholder="Contoh: Liburan Pertama Ke Pantai" required>
+                </div>
+
+                <div class="modal-add__field">
+                    <label for="memory-date">Tanggal</label>
+                    <input type="text" id="memory-date" placeholder="Contoh: 28 Juli 2026">
+                </div>
+
+                <div class="modal-add__field">
+                    <label for="memory-tag">Kategori / Tag</label>
+                    <input type="text" id="memory-tag" placeholder="Contoh: Petualangan / Momen Manis">
+                </div>
+
+                <div class="modal-add__field">
+                    <label for="memory-icon">Icon Momen</label>
+                    <select id="memory-icon">
+                        <option value="💖">💖 Momen Cinta</option>
+                        <option value="✨">✨ Keajaiban</option>
+                        <option value="☕">☕ Kencan / Chill</option>
+                        <option value="🌊">🌊 Petualangan</option>
+                        <option value="📸">📸 Foto Spesial</option>
+                    </select>
+                </div>
+
+                <div class="modal-add__field">
+                    <label for="memory-story">Cerita Kenangan</label>
+                    <textarea id="memory-story" rows="4" placeholder="Tuliskan cerita singkat momen berharga ini..." required></textarea>
+                </div>
+
+                <button type="submit" class="modal-add__submit">Simpan Kenangan 💫</button>
+            </form>
+        </div>
+    </div>
 
     <div class="memory-modal"></div>
 
@@ -265,8 +422,6 @@
     </script>
 
     <script type="module" src="js/app.js"></script>
-
-
 
 </body>
 

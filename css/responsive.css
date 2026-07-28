@@ -56,6 +56,10 @@
     .polaroid-card__image-wrap {
         height: 200px;
     }
+
+    .journey-section, .bucket-section, .vault-section {
+        padding: 60px 16px;
+    }
 }
 
 /* Small Mobile Screens (<= 480px) */
@@ -64,8 +68,8 @@
         font-size: clamp(2.2rem, 8vw, 3rem);
     }
 
-    .letter-section, .gallery-section {
-        padding: 60px 15px;
+    .letter-section, .gallery-section, .journey-section, .bucket-section, .vault-section {
+        padding: 50px 15px;
     }
 
     .letter-paper {
@@ -80,6 +84,14 @@
         font-size: 1.6rem;
     }
 
+    .vault-lock-screen {
+        padding: 35px 18px;
+    }
+
+    .vault-input-group {
+        flex-direction: column;
+    }
+
     .secret-toast {
         width: 88vw;
         padding: 12px 20px;
@@ -92,7 +104,8 @@
 @media (hover: none) and (pointer: coarse) {
     .audio-control:active,
     .envelope-wrapper:active,
-    .polaroid-card:active {
-        transform: scale(0.98);
+    .polaroid-card:active,
+    .dock-item:active {
+        transform: scale(0.95);
     }
 }

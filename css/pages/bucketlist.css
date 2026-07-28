@@ -1,0 +1,214 @@
+/* =========================================
+   BUCKET LIST SECTION STYLES
+========================================== */
+
+.bucket-section {
+    position: relative;
+    padding: 100px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.bucket-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.bucket-header__subtitle {
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+}
+
+.bucket-header__title {
+    font-family: var(--display-font);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: var(--text);
+}
+
+.bucket-header__title span {
+    color: var(--gold);
+}
+
+/* Progress Bar Container */
+.bucket-progress-wrapper {
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+    background: rgba(16, 23, 45, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 20px 28px;
+    box-shadow: var(--shadow-soft);
+}
+
+.bucket-progress__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.bucket-progress__text {
+    color: var(--gold);
+}
+
+.bucket-progress__count {
+    color: var(--muted);
+}
+
+.bucket-progress__bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bucket-progress__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FF5EA8, #FFD166, #7C5CFF);
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
+}
+
+/* Bucket Cards Grid */
+.bucket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+}
+
+.bucket-card {
+    background: rgba(16, 23, 45, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.bucket-card:hover {
+    border-color: rgba(255, 209, 102, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(255, 209, 102, 0.15);
+}
+
+.bucket-card.is-completed {
+    background: rgba(255, 209, 102, 0.08);
+    border-color: rgba(255, 209, 102, 0.4);
+}
+
+.bucket-card.is-completed::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--gold);
+}
+
+/* Custom Checkbox */
+.bucket-card__check-wrap {
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.bucket-card__check-wrap input[type="checkbox"] {
+    display: none;
+}
+
+.bucket-card__checkbox {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.bucket-card__check-wrap input[type="checkbox"]:checked + .bucket-card__checkbox {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #050816;
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
+}
+
+.check-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.25s ease;
+}
+
+.bucket-card__check-wrap input[type="checkbox"]:checked + .bucket-card__checkbox .check-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Card Content */
+.bucket-card__body {
+    flex-grow: 1;
+}
+
+.bucket-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.bucket-card__icon {
+    font-size: 1.4rem;
+}
+
+.bucket-card__badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(255, 209, 102, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.bucket-card__title {
+    font-family: var(--body-font);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+}
+
+.bucket-card.is-completed .bucket-card__title {
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+.bucket-card__desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
