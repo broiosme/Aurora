@@ -1,4 +1,4 @@
-import { getStoredChapters, saveChapter } from "./data/bookData.js";
+import { getStoredChapters, saveChapter, deleteChapter } from "./data/bookData.js";
 
 let chapters = [];
 let currentIndex = 0;
@@ -18,12 +18,14 @@ function initBookApp() {
     const nextBtn = document.querySelector("#next-page-btn");
     const tocBtn = document.querySelector("#toc-btn");
     const addBtn = document.querySelector("#add-chapter-btn");
+    const deleteBtn = document.querySelector("#delete-chapter-btn");
 
     if (prevBtn) prevBtn.addEventListener("click", goToPrevChapter);
     if (nextBtn) nextBtn.addEventListener("click", goToNextChapter);
 
     if (tocBtn) tocBtn.addEventListener("click", openTocModal);
     if (addBtn) addBtn.addEventListener("click", openAddChapterModal);
+    if (deleteBtn) deleteBtn.addEventListener("click", handleDeleteActiveChapter);
 
     // Modal close listeners
     document.querySelectorAll(".book-modal-close").forEach(btn => {
@@ -55,14 +57,6 @@ function initBookApp() {
 
 function renderCurrentChapter() {
     const total = chapters.length;
-    if (total === 0) return;
-
-    if (currentIndex < 0) currentIndex = 0;
-    if (currentIndex >= total) currentIndex = total - 1;
-
-    const chapter = chapters[currentIndex];
-
-    // Left page: Chapter Header, Title, Author & First portion of story
     const leftTitle = document.querySelector("#left-sheet-title");
     const leftAuthor = document.querySelector("#left-sheet-author");
     const leftHeaderChapter = document.querySelector("#left-header-chapter");
@@ -70,11 +64,35 @@ function renderCurrentChapter() {
     const leftBody = document.querySelector("#left-sheet-body");
     const leftFooterPage = document.querySelector("#left-footer-page");
 
-    // Right page: Continuing portion of story & signature
     const rightTitle = document.querySelector("#right-sheet-title");
     const rightBody = document.querySelector("#right-sheet-body");
     const rightFooterPage = document.querySelector("#right-footer-page");
     const pageIndicator = document.querySelector("#page-indicator");
+
+    const prevBtn = document.querySelector("#prev-page-btn");
+    const nextBtn = document.querySelector("#next-page-btn");
+
+    if (total === 0) {
+        if (leftTitle) leftTitle.textContent = "Belum Ada Bab Cerita 📖";
+        if (leftAuthor) leftAuthor.textContent = "Ditulis oleh: Kamu & Mazyyatul";
+        if (leftHeaderChapter) leftHeaderChapter.textContent = "Kosong";
+        if (leftHeaderDate) leftHeaderDate.textContent = "-";
+        if (leftBody) leftBody.textContent = "Buku ini masih kosong. Klik tombol 'Tulis Bab' di atas untuk menuliskan kisah kenangan indah kalian!";
+        if (leftFooterPage) leftFooterPage.textContent = "Halaman 0";
+        if (rightTitle) rightTitle.textContent = "Halaman Kosong";
+        if (rightBody) rightBody.textContent = "✨ Tuliskan cerita pertamamu sekarang...";
+        if (rightFooterPage) rightFooterPage.textContent = "Halaman 0";
+        if (pageIndicator) pageIndicator.textContent = "Halaman 0 dari 0";
+
+        if (prevBtn) prevBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true;
+        return;
+    }
+
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex >= total) currentIndex = total - 1;
+
+    const chapter = chapters[currentIndex];
 
     if (leftTitle) leftTitle.textContent = chapter.title;
     if (leftAuthor) leftAuthor.textContent = `Ditulis oleh: ${chapter.author}`;
@@ -100,11 +118,27 @@ function renderCurrentChapter() {
     if (pageIndicator) pageIndicator.textContent = `Halaman ${pageNum} dari ${total} — Bab ${chapter.chapterNumber || pageNum}`;
 
     // Update prev/next button state
-    const prevBtn = document.querySelector("#prev-page-btn");
-    const nextBtn = document.querySelector("#next-page-btn");
-
     if (prevBtn) prevBtn.disabled = (currentIndex === 0);
     if (nextBtn) nextBtn.disabled = (currentIndex === total - 1);
+}
+
+function handleDeleteActiveChapter() {
+    if (chapters.length === 0) {
+        alert("Tidak ada bab novel untuk dihapus.");
+        return;
+    }
+    const currentChap = chapters[currentIndex];
+    if (!currentChap) return;
+
+    const confirmDelete = confirm(`Apakah Anda yakin ingin menghapus "${currentChap.title}"?`);
+    if (!confirmDelete) return;
+
+    chapters = deleteChapter(currentChap.id);
+    if (currentIndex >= chapters.length) {
+        currentIndex = Math.max(0, chapters.length - 1);
+    }
+    renderCurrentChapter();
+    alert("✨ Bab novel berhasil dihapus!");
 }
 
 function goToPrevChapter() {
@@ -151,18 +185,26 @@ function openTocModal() {
     const tocList = document.querySelector("#toc-list");
     if (!tocModal || !tocList) return;
 
-    tocList.innerHTML = chapters.map((chap, idx) => `
-        <li class="book-toc-item" data-index="${idx}">
-            <div>
-                <div class="book-toc-item__title">Bab ${idx + 1}: ${chap.title}</div>
-                <div class="book-toc-item__author">${chap.date} — Oleh ${chap.author}</div>
-            </div>
-            <span>👉</span>
-        </li>
-    `).join('');
+    if (chapters.length === 0) {
+        tocList.innerHTML = `<li style="color: var(--muted); text-align: center; padding: 20px;">Belum ada bab novel yang ditulis.</li>`;
+    } else {
+        tocList.innerHTML = chapters.map((chap, idx) => `
+            <li class="book-toc-item" data-index="${idx}">
+                <div>
+                    <div class="book-toc-item__title">Bab ${idx + 1}: ${chap.title}</div>
+                    <div class="book-toc-item__author">${chap.date} — Oleh ${chap.author}</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" class="book-toc-item__delete" data-id="${chap.id}" title="Hapus Bab Ini">🗑️</button>
+                    <span>👉</span>
+                </div>
+            </li>
+        `).join('');
+    }
 
     tocList.querySelectorAll(".book-toc-item").forEach(item => {
-        item.addEventListener("click", () => {
+        item.addEventListener("click", (e) => {
+            if (e.target.closest(".book-toc-item__delete")) return;
             const index = parseInt(item.dataset.index, 10);
             currentIndex = index;
             renderCurrentChapter();
@@ -171,9 +213,26 @@ function openTocModal() {
         });
     });
 
+    tocList.querySelectorAll(".book-toc-item__delete").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const id = btn.dataset.id;
+            const chap = chapters.find(c => c.id === id);
+            if (chap && confirm(`Apakah Anda yakin ingin menghapus Bab "${chap.title}"?`)) {
+                chapters = deleteChapter(id);
+                if (currentIndex >= chapters.length) {
+                    currentIndex = Math.max(0, chapters.length - 1);
+                }
+                renderCurrentChapter();
+                openTocModal();
+            }
+        });
+    });
+
     tocModal.classList.add("is-visible");
     document.body.style.overflow = "hidden";
 }
+
 
 function openAddChapterModal() {
     const addModal = document.querySelector("#add-chapter-modal");

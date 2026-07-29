@@ -145,6 +145,28 @@
     color: var(--muted);
 }
 
+.journey-card__delete-btn {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 6px;
+    transition: all 0.2s ease;
+}
+
+.journey-card__delete-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
 .journey-card__title {
     font-family: var(--display-font);
     font-size: 1.8rem;

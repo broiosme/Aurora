@@ -66,3 +66,54 @@ export const journeyMilestones = [
         description: "Setiap hari bersamamu adalah hadiah terindah. Cerita ini masih panjang dan aku tidak sabar melewati ribuan esok bersamamu."
     }
 ];
+
+const CUSTOM_MEMORIES_KEY = "aurora_custom_memories";
+const DELETED_MILESTONES_KEY = "aurora_deleted_milestones";
+
+export function getDeletedMilestoneIds() {
+    try {
+        const stored = localStorage.getItem(DELETED_MILESTONES_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+export function getCustomMemories() {
+    try {
+        const stored = localStorage.getItem(CUSTOM_MEMORIES_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+export function getStoredJourneyMilestones() {
+    const deletedIds = getDeletedMilestoneIds();
+    const activeInitial = journeyMilestones.filter(m => !deletedIds.includes(m.id));
+    const customList = getCustomMemories();
+    return [...activeInitial, ...customList];
+}
+
+export function deleteJourneyMilestone(id) {
+    if (String(id).startsWith("custom_")) {
+        const customList = getCustomMemories().filter(m => m.id !== id);
+        try {
+            localStorage.setItem(CUSTOM_MEMORIES_KEY, JSON.stringify(customList));
+        } catch (e) {
+            console.warn("Could not delete custom memory", e);
+        }
+    } else {
+        const deletedIds = getDeletedMilestoneIds();
+        if (!deletedIds.includes(id)) {
+            deletedIds.push(id);
+            try {
+                localStorage.setItem(DELETED_MILESTONES_KEY, JSON.stringify(deletedIds));
+            } catch (e) {
+                console.warn("Could not save deleted milestone ID", e);
+            }
+        }
+    }
+    return getStoredJourneyMilestones();
+}
+

@@ -1,3 +1,5 @@
+import { renderJourneyTimeline } from "./journey.js";
+
 const CUSTOM_MEMORIES_KEY = "aurora_custom_memories";
 
 export function initAddMemoryModal() {
@@ -7,6 +9,38 @@ export function initAddMemoryModal() {
 
     const closeBtn = modal.querySelector(".modal-add__close");
     const form = modal.querySelector("#add-memory-form");
+    const imageInput = modal.querySelector("#memory-image");
+    const previewWrap = modal.querySelector("#memory-image-preview-wrap");
+    const previewImg = modal.querySelector("#memory-image-preview");
+    const removeImgBtn = modal.querySelector("#remove-image-btn");
+
+    let currentImageDataUrl = "";
+
+    function resetImagePreview() {
+        currentImageDataUrl = "";
+        if (imageInput) imageInput.value = "";
+        if (previewImg) previewImg.src = "";
+        if (previewWrap) previewWrap.style.display = "none";
+    }
+
+    if (imageInput) {
+        imageInput.addEventListener("change", (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    currentImageDataUrl = event.target.result;
+                    if (previewImg) previewImg.src = currentImageDataUrl;
+                    if (previewWrap) previewWrap.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    if (removeImgBtn) {
+        removeImgBtn.addEventListener("click", resetImagePreview);
+    }
 
     function openModal(e) {
         if (e) e.preventDefault();
@@ -18,6 +52,7 @@ export function initAddMemoryModal() {
         modal.classList.remove("is-visible");
         document.body.style.overflow = "";
         if (form) form.reset();
+        resetImagePreview();
     }
 
     if (triggerBtn) {
@@ -57,32 +92,31 @@ export function initAddMemoryModal() {
                 tag,
                 icon,
                 color: "#FF5EA8",
-                image: "assets/images/memory1.png",
+                image: currentImageDataUrl || "assets/images/memory1.png",
                 description: story
             };
 
             saveCustomMemory(newMemory);
-            const newCard = appendCustomMemoryToTimeline(newMemory);
+            renderJourneyTimeline();
             closeModal();
 
             // Scroll to the newly added memory
-            if (newCard) {
-                setTimeout(() => {
+            setTimeout(() => {
+                const container = document.querySelector("#journey .journey-timeline");
+                const newCard = container ? container.lastElementChild : null;
+                if (newCard) {
                     if (window.lenis) {
                         window.lenis.scrollTo(newCard, { offset: -50, duration: 1.2 });
                     } else {
                         newCard.scrollIntoView({ behavior: "smooth" });
                     }
-                }, 300);
-            }
+                }
+            }, 300);
 
             // Notification / Feedback
             alert("✨ Kenangan indah baru berhasil disimpan di perjalanan kalian!");
         });
     }
-
-    // Load any existing custom memories from localStorage on startup
-    loadCustomMemories();
 }
 
 function getStoredCustomMemories() {
@@ -104,40 +138,3 @@ function saveCustomMemory(item) {
     }
 }
 
-function loadCustomMemories() {
-    const list = getStoredCustomMemories();
-    list.forEach(item => {
-        appendCustomMemoryToTimeline(item);
-    });
-}
-
-function appendCustomMemoryToTimeline(item) {
-    const container = document.querySelector("#journey .journey-timeline");
-    if (!container) return null;
-
-    const existingCards = container.querySelectorAll(".journey-card");
-    const count = existingCards.length;
-    const isEven = count % 2 === 0;
-
-    const card = document.createElement("div");
-    card.className = `journey-card ${isEven ? 'journey-card--left' : 'journey-card--right'} journey-card--custom`;
-    card.innerHTML = `
-        <div class="journey-card__node">
-            <span class="journey-card__icon">${item.icon}</span>
-        </div>
-        <div class="journey-card__content">
-            <div class="journey-card__header">
-                <span class="journey-card__tag" style="background: ${item.color}22; color: ${item.color}; border: 1px solid ${item.color}44;">
-                    ${item.tag}
-                </span>
-                <span class="journey-card__date">${item.date}</span>
-            </div>
-            <h3 class="journey-card__title">${item.title}</h3>
-            <p class="journey-card__subtitle">${item.subtitle}</p>
-            <p class="journey-card__desc">${item.description}</p>
-        </div>
-    `;
-
-    container.appendChild(card);
-    return card;
-}

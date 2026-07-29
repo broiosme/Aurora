@@ -42,16 +42,16 @@ Terima kasih telah menjadi tokoh utama dalam cerita terindah dalam hidupku. Mari
 export function getStoredChapters() {
     try {
         const stored = localStorage.getItem(BOOK_STORAGE_KEY);
-        if (stored) {
+        if (stored !== null) {
             const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length > 0) {
+            if (Array.isArray(parsed)) {
                 return parsed;
             }
         }
     } catch (e) {
         console.warn("Error reading stored book chapters", e);
     }
-    return initialChapters;
+    return [...initialChapters];
 }
 
 export function saveChapter(newChapter) {
@@ -64,3 +64,15 @@ export function saveChapter(newChapter) {
     }
     return chapters;
 }
+
+export function deleteChapter(chapterId) {
+    let chapters = getStoredChapters();
+    chapters = chapters.filter(chap => chap.id !== chapterId);
+    try {
+        localStorage.setItem(BOOK_STORAGE_KEY, JSON.stringify(chapters));
+    } catch (e) {
+        console.warn("Error deleting chapter", e);
+    }
+    return chapters;
+}
+

@@ -129,6 +129,40 @@
     box-shadow: 0 0 15px rgba(255, 209, 102, 0.4);
 }
 
+.book-action-btn--delete {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+
+.book-action-btn--delete:hover,
+.book-action-btn--delete:active {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+}
+
+.book-toc-item__delete {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.book-toc-item__delete:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.1);
+}
+
 /* =========================================
    BOOK STAGE & NOVEL SHEET LAYOUT
 ========================================== */
