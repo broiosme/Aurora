@@ -196,3 +196,46 @@
         height: 12px;
     }
 }
+
+/* =========================================
+   LIGHT MODE — MEMORIES
+========================================== */
+
+[data-theme="light"] .memory-star {
+    background: #F5A623;
+    box-shadow:
+        0 0 18px rgba(245, 166, 35, 0.7),
+        0 0 50px rgba(245, 166, 35, 0.2);
+}
+
+[data-theme="light"] .memory-star--special {
+    background: #FF9800;
+    box-shadow:
+        0 0 25px rgba(255, 152, 0, 0.8),
+        0 0 50px rgba(255, 152, 0, 0.4);
+}
+
+[data-theme="light"] .memory-star:hover {
+    box-shadow:
+        0 0 28px rgba(245, 166, 35, 0.9),
+        0 0 90px rgba(245, 166, 35, 0.6);
+}
+
+[data-theme="light"] .memory-star::after {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--text);
+}
+
+[data-theme="light"] .constellation-lines line {
+    stroke: rgba(245, 166, 35, 0.35);
+}
+
+[data-theme="light"] .constellation-lines line.line-active {
+    stroke: rgba(255, 152, 0, 0.8);
+}
+
+[data-theme="light"] .star-tooltip {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--text);
+}

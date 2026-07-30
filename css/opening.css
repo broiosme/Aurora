@@ -81,3 +81,19 @@
         margin-top: 40px;
     }
 }
+
+/* =========================================
+   LIGHT MODE — OPENING
+========================================== */
+
+[data-theme="light"] .opening {
+    background: rgba(232, 244, 253, 0.65);
+}
+
+[data-theme="light"] .name {
+    color: var(--text);
+}
+
+[data-theme="light"] .click-anywhere {
+    color: rgba(27, 42, 74, 0.45);
+}

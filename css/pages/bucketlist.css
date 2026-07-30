@@ -212,3 +212,41 @@
     color: var(--muted);
     line-height: 1.5;
 }
+
+/* =========================================
+   LIGHT MODE — BUCKET LIST
+========================================== */
+
+[data-theme="light"] .bucket-progress-wrapper {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .bucket-progress__bar {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .bucket-card {
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .bucket-card:hover {
+    border-color: rgba(245, 166, 35, 0.25);
+    box-shadow: 0 12px 35px rgba(245, 166, 35, 0.10);
+}
+
+[data-theme="light"] .bucket-card.is-completed {
+    background: rgba(245, 166, 35, 0.06);
+    border-color: rgba(245, 166, 35, 0.3);
+}
+
+[data-theme="light"] .bucket-card__checkbox {
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .bucket-card__badge {
+    background: rgba(245, 166, 35, 0.08);
+}

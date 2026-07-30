@@ -102,3 +102,33 @@
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.8);
 }
+
+/* =========================================
+   LIGHT MODE — AUDIO
+========================================== */
+
+[data-theme="light"] .audio-control {
+    background: rgba(255, 255, 255, 0.70);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06),
+                0 0 15px rgba(59, 164, 207, 0.08);
+}
+
+[data-theme="light"] .audio-control:hover {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(245, 166, 35, 0.25);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08),
+                0 0 25px rgba(245, 166, 35, 0.12);
+}
+
+[data-theme="light"] .audio-icon {
+    color: var(--text);
+}
+
+[data-theme="light"] .sound-waves span {
+    background: linear-gradient(180deg, var(--gold), var(--primary));
+}
+
+[data-theme="light"] .audio-label {
+    color: rgba(27, 42, 74, 0.70);
+}

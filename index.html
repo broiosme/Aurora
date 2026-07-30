@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="css/components/audio.css">
     <link rel="stylesheet" href="css/components/dock.css">
     <link rel="stylesheet" href="css/components/modal-add.css">
+    <link rel="stylesheet" href="css/effects/light-bg.css">
     <link rel="stylesheet" href="css/responsive.css">
 
 </head>
@@ -55,6 +56,22 @@
         <canvas id="stars"></canvas>
 
         <div class="moon"></div>
+
+        <!-- Light Mode Elements -->
+        <div class="sun"></div>
+        <div class="sun-rays"></div>
+
+        <div class="cloud cloud--1"><div class="cloud__shape"></div></div>
+        <div class="cloud cloud--2"><div class="cloud__shape"></div></div>
+        <div class="cloud cloud--3"><div class="cloud__shape"></div></div>
+
+        <div class="ocean">
+            <div class="ocean__gradient"></div>
+            <div class="ocean__wave ocean__wave--1"></div>
+            <div class="ocean__wave ocean__wave--2"></div>
+            <div class="ocean__wave ocean__wave--3"></div>
+            <div class="ocean__shimmer"></div>
+        </div>
 
         <div class="gradient-bg"></div>
 
@@ -336,6 +353,10 @@
             ✨
             <span class="dock-item__tooltip">Tambah Kenangan</span>
         </button>
+        <button type="button" class="dock-item dock-item--theme" id="theme-toggle">
+            ☀️
+            <span class="dock-item__tooltip">Mode Pantai</span>
+        </button>
     </nav>
 
     <!-- =========================================
@@ -434,6 +455,7 @@
         gsap.ticker.lagSmoothing(0);
     </script>
 
+    <script type="module" src="js/birds.js"></script>
     <script type="module" src="js/app.js"></script>
 
 </body>

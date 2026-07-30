@@ -191,3 +191,68 @@
 .gallery-lightbox__close:hover {
     background: rgba(255, 255, 255, 0.3);
 }
+
+/* =========================================
+   LIGHT MODE — GALLERY
+========================================== */
+
+[data-theme="light"] .gallery-header__subtitle {
+    color: var(--secondary);
+}
+
+[data-theme="light"] .gallery-header__title {
+    color: var(--text);
+}
+
+[data-theme="light"] .polaroid-card {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06),
+                0 0 15px rgba(59, 164, 207, 0.05);
+}
+
+[data-theme="light"] .polaroid-card:hover {
+    border-color: rgba(245, 166, 35, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.10),
+                0 0 30px rgba(245, 166, 35, 0.12);
+}
+
+[data-theme="light"] .polaroid-card__image-wrap {
+    background: #F0F4FF;
+}
+
+[data-theme="light"] .polaroid-card__caption {
+    color: var(--text);
+}
+
+[data-theme="light"] .polaroid-card__date {
+    color: rgba(27, 42, 74, 0.5);
+}
+
+[data-theme="light"] .polaroid-card__placeholder {
+    background: radial-gradient(circle, rgba(232, 244, 253, 0.8), rgba(240, 244, 255, 0.95));
+    color: var(--gold);
+}
+
+[data-theme="light"] .gallery-lightbox {
+    background: rgba(255, 255, 255, 0.88);
+}
+
+[data-theme="light"] .gallery-lightbox__content {
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(245, 166, 35, 0.2);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .gallery-lightbox__caption {
+    color: var(--gold);
+}
+
+[data-theme="light"] .gallery-lightbox__close {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text);
+}
+
+[data-theme="light"] .gallery-lightbox__close:hover {
+    background: rgba(0, 0, 0, 0.12);
+}

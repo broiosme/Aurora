@@ -126,3 +126,88 @@
         display: none;
     }
 }
+
+/* Theme Toggle Button */
+.dock-item--theme {
+    background: rgba(255, 183, 77, 0.2);
+    color: var(--gold);
+    border: 1px solid rgba(255, 183, 77, 0.4);
+}
+
+.dock-item--theme:hover,
+.dock-item--theme:active {
+    background: linear-gradient(135deg, #FFB74D, #FFA726);
+    color: #1B2A4A;
+}
+
+/* =========================================
+   LIGHT MODE — DOCK
+========================================== */
+
+[data-theme="light"] .cosmic-dock {
+    background: rgba(255, 255, 255, 0.80);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.10), 0 0 20px rgba(59, 164, 207, 0.08);
+}
+
+[data-theme="light"] .dock-item {
+    color: var(--muted);
+}
+
+[data-theme="light"] .dock-item:hover,
+[data-theme="light"] .dock-item:active {
+    color: var(--text);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .dock-item.is-active {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 107, 138, 0.4);
+}
+
+[data-theme="light"] .dock-item__tooltip {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text);
+}
+
+[data-theme="light"] .dock-divider {
+    background: rgba(0, 0, 0, 0.10);
+}
+
+[data-theme="light"] .dock-item--book {
+    background: rgba(59, 164, 207, 0.15);
+    color: var(--secondary);
+    border: 1px solid rgba(59, 164, 207, 0.3);
+}
+
+[data-theme="light"] .dock-item--book:hover,
+[data-theme="light"] .dock-item--book:active {
+    background: var(--secondary);
+    color: white;
+}
+
+[data-theme="light"] .dock-item--add {
+    background: rgba(245, 166, 35, 0.15);
+    color: var(--gold);
+    border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+[data-theme="light"] .dock-item--add:hover,
+[data-theme="light"] .dock-item--add:active {
+    background: var(--gold);
+    color: white;
+}
+
+[data-theme="light"] .dock-item--theme {
+    background: rgba(100, 100, 130, 0.12);
+    color: #5E7290;
+    border: 1px solid rgba(100, 100, 130, 0.25);
+}
+
+[data-theme="light"] .dock-item--theme:hover,
+[data-theme="light"] .dock-item--theme:active {
+    background: linear-gradient(135deg, #3d3d6b, #1B2A4A);
+    color: white;
+}

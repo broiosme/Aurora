@@ -187,3 +187,59 @@
     color: #c084fc;
     text-align: right;
 }
+
+/* =========================================
+   LIGHT MODE — LETTER
+========================================== */
+
+[data-theme="light"] .letter-header__subtitle {
+    color: var(--gold);
+}
+
+[data-theme="light"] .letter-header__title {
+    color: var(--text);
+}
+
+[data-theme="light"] .letter-header__title span {
+    color: var(--primary);
+}
+
+[data-theme="light"] .envelope {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(240, 244, 255, 0.95));
+    border: 1px solid rgba(245, 166, 35, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08),
+                0 0 30px rgba(59, 164, 207, 0.08);
+}
+
+[data-theme="light"] .envelope-wrapper:hover .envelope {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12),
+                0 0 45px rgba(245, 166, 35, 0.15);
+}
+
+[data-theme="light"] .envelope__flap {
+    background: linear-gradient(180deg, rgba(232, 244, 253, 0.98), rgba(255, 255, 255, 0.95));
+    border-top: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+[data-theme="light"] .envelope__prompt {
+    color: rgba(27, 42, 74, 0.6);
+}
+
+[data-theme="light"] .letter-paper {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(245, 166, 35, 0.2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08),
+                0 0 35px rgba(59, 164, 207, 0.08);
+}
+
+[data-theme="light"] .letter-paper__greeting {
+    color: var(--gold);
+}
+
+[data-theme="light"] .letter-paper__body {
+    color: rgba(27, 42, 74, 0.85);
+}
+
+[data-theme="light"] .letter-paper__signature {
+    color: var(--primary);
+}

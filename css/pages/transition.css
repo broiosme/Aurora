@@ -65,3 +65,11 @@
         font-size: 0.9rem;
     }
 }
+
+/* =========================================
+   LIGHT MODE — TRANSITION
+========================================== */
+
+[data-theme="light"] .transition__desc {
+    color: rgba(27, 42, 74, 0.65);
+}

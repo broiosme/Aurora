@@ -235,3 +235,28 @@
         justify-content: flex-start;
     }
 }
+
+/* =========================================
+   LIGHT MODE — JOURNEY
+========================================== */
+
+[data-theme="light"] .journey-card__content {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .journey-card__content:hover {
+    border-color: rgba(255, 107, 138, 0.25);
+    box-shadow: 0 20px 50px rgba(59, 164, 207, 0.12);
+}
+
+[data-theme="light"] .journey-card__node {
+    background: var(--surface);
+    border: 2px solid var(--secondary);
+    box-shadow: 0 0 15px rgba(59, 164, 207, 0.25);
+}
+
+[data-theme="light"] .journey-card__img-wrap {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}

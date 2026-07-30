@@ -1,0 +1,350 @@
+/* =========================================
+   LIGHT MODE — BEACH BACKGROUND ELEMENTS
+   Sun, Clouds, Ocean, Shimmer
+========================================== */
+
+/* ==========================
+   SUN
+========================== */
+
+.sun {
+    position: fixed;
+    top: 80px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%,
+        #FFF9C4,
+        #FFD54F 40%,
+        #FFA726 80%);
+    box-shadow:
+        0 0 60px rgba(255, 183, 77, 0.6),
+        0 0 120px rgba(255, 183, 77, 0.3),
+        0 0 200px rgba(255, 183, 77, 0.15);
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+[data-theme="light"] .sun {
+    opacity: 1;
+}
+
+/* Sun Rays */
+.sun::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(255, 213, 79, 0.15),
+        rgba(255, 183, 77, 0.05) 50%,
+        transparent 70%);
+    animation: sunPulse 4s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes sunPulse {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* God Rays */
+.sun-rays {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 70vh;
+    z-index: -2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    background:
+        conic-gradient(
+            from 200deg at 85% 15%,
+            transparent 0deg,
+            rgba(255, 213, 79, 0.06) 15deg,
+            transparent 30deg,
+            rgba(255, 183, 77, 0.04) 60deg,
+            transparent 75deg,
+            rgba(255, 213, 79, 0.05) 110deg,
+            transparent 130deg,
+            rgba(255, 183, 77, 0.03) 160deg,
+            transparent 180deg
+        );
+    filter: blur(15px);
+}
+
+[data-theme="light"] .sun-rays {
+    opacity: 1;
+    animation: raysRotate 30s linear infinite;
+}
+
+@keyframes raysRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================
+   CLOUDS
+========================== */
+
+.cloud {
+    position: fixed;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+[data-theme="light"] .cloud {
+    opacity: 1;
+}
+
+.cloud__shape {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50px;
+    position: relative;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.04),
+        inset 0 -5px 15px rgba(0, 0, 0, 0.02);
+}
+
+.cloud__shape::before,
+.cloud__shape::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+}
+
+/* Cloud 1 — Large, top left */
+.cloud--1 {
+    top: 12%;
+    left: -10%;
+    animation: cloudDrift1 50s linear infinite;
+}
+
+.cloud--1 .cloud__shape {
+    width: 180px;
+    height: 55px;
+}
+
+.cloud--1 .cloud__shape::before {
+    width: 70px;
+    height: 70px;
+    top: -30px;
+    left: 30px;
+}
+
+.cloud--1 .cloud__shape::after {
+    width: 90px;
+    height: 90px;
+    top: -45px;
+    left: 70px;
+}
+
+/* Cloud 2 — Medium, top center */
+.cloud--2 {
+    top: 8%;
+    left: -15%;
+    animation: cloudDrift2 65s linear infinite;
+    animation-delay: -20s;
+}
+
+.cloud--2 .cloud__shape {
+    width: 130px;
+    height: 40px;
+}
+
+.cloud--2 .cloud__shape::before {
+    width: 50px;
+    height: 50px;
+    top: -22px;
+    left: 20px;
+}
+
+.cloud--2 .cloud__shape::after {
+    width: 65px;
+    height: 65px;
+    top: -32px;
+    left: 50px;
+}
+
+/* Cloud 3 — Small, high right */
+.cloud--3 {
+    top: 18%;
+    left: -8%;
+    animation: cloudDrift1 75s linear infinite;
+    animation-delay: -35s;
+}
+
+.cloud--3 .cloud__shape {
+    width: 100px;
+    height: 30px;
+}
+
+.cloud--3 .cloud__shape::before {
+    width: 40px;
+    height: 40px;
+    top: -18px;
+    left: 15px;
+}
+
+.cloud--3 .cloud__shape::after {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 40px;
+}
+
+@keyframes cloudDrift1 {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 200px)); }
+}
+
+@keyframes cloudDrift2 {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 250px)); }
+}
+
+/* ==========================
+   OCEAN
+========================== */
+
+.ocean {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 28vh;
+    z-index: -1;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+[data-theme="light"] .ocean {
+    opacity: 1;
+}
+
+/* Ocean gradient base */
+.ocean__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+        rgba(69, 183, 209, 0) 0%,
+        rgba(69, 183, 209, 0.15) 10%,
+        rgba(52, 152, 219, 0.35) 30%,
+        rgba(41, 128, 185, 0.55) 60%,
+        rgba(30, 100, 160, 0.70) 100%);
+}
+
+/* Animated wave layers */
+.ocean__wave {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+}
+
+.ocean__wave--1 {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(69,183,209,0.25)' d='M0,160L48,170.7C96,181,192,203,288,192C384,181,480,139,576,128C672,117,768,139,864,149.3C960,160,1056,160,1152,149.3C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+    background-size: 50% 100%;
+    animation: waveFlow 12s linear infinite;
+    opacity: 0.7;
+}
+
+.ocean__wave--2 {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(52,152,219,0.30)' d='M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,229.3C672,235,768,213,864,192C960,171,1056,149,1152,160C1248,171,1344,213,1392,234.7L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+    background-size: 50% 100%;
+    animation: waveFlow 8s linear infinite reverse;
+    opacity: 0.6;
+}
+
+.ocean__wave--3 {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(41,128,185,0.35)' d='M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,224C672,235,768,245,864,234.7C960,224,1056,192,1152,181.3C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+    background-size: 50% 100%;
+    animation: waveFlow 15s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes waveFlow {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* Ocean shimmer / sparkles */
+.ocean__shimmer {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.25) 0%, transparent 2%),
+        radial-gradient(circle at 60% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 2%),
+        radial-gradient(circle at 15% 70%, rgba(255, 255, 255, 0.25) 0%, transparent 2%),
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 2%),
+        radial-gradient(circle at 90% 70%, rgba(255, 255, 255, 0.25) 0%, transparent 2%);
+    animation: shimmer 3s ease-in-out infinite alternate;
+}
+
+@keyframes shimmer {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.8; }
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 768px) {
+    .sun {
+        width: 70px;
+        height: 70px;
+        top: 60px;
+        right: 60px;
+    }
+
+    .sun::before {
+        width: 200px;
+        height: 200px;
+    }
+
+    .ocean {
+        height: 22vh;
+    }
+
+    .cloud--1 .cloud__shape { width: 120px; height: 38px; }
+    .cloud--2 .cloud__shape { width: 90px; height: 28px; }
+    .cloud--3 .cloud__shape { width: 70px; height: 22px; }
+}
+
+@media (max-width: 480px) {
+    .sun {
+        width: 55px;
+        height: 55px;
+        top: 50px;
+        right: 40px;
+    }
+
+    .ocean {
+        height: 18vh;
+    }
+}

@@ -79,3 +79,40 @@
     --z-opening: 9999;
 
 }
+
+/* ===========================
+   LIGHT MODE (BEACH THEME)
+=========================== */
+
+[data-theme="light"] {
+
+    /* COLORS */
+    --bg: #E8F4FD;
+    --surface: #FFFFFF;
+    --surface-glass: rgba(255, 255, 255, 0.72);
+
+    --primary: #FF6B8A;
+    --secondary: #3BA4CF;
+    --accent: #45B7D1;
+    --gold: #F5A623;
+
+    --text: #1B2A4A;
+    --muted: #5E7290;
+
+    --border: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(0, 0, 0, 0.15);
+
+    /* SHADOWS */
+    --shadow-primary:
+        0 20px 80px rgba(59, 164, 207, 0.18);
+
+    --shadow-soft:
+        0 10px 30px rgba(0, 0, 0, 0.08);
+
+    --shadow-glow:
+        0 0 80px rgba(245, 166, 35, 0.10);
+
+    --shadow-card:
+        0 15px 50px rgba(0, 0, 0, 0.08),
+        0 0 80px rgba(59, 164, 207, 0.06);
+}

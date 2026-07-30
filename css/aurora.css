@@ -203,3 +203,56 @@
     filter: blur(50px);
 
 }
+
+/* ===========================================================
+   LIGHT MODE OVERRIDES — BACKGROUND ENGINE
+=========================================================== */
+
+/* Sky gradient — bright blue sky fading to warm horizon */
+[data-theme="light"] .gradient-bg {
+    background:
+        radial-gradient(circle at 80% 10%,
+            rgba(255, 213, 79, 0.15),
+            transparent 30%),
+
+        linear-gradient(180deg,
+            #87CEEB 0%,
+            #A8D8EA 30%,
+            #B8E2F2 50%,
+            #D4ECFA 70%,
+            #E8F4FD 100%);
+}
+
+/* Aurora → hidden in light mode (replaced by sun rays in light-bg.css) */
+[data-theme="light"] .aurora {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Moon → hidden in light mode (replaced by sun in light-bg.css) */
+[data-theme="light"] .moon {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Noise → softer in light mode */
+[data-theme="light"] .noise {
+    opacity: 0.015;
+}
+
+/* Cursor light → warm golden glow */
+[data-theme="light"] .cursor-light {
+    background: radial-gradient(
+        circle,
+        rgba(255, 183, 77, 0.30),
+        rgba(255, 213, 79, 0.10),
+        transparent 70%
+    );
+    opacity: 0.06;
+}
+
+/* Stars canvas → hidden in light mode (birds.js takes over) */
+[data-theme="light"] #stars {
+    opacity: 0;
+    pointer-events: none;
+}

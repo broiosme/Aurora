@@ -18,6 +18,7 @@ import { initBucketListSection } from "./sections/bucketList.js";
 import { initSecretVault } from "./sections/vault.js";
 import { initFloatingDock } from "./ui/dock.js";
 import { initAddMemoryModal } from "./sections/addMemory.js";
+import { initThemeToggle } from "./theme-toggle.js";
 import "./cursor.js";
 
 console.clear();
@@ -26,6 +27,7 @@ console.log("✨ Aurora — Our Cosmic Sanctuary (Mazyyatul & You)");
 
 // Initialize after DOM is ready and all elements exist
 document.addEventListener("DOMContentLoaded", () => {
+    initThemeToggle();
     initAudio();
     createStars();
     connectStars();
