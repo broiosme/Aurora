@@ -72,4 +72,50 @@ body {
 
 [data-theme="light"] .custom-cursor__dot {
     background: var(--text);
+}
+
+/* =========================================
+   THEME TRANSITION — RIPPLE WIPE
+   The new theme expands as a circle from the toggle button
+   using the View Transitions API
+========================================== */
+
+/* Disable the default crossfade so we fully control the reveal */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+/* Old page stays on top until the new one covers it */
+::view-transition-old(root) {
+    z-index: 1;
+}
+
+/* New theme expands outward as a circle from the toggle button */
+::view-transition-new(root) {
+    z-index: 9999;
+    clip-path: circle(0 at var(--theme-ripple-x, 50%) var(--theme-ripple-y, 50%));
+    animation: theme-ripple-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes theme-ripple-in {
+    to {
+        clip-path: circle(var(--theme-ripple-r, 150vmax) at var(--theme-ripple-x, 50%) var(--theme-ripple-y, 50%));
+    }
+}
+
+/* Freeze CSS transitions while the ripple plays so the new-theme
+   snapshot is captured with its final colors */
+html.theme-rippling *,
+html.theme-rippling *::before,
+html.theme-rippling *::after {
+    transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+    }
 }
