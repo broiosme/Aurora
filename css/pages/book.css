@@ -747,3 +747,23 @@
         border-bottom-color: rgba(59, 164, 207, 0.30);
     }
 }
+
+/* =========================================
+   THEME TRANSITION OVERLAY
+   Full-screen crossfade used when switching dark/light mode
+========================================== */
+
+.theme-transition-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(16, 23, 45, 0.98);
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity;
+    transition: opacity 0.32s ease;
+}
+
+.theme-transition-overlay.is-visible {
+    opacity: 1;
+}
