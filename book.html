@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/pages/book.css">
+    <link rel="stylesheet" href="css/effects/light-bg.css">
 
 </head>
 
@@ -34,6 +35,20 @@
     <div class="book-bg-engine">
         <canvas id="book-stars-canvas"></canvas>
         <div class="book-aurora-glow"></div>
+
+        <!-- Light Mode — Ocean Elements -->
+        <div class="sun"></div>
+        <div class="sun-rays"></div>
+        <div class="cloud cloud--1"><div class="cloud__shape"></div></div>
+        <div class="cloud cloud--2"><div class="cloud__shape"></div></div>
+        <div class="cloud cloud--3"><div class="cloud__shape"></div></div>
+        <div class="ocean">
+            <div class="ocean__gradient"></div>
+            <div class="ocean__wave ocean__wave--1"></div>
+            <div class="ocean__wave ocean__wave--2"></div>
+            <div class="ocean__wave ocean__wave--3"></div>
+            <div class="ocean__shimmer"></div>
+        </div>
     </div>
 
     <!-- Header Navigation -->
@@ -52,6 +67,9 @@
             </button>
             <button type="button" class="book-action-btn" id="add-chapter-btn">
                 <span>✨</span> <span class="btn-label">Tulis Bab</span>
+            </button>
+            <button type="button" class="book-action-btn book-action-btn--theme" id="theme-toggle" title="Ganti Tema">
+                <span>☀️</span> <span class="btn-label">Mode Pantai</span>
             </button>
             <button type="button" class="book-action-btn book-action-btn--delete" id="delete-chapter-btn" title="Hapus Bab Ini">
                 <span>🗑️</span> <span class="btn-label">Hapus Bab</span>
@@ -153,13 +171,13 @@
             <form id="add-chapter-form">
                 <div style="margin-bottom: 16px;">
                     <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Judul Bab</label>
-                    <input type="text" id="chap-title" placeholder="Contoh: Bab 4: Petualangan Ke Kota Seribu Lampu" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 12px; color: white; box-sizing: border-box;" required>
+                    <input type="text" id="chap-title" placeholder="Contoh: Bab 4: Petualangan Ke Kota Seribu Lampu" style="width: 100%; background: var(--surface-glass); border: 1px solid var(--border-hover); border-radius: 8px; padding: 12px; color: var(--text); box-sizing: border-box;" required>
                 </div>
 
                 <div style="display: flex; gap: 12px; margin-bottom: 16px;">
                     <div style="flex: 1;">
                         <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Penulis</label>
-                        <select id="chap-author" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 12px; color: white; box-sizing: border-box;">
+                        <select id="chap-author" style="width: 100%; background: var(--surface-glass); border: 1px solid var(--border-hover); border-radius: 8px; padding: 12px; color: var(--text); box-sizing: border-box;">
                             <option value="Kamu & Mazyyatul">Kamu & Mazyyatul</option>
                             <option value="Kamu">Dari: Kamu</option>
                             <option value="Mazyyatul">Dari: Mazyyatul</option>
@@ -168,13 +186,13 @@
 
                     <div style="flex: 1;">
                         <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Tanggal</label>
-                        <input type="text" id="chap-date" placeholder="Contoh: 28 Juli 2026" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 12px; color: white; box-sizing: border-box;">
+                        <input type="text" id="chap-date" placeholder="Contoh: 28 Juli 2026" style="width: 100%; background: var(--surface-glass); border: 1px solid var(--border-hover); border-radius: 8px; padding: 12px; color: var(--text); box-sizing: border-box;">
                     </div>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;">Isi Cerita Novel (Bebas & Panjang)</label>
-                    <textarea id="chap-content" rows="10" placeholder="Tuliskan cerita panjang kalian di sini... Gunakan enter 2 kali untuk membuat paragraf baru." style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 14px; color: white; font-family: var(--display-font); font-size: 1.1rem; line-height: 1.6; box-sizing: border-box;" required></textarea>
+                    <textarea id="chap-content" rows="10" placeholder="Tuliskan cerita panjang kalian di sini... Gunakan enter 2 kali untuk membuat paragraf baru." style="width: 100%; background: var(--surface-glass); border: 1px solid var(--border-hover); border-radius: 8px; padding: 14px; color: var(--text); font-family: var(--display-font); font-size: 1.1rem; line-height: 1.6; box-sizing: border-box;" required></textarea>
                 </div>
 
                 <button type="submit" style="width: 100%; background: linear-gradient(135deg, var(--gold), var(--primary)); border: none; border-radius: 8px; padding: 14px; color: #050816; font-weight: 700; font-size: 1rem; cursor: pointer;">Simpan Bab Novel ✨</button>

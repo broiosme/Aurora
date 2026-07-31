@@ -1,9 +1,11 @@
 import { getStoredChapters, saveChapter, deleteChapter } from "./data/bookData.js";
+import { initThemeToggle } from "./theme-toggle.js";
 
 let chapters = [];
 let currentIndex = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
+    initThemeToggle();
     initBookApp();
 });
 
