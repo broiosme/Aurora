@@ -80,28 +80,54 @@ body {
    using the View Transitions API
 ========================================== */
 
-/* Disable the default crossfade so we fully control the reveal */
+/* Disable the default crossfade so we fully control the reveal.
+   The per-snapshot rules below deliberately override these animations. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
 }
 
-/* Old page stays on top until the new one covers it */
+/* The old theme gently dissolves away instead of snapping off,
+   so the new one feels like it blooms in over it */
 ::view-transition-old(root) {
     z-index: 1;
+    animation: theme-wipe-old 0.5s ease forwards;
 }
 
-/* New theme expands outward as a circle from the toggle button */
+/* New theme expands outward as a circle from the toggle button,
+   softly defocused at first, then sharpening as it fills the screen */
 ::view-transition-new(root) {
     z-index: 9999;
     clip-path: circle(0 at var(--theme-ripple-x, 50%) var(--theme-ripple-y, 50%));
-    animation: theme-ripple-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation:
+        theme-ripple-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        theme-focus-in 0.4s ease forwards;
 }
 
 @keyframes theme-ripple-in {
     to {
         clip-path: circle(var(--theme-ripple-r, 150vmax) at var(--theme-ripple-x, 50%) var(--theme-ripple-y, 50%));
+    }
+}
+
+/* Old snapshot fades out — the reveal reads as layered, not a hard cut */
+@keyframes theme-wipe-old {
+    to {
+        opacity: 0;
+    }
+}
+
+/* New snapshot arrives slightly soft & translucent, then sharpens.
+   Kept short + low blur so it stays GPU-friendly on all devices */
+@keyframes theme-focus-in {
+    from {
+        opacity: 0.35;
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
     }
 }
 

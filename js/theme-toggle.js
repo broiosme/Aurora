@@ -104,7 +104,7 @@ function rippleTheme(html, toggle, next, storageKey, onThemeApplied) {
 // 2) swap the theme while fully covered
 // 3) fade the overlay out to reveal the new theme
 function transitionTheme(html, overlay, next, storageKey, onDone) {
-    const FADE_MS = 320; // must match .theme-transition-overlay transition-duration
+    const FADE_MS = 350; // must match .theme-transition-overlay transition-duration
 
     const tint = next === "light"
         ? "radial-gradient(circle at 50% 35%, rgba(210, 238, 252, 0.98) 0%, rgba(232, 244, 253, 1) 100%)"
