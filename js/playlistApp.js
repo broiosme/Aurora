@@ -3,7 +3,7 @@
 // playlistApp.js
 // =========================================
 
-import { getAllSongs, addCustomSong, deleteCustomSong } from './data/playlistData.js';
+import { getAllSongs, addCustomSong, deleteSong, extractSpotifyId } from './data/playlistData.js';
 import { initThemeToggle } from './theme-toggle.js';
 
 // ===========================
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initStars();
     allSongs = getAllSongs();
     renderHero();
-    renderFeatured(allSongs[0]);
+    if (allSongs.length > 0) renderFeatured(allSongs[0]);
     renderSongList();
     initModal();
     initCustomCursor();
@@ -67,27 +67,20 @@ function renderFeatured(song) {
         memoryEl.style.borderLeftColor = song.color || 'var(--primary)';
     }
 
-    // Render Spotify embed
-    renderSpotifyEmbed(song.spotifyId);
+    // Render Spotify embed — extract ID dari URL panjang jika perlu
+    renderSpotifyEmbed(extractSpotifyId(song.spotifyId));
 
     // Update active state in list
     document.querySelectorAll('.playlist-song-row').forEach(row => {
         row.classList.toggle('is-active', row.dataset.songId === song.id);
-        row.style.setProperty('--song-color', row.dataset.color || 'var(--primary)');
     });
-
-    // Scroll featured into view smoothly
-    const featured = document.querySelector('.playlist-featured');
-    if (featured) {
-        featured.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
 }
 
-function renderSpotifyEmbed(spotifyId) {
+function renderSpotifyEmbed(trackId) {
     const embedWrap = document.getElementById('featured-embed');
     if (!embedWrap) return;
 
-    if (!spotifyId) {
+    if (!trackId) {
         embedWrap.innerHTML = `
             <div class="playlist-featured__embed-placeholder">
                 <div class="spotify-logo">🎵</div>
@@ -97,12 +90,10 @@ function renderSpotifyEmbed(spotifyId) {
         return;
     }
 
-    // Use Spotify Embed API — works without login for 30s preview,
-    // full playback when user is logged in to Spotify in the browser.
     embedWrap.innerHTML = `
         <iframe
             id="spotify-player-iframe"
-            src="https://open.spotify.com/embed/track/${spotifyId}?utm_source=generator&theme=0"
+            src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0"
             width="100%"
             height="280"
             frameborder="0"
@@ -135,8 +126,6 @@ function renderSongList() {
     list.innerHTML = allSongs.map((song, index) => `
         <div class="playlist-song-row${song.id === activeSongId ? ' is-active' : ''}"
              data-song-id="${song.id}"
-             data-custom="${song.id.startsWith('custom_')}"
-             data-color="${song.color || 'var(--primary)'}"
              style="--song-color: ${song.color || 'var(--primary)'}; animation-delay: ${index * 0.06}s;">
             <div class="playlist-song-row__index">${song.emoji || '🎵'}</div>
             <div class="playlist-song-row__info">
@@ -151,28 +140,45 @@ function renderSongList() {
         </div>
     `).join('');
 
-    // Attach click events
+    // Click → play / show featured
     list.querySelectorAll('.playlist-song-row').forEach(row => {
         row.addEventListener('click', (e) => {
-            // Don't trigger if clicking delete button
             if (e.target.closest('.playlist-song-row__delete')) return;
-            const songId = row.dataset.songId;
-            const song = allSongs.find(s => s.id === songId);
+            const song = allSongs.find(s => s.id === row.dataset.songId);
             if (song) renderFeatured(song);
         });
     });
 
-    // Delete buttons
+    // Delete buttons — sekarang semua lagu bisa dihapus
     list.querySelectorAll('.playlist-song-row__delete').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const songId = btn.dataset.songId;
-            if (confirm('Hapus lagu ini dari playlist?')) {
-                allSongs = deleteCustomSong(songId);
+            const song = allSongs.find(s => s.id === songId);
+            const songName = song ? song.title : 'lagu ini';
+            if (confirm(`Hapus "${songName}" dari playlist?`)) {
+                allSongs = deleteSong(songId);
                 renderHero();
                 renderSongList();
-                // Reset featured to first song
-                if (allSongs.length > 0) renderFeatured(allSongs[0]);
+                // Jika lagu yang dihapus adalah yang sedang aktif, ganti ke lagu pertama
+                if (activeSongId === songId) {
+                    if (allSongs.length > 0) {
+                        renderFeatured(allSongs[0]);
+                    } else {
+                        // Playlist kosong — reset featured
+                        activeSongId = null;
+                        const embedWrap = document.getElementById('featured-embed');
+                        if (embedWrap) embedWrap.innerHTML = `
+                            <div class="playlist-featured__embed-placeholder">
+                                <div class="spotify-logo">🎵</div>
+                                <p>Pilih lagu untuk memutar</p>
+                            </div>
+                        `;
+                        document.getElementById('featured-title').textContent = 'Pilih Lagu';
+                        document.getElementById('featured-artist').textContent = '–';
+                        document.getElementById('featured-memory').textContent = 'Tambahkan lagu ke playlist kalian.';
+                    }
+                }
             }
         });
     });
@@ -203,34 +209,28 @@ function initModal() {
         if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
 
-    // Handle Spotify link input — extract ID from URL
+    // Auto-extract Spotify ID dari URL saat user keluar dari field
     const spotifyInput = document.getElementById('song-spotify-id');
     if (spotifyInput) {
         spotifyInput.addEventListener('blur', () => {
-            const val = spotifyInput.value.trim();
-            // If user pasted full URL, extract just the track ID
-            const match = val.match(/track\/([A-Za-z0-9]+)/);
-            if (match) spotifyInput.value = match[1];
+            const extracted = extractSpotifyId(spotifyInput.value.trim());
+            if (extracted) spotifyInput.value = extracted;
         });
     }
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const title = document.getElementById('song-title')?.value.trim();
-        const artist = document.getElementById('song-artist')?.value.trim();
-        let spotifyId = document.getElementById('song-spotify-id')?.value.trim();
-        const memory = document.getElementById('song-memory')?.value.trim();
-        const date = document.getElementById('song-date')?.value.trim();
-        const emoji = document.getElementById('song-emoji')?.value || '🎵';
-        const tag = document.getElementById('song-tag')?.value.trim();
-        const color = document.getElementById('song-color')?.value || '#FF5EA8';
+        const title    = document.getElementById('song-title')?.value.trim();
+        const artist   = document.getElementById('song-artist')?.value.trim();
+        const spotifyId = extractSpotifyId(document.getElementById('song-spotify-id')?.value.trim());
+        const memory   = document.getElementById('song-memory')?.value.trim();
+        const date     = document.getElementById('song-date')?.value.trim();
+        const emoji    = document.getElementById('song-emoji')?.value || '🎵';
+        const tag      = document.getElementById('song-tag')?.value.trim();
+        const color    = document.getElementById('song-color')?.value || '#FF5EA8';
 
         if (!title || !artist) return;
-
-        // Extract Spotify ID from URL if pasted
-        const match = spotifyId.match(/track\/([A-Za-z0-9]+)/);
-        if (match) spotifyId = match[1];
 
         const newSong = {
             id: `custom_${Date.now()}`,

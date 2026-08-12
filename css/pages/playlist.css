@@ -562,10 +562,6 @@
     background: rgba(255,68,68,0.1);
 }
 
-/* Only custom songs show delete */
-.playlist-song-row:not([data-custom="true"]) .playlist-song-row__delete {
-    display: none;
-}
 
 /* ===========================
    ADD SONG MODAL

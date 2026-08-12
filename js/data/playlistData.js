@@ -2,18 +2,32 @@
 // PLAYLIST DATA — Our Love Soundtrack
 // =========================================
 // Untuk mengganti lagu: ubah spotifyId dengan ID track Spotify.
-// Cara dapat ID: Buka Spotify → klik kanan lagu → Share → Copy Song Link
-// Link terlihat seperti: https://open.spotify.com/track/XXXXXXXXXXXXXXXX
-// XXXXXXXXXXXXXXXX itulah yang dimasukkan ke spotifyId.
+// Kamu bisa paste LINK PENUH dari Spotify, ID akan diekstrak otomatis.
+// Contoh link: https://open.spotify.com/track/XXXXXXXXXXXXXXXX
+// Atau cukup ID-nya saja: XXXXXXXXXXXXXXXX
 
 const PLAYLIST_STORAGE_KEY = "aurora_playlist_songs";
+const CUSTOM_PLAYLIST_KEY  = "aurora_custom_songs";
+const DELETED_INITIAL_KEY  = "aurora_deleted_initial_songs";
 
+// ===========================
+// HELPER — ekstrak Spotify Track ID dari URL panjang
+// ===========================
+export function extractSpotifyId(input) {
+    if (!input) return "";
+    const match = input.match(/track\/([A-Za-z0-9]+)/);
+    return match ? match[1] : input.trim();
+}
+
+// ===========================
+// DATA AWAL
+// ===========================
 export const initialPlaylist = [
     {
         id: "song_1",
         title: "Lagu Pertama Kita",
         artist: "Nama Artis",
-        spotifyId: "4iV5W9uYEdYUVa79Axb7Rh", // Ganti dengan ID lagu asli
+        spotifyId: "https://open.spotify.com/track/6lzzVdbjMSBgXvCPoXSBUT?si=cucXVxI6Rmiw41U6BbFgbg&utm_source=copy-link&sci=spotify%3Acard-config%3A1J7YK85eqSgt3uFTcHYYJF",
         color: "#FF5EA8",
         memory: "Lagu yang pertama kali kita dengar bersama. Setiap kali lagu ini mengalun, aku selalu teringat momen itu.",
         date: "13 Juli 2024",
@@ -24,7 +38,7 @@ export const initialPlaylist = [
         id: "song_2",
         title: "Soundtrack Kencan Kita",
         artist: "Nama Artis",
-        spotifyId: "1BxfuPKGuaTgP7aM0Bbdwr", // Ganti dengan ID lagu asli
+        spotifyId: "https://open.spotify.com/track/2NHiy6rZOvm7XFMAIN7jxT?si=hfwlQc7jSIm_Z4aWn9QnJA&utm_source=copy-link&sci=spotify%3Acard-config%3A3mJzYd7xwtROEDzCliXruT",
         color: "#7C5CFF",
         memory: "Lagu yang menemani kencan pertama kita. Masih ingat saat kamu tersenyum mendengarnya.",
         date: "15 September 2024",
@@ -35,7 +49,7 @@ export const initialPlaylist = [
         id: "song_3",
         title: "Lagu Malam Favoritku",
         artist: "Nama Artis",
-        spotifyId: "7qiZfU4dY1lWllzX7mPBI3", // Ganti dengan ID lagu asli
+        spotifyId: "7qiZfU4dY1lWllzX7mPBI3",
         color: "#6FAEFF",
         memory: "Kalau lagi kangen kamu di malam hari, ini lagu yang selalu kuputar sambil menatap bintang.",
         date: "November 2024",
@@ -46,7 +60,7 @@ export const initialPlaylist = [
         id: "song_4",
         title: "Lagu Yang Mengingatkanku Padamu",
         artist: "Nama Artis",
-        spotifyId: "2takcwOaAZWiXQijPHIx7B", // Ganti dengan ID lagu asli
+        spotifyId: "2takcwOaAZWiXQijPHIx7B",
         color: "#FFD166",
         memory: "Setiap kali lagu ini muncul di playlist acak, rasanya seperti semesta mengingatkanku untuk tersenyum.",
         date: "Desember 2024",
@@ -57,7 +71,7 @@ export const initialPlaylist = [
         id: "song_5",
         title: "Lagu Impian Kita",
         artist: "Nama Artis",
-        spotifyId: "5ghIJDpPoe3CfHMGu71E6T", // Ganti dengan ID lagu asli
+        spotifyId: "5ghIJDpPoe3CfHMGu71E6T",
         color: "#C084FC",
         memory: "Lagu ini adalah soundtrack dari semua impian yang ingin kita wujudkan bersama.",
         date: "2025",
@@ -66,21 +80,29 @@ export const initialPlaylist = [
     }
 ];
 
-const CUSTOM_PLAYLIST_KEY = "aurora_custom_songs";
-
-export function getStoredPlaylist() {
+// ===========================
+// DELETED INITIAL SONGS
+// ===========================
+function getDeletedInitialIds() {
     try {
-        const stored = localStorage.getItem(PLAYLIST_STORAGE_KEY);
-        if (stored !== null) {
-            const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed)) return parsed;
-        }
+        const stored = localStorage.getItem(DELETED_INITIAL_KEY);
+        return stored ? JSON.parse(stored) : [];
     } catch (e) {
-        console.warn("Error reading stored playlist", e);
+        return [];
     }
-    return [...initialPlaylist];
 }
 
+function saveDeletedInitialIds(ids) {
+    try {
+        localStorage.setItem(DELETED_INITIAL_KEY, JSON.stringify(ids));
+    } catch (e) {
+        console.warn("Error saving deleted initial IDs", e);
+    }
+}
+
+// ===========================
+// CUSTOM SONGS
+// ===========================
 export function getCustomSongs() {
     try {
         const stored = localStorage.getItem(CUSTOM_PLAYLIST_KEY);
@@ -90,27 +112,63 @@ export function getCustomSongs() {
     }
 }
 
-export function getAllSongs() {
-    return [...getStoredPlaylist(), ...getCustomSongs()];
+function saveCustomSongs(songs) {
+    try {
+        localStorage.setItem(CUSTOM_PLAYLIST_KEY, JSON.stringify(songs));
+    } catch (e) {
+        console.warn("Error saving custom songs", e);
+    }
 }
 
+// ===========================
+// GET ALL (filter deleted initial)
+// ===========================
+export function getAllSongs() {
+    const deletedIds = getDeletedInitialIds();
+    const activeInitial = initialPlaylist.filter(s => !deletedIds.includes(s.id));
+    return [...activeInitial, ...getCustomSongs()];
+}
+
+// ===========================
+// ADD CUSTOM SONG
+// ===========================
 export function addCustomSong(song) {
     const songs = getCustomSongs();
     songs.push(song);
-    try {
-        localStorage.setItem(CUSTOM_PLAYLIST_KEY, JSON.stringify(songs));
-    } catch (e) {
-        console.warn("Error saving custom song", e);
-    }
+    saveCustomSongs(songs);
     return getAllSongs();
 }
 
-export function deleteCustomSong(songId) {
-    const songs = getCustomSongs().filter(s => s.id !== songId);
+// ===========================
+// DELETE ANY SONG
+// ===========================
+export function deleteSong(songId) {
+    // Cek apakah itu lagu custom
+    const customSongs = getCustomSongs();
+    const isCustom = customSongs.some(s => s.id === songId);
+
+    if (isCustom) {
+        saveCustomSongs(customSongs.filter(s => s.id !== songId));
+    } else {
+        // Lagu preset — simpan ID-nya ke daftar yang dihapus
+        const deletedIds = getDeletedInitialIds();
+        if (!deletedIds.includes(songId)) {
+            deletedIds.push(songId);
+            saveDeletedInitialIds(deletedIds);
+        }
+    }
+
+    return getAllSongs();
+}
+
+// ===========================
+// RESTORE ALL (reset ke default)
+// ===========================
+export function restoreInitialSongs() {
     try {
-        localStorage.setItem(CUSTOM_PLAYLIST_KEY, JSON.stringify(songs));
+        localStorage.removeItem(DELETED_INITIAL_KEY);
     } catch (e) {
-        console.warn("Error deleting custom song", e);
+        console.warn("Error restoring initial songs", e);
     }
     return getAllSongs();
 }
