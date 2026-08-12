@@ -129,9 +129,11 @@ function transitionTheme(html, overlay, next, storageKey, onDone) {
 }
 
 function updateToggleIcon(btn, theme) {
+    const isDockItem = btn.classList.contains("dock-item");
+    const tooltipClass = isDockItem ? "dock-item__tooltip" : "btn-label";
     if (theme === "light") {
-        btn.innerHTML = `🌙<span class="dock-item__tooltip">Mode Malam</span>`;
+        btn.innerHTML = `<span>🌙</span><span class="${tooltipClass}">Mode Malam</span>`;
     } else {
-        btn.innerHTML = `☀️<span class="dock-item__tooltip">Mode Pantai</span>`;
+        btn.innerHTML = `<span>☀️</span><span class="${tooltipClass}">Mode Pantai</span>`;
     }
 }

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Playlist Kita — Aurora</title>
+
+    <meta name="description" content="Soundtrack dari cerita cinta kita. Kumpulan lagu-lagu bermakna yang menemani setiap momen berharga kita.">
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/pages/playlist.css">
+    <link rel="stylesheet" href="css/effects/light-bg.css">
+
+</head>
+
+<body class="playlist-body">
+
+    <!-- Background Cosmic Engine -->
+    <div class="playlist-bg-engine">
+        <canvas id="playlist-stars-canvas"></canvas>
+        <div class="playlist-aurora-glow"></div>
+
+        <!-- Light Mode — Ocean Elements -->
+        <div class="sun"></div>
+        <div class="sun-rays"></div>
+        <div class="cloud cloud--1"><div class="cloud__shape"></div></div>
+        <div class="cloud cloud--2"><div class="cloud__shape"></div></div>
+        <div class="cloud cloud--3"><div class="cloud__shape"></div></div>
+        <div class="ocean">
+            <div class="ocean__gradient"></div>
+            <div class="ocean__wave ocean__wave--1"></div>
+            <div class="ocean__wave ocean__wave--2"></div>
+            <div class="ocean__wave ocean__wave--3"></div>
+            <div class="ocean__shimmer"></div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="playlist-nav-header">
+        <a href="index.html" class="playlist-nav-header__back">
+            <span>🌌</span> <span class="btn-label">Kembali</span>
+        </a>
+
+        <h1 class="playlist-nav-header__title">
+            Our Playlist 🎵
+        </h1>
+
+        <div class="playlist-nav-header__actions">
+            <button type="button" class="playlist-action-btn" id="add-song-btn">
+                <span>✨</span> <span class="btn-label">Tambah Lagu</span>
+            </button>
+            <button type="button" class="playlist-action-btn playlist-action-btn--theme" id="theme-toggle" title="Ganti Tema">
+                <span>☀️</span> <span class="btn-label">Mode Pantai</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Stage -->
+    <main class="playlist-stage">
+
+        <!-- Hero Header -->
+        <div class="playlist-hero">
+            <p class="playlist-hero__eyebrow">Our Love Soundtrack</p>
+            <h2 class="playlist-hero__title">
+                Lagu-Lagu Yang<br>Menyimpan Kenangan<span>.</span>
+            </h2>
+            <p class="playlist-hero__subtitle">
+                Setiap lagu punya ceritanya sendiri.<br>
+                Inilah soundtrack dari perjalanan kita bersama.
+            </p>
+
+            <div class="playlist-stats">
+                <div class="playlist-stat">
+                    <span class="playlist-stat__value" id="stat-songs">0</span>
+                    <span class="playlist-stat__label">Lagu Bermakna</span>
+                </div>
+                <div class="playlist-stat">
+                    <span class="playlist-stat__value" id="stat-memories">0</span>
+                    <span class="playlist-stat__label">Kenangan Tersimpan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Player -->
+        <div class="playlist-featured">
+            <p class="playlist-featured__label">🎧 Now Playing</p>
+            <div class="playlist-featured__card">
+                <div class="playlist-featured__top">
+
+                    <!-- Info Side -->
+                    <div class="playlist-featured__info">
+                        <div>
+                            <div class="playlist-featured__tag">
+                                <span id="featured-emoji">🎵</span>
+                                <span id="featured-tag">Kenangan</span>
+                            </div>
+                            <h3 class="playlist-featured__song-title" id="featured-title">Pilih Lagu</h3>
+                            <p class="playlist-featured__artist" id="featured-artist">–</p>
+                        </div>
+
+                        <div>
+                            <blockquote class="playlist-featured__memory" id="featured-memory-block">
+                                <span id="featured-memory">Klik salah satu lagu di bawah untuk memilih dan memutar lagu kenangan kita.</span>
+                            </blockquote>
+                            <p class="playlist-featured__date" id="featured-date"></p>
+                        </div>
+                    </div>
+
+                    <!-- Spotify Embed Side -->
+                    <div class="playlist-featured__embed" id="featured-embed">
+                        <div class="playlist-featured__embed-placeholder">
+                            <div class="spotify-logo">🎵</div>
+                            <p>Pilih lagu untuk memutar</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Song List -->
+        <div class="playlist-grid-section">
+            <p class="playlist-grid-section__label">🎶 Semua Lagu Kita</p>
+            <div class="playlist-song-list" id="song-list">
+                <!-- Songs rendered via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Add Song Modal -->
+    <div class="playlist-add-modal" id="add-song-modal">
+        <div class="playlist-add-modal__content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h3 class="playlist-add-modal__title">Tambah Lagu Kita ✨</h3>
+                <button type="button" class="playlist-add-modal__close-btn">&times;</button>
+            </div>
+            <p class="playlist-add-modal__subtitle">Tambahkan lagu yang bermakna ke dalam playlist kenangan kalian berdua</p>
+
+            <div class="playlist-add-modal__hint">
+                💡 <strong>Cara dapat Spotify Track ID:</strong> Buka Spotify → klik kanan lagu → Share → "Copy Song Link" → paste di sini. Kamu bisa paste link lengkap, ID akan otomatis terdeteksi.
+            </div>
+
+            <form id="add-song-form">
+                <div class="playlist-add-modal__row">
+                    <div class="playlist-add-modal__field">
+                        <label for="song-title">Judul Lagu *</label>
+                        <input type="text" id="song-title" placeholder="Nama lagu" required>
+                    </div>
+                    <div class="playlist-add-modal__field">
+                        <label for="song-artist">Artis *</label>
+                        <input type="text" id="song-artist" placeholder="Nama artis" required>
+                    </div>
+                </div>
+
+                <div class="playlist-add-modal__field">
+                    <label for="song-spotify-id">Spotify Link / Track ID</label>
+                    <div class="spotify-link-wrap">
+                        <input type="text" id="song-spotify-id" placeholder="https://open.spotify.com/track/XXXXXXXX atau paste ID saja">
+                        <a href="https://open.spotify.com" target="_blank" class="spotify-link-open" title="Buka Spotify">
+                            🎵
+                        </a>
+                    </div>
+                </div>
+
+                <div class="playlist-add-modal__field">
+                    <label for="song-memory">Cerita Di Balik Lagu</label>
+                    <textarea id="song-memory" rows="3" placeholder="Kenangan apa yang tersimpan di lagu ini? Momen apa yang teringat saat mendengarnya..."></textarea>
+                </div>
+
+                <div class="playlist-add-modal__row">
+                    <div class="playlist-add-modal__field">
+                        <label for="song-date">Tanggal / Momen</label>
+                        <input type="text" id="song-date" placeholder="Contoh: 13 Juli 2024">
+                    </div>
+                    <div class="playlist-add-modal__field">
+                        <label for="song-tag">Label / Tag</label>
+                        <input type="text" id="song-tag" placeholder="Contoh: First Date">
+                    </div>
+                </div>
+
+                <div class="playlist-add-modal__row">
+                    <div class="playlist-add-modal__field">
+                        <label for="song-emoji">Icon</label>
+                        <select id="song-emoji">
+                            <option value="🎵">🎵 Musik</option>
+                            <option value="💖">💖 Cinta</option>
+                            <option value="✨">✨ Keajaiban</option>
+                            <option value="🌙">🌙 Malam</option>
+                            <option value="☕">☕ Kencan</option>
+                            <option value="🌊">🌊 Petualangan</option>
+                            <option value="🚀">🚀 Impian</option>
+                            <option value="💛">💛 Kenangan</option>
+                            <option value="🎶">🎶 Melodi</option>
+                            <option value="🌟">🌟 Bintang</option>
+                        </select>
+                    </div>
+                    <div class="playlist-add-modal__field">
+                        <label for="song-color">Warna Aksen</label>
+                        <select id="song-color">
+                            <option value="#FF5EA8">🩷 Pink Aurora</option>
+                            <option value="#7C5CFF">💜 Ungu Kosmik</option>
+                            <option value="#6FAEFF">💙 Biru Bintang</option>
+                            <option value="#FFD166">💛 Emas Matahari</option>
+                            <option value="#C084FC">🪻 Lavender</option>
+                            <option value="#1DB954">💚 Hijau Spotify</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="playlist-add-modal__submit">Simpan Lagu ✨</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Theme Transition Overlay -->
+    <div class="theme-transition-overlay" aria-hidden="true"></div>
+
+    <!-- App Script -->
+    <script type="module" src="js/playlistApp.js"></script>
+
+</body>
+
+</html>
