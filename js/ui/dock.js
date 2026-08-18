@@ -15,30 +15,51 @@ export function initFloatingDock() {
     let targetCx = 0;
     let animFrameId = null;
 
-    function updateNotchPath(cx) {
+    function getBeadDimensions() {
+        if (!dockBead) return { sb: 22, sd: 22, beadWidth: 46 };
+        const beadRect = dockBead.getBoundingClientRect();
+        const w = beadRect.width > 0 ? beadRect.width : 46;
+        const r = w / 2;
+        return { sb: Math.round(r + 1), sd: Math.round(r - 1), beadWidth: w };
+    }
+
+    function calculateTargetCx(item) {
+        if (!item) return 0;
+        const itemRect = item.getBoundingClientRect();
+        const dockRect = dockNav.getBoundingClientRect();
+        return itemRect.left + itemRect.width / 2 - dockRect.left;
+    }
+
+    function updateBeadAndNotch(cx) {
         const dockRect = dockNav.getBoundingClientRect();
         const W = dockRect.width;
         const H = dockRect.height || 54;
         if (W === 0) return;
 
+        const { sb, sd, beadWidth } = getBeadDimensions();
+
+        // Clamp cx to keep socket notch inside dock SVG boundaries
+        const minCx = sb + 14;
+        const maxCx = W - (sb + 14);
+        const safeCx = Math.min(Math.max(cx, minCx), maxCx);
+
         if (skinSvg) {
             skinSvg.setAttribute("viewBox", `0 0 ${W} ${H}`);
         }
 
-        const y0 = 12; // top line of bar track
-        const sb = 22; // socket half width
-        const sd = 22; // socket depth
+        const trackBg = dockNav.querySelector(".dock-track-bg");
+        const y0 = trackBg ? (parseFloat(window.getComputedStyle(trackBg).top) || 12) : 12;
 
-        const leftEdge = Math.max(16, cx - sb - 14);
-        const rightEdge = Math.min(W - 16, cx + sb + 14);
+        const leftEdge = Math.max(16, safeCx - sb - 14);
+        const rightEdge = Math.min(W - 16, safeCx + sb + 14);
 
         // Path for closed fill shape
         const fillPath = `
             M 0,${y0 + 16}
             Q 0,${y0} 16,${y0}
             L ${leftEdge},${y0}
-            C ${cx - sb + 2},${y0} ${cx - 12},${y0 + sd} ${cx},${y0 + sd}
-            C ${cx + 12},${y0 + sd} ${cx + sb - 2},${y0} ${rightEdge},${y0}
+            C ${safeCx - sb + 2},${y0} ${safeCx - 12},${y0 + sd} ${safeCx},${y0 + sd}
+            C ${safeCx + 12},${y0 + sd} ${safeCx + sb - 2},${y0} ${rightEdge},${y0}
             L ${W - 16},${y0}
             Q ${W},${y0} ${W},${y0 + 16}
             L ${W},${H - 16}
@@ -53,29 +74,36 @@ export function initFloatingDock() {
             M 0,${y0 + 16}
             Q 0,${y0} 16,${y0}
             L ${leftEdge},${y0}
-            C ${cx - sb + 2},${y0} ${cx - 12},${y0 + sd} ${cx},${y0 + sd}
-            C ${cx + 12},${y0 + sd} ${cx + sb - 2},${y0} ${rightEdge},${y0}
+            C ${safeCx - sb + 2},${y0} ${safeCx - 12},${y0 + sd} ${safeCx},${y0 + sd}
+            C ${safeCx + 12},${y0 + sd} ${safeCx + sb - 2},${y0} ${rightEdge},${y0}
             L ${W - 16},${y0}
             Q ${W},${y0} ${W},${y0 + 16}
         `.replace(/\s+/g, ' ').trim();
 
         if (skinFill) skinFill.setAttribute("d", fillPath);
         if (skinRim) skinRim.setAttribute("d", rimPath);
+
+        // Clamp bead position within dock container width
+        const safeBeadLeft = Math.min(Math.max(cx, beadWidth / 2 + 4), W - (beadWidth / 2 + 4));
+        if (dockBead) dockBead.style.left = `${safeBeadLeft}px`;
+
+        // Clamp active label position so it stays inside dock container boundaries
+        if (dockActiveLabel) {
+            const labelWidth = dockActiveLabel.offsetWidth || 60;
+            const safeLabelLeft = Math.min(Math.max(cx, labelWidth / 2 + 8), W - (labelWidth / 2 + 8));
+            dockActiveLabel.style.left = `${safeLabelLeft}px`;
+        }
     }
 
     function animateNotch() {
         const diff = targetCx - currentCx;
         if (Math.abs(diff) > 0.3) {
-            currentCx += diff * 0.18;
-            if (dockBead) dockBead.style.left = `${currentCx}px`;
-            if (dockActiveLabel) dockActiveLabel.style.left = `${currentCx}px`;
-            updateNotchPath(currentCx);
+            currentCx += diff * 0.22;
+            updateBeadAndNotch(currentCx);
             animFrameId = requestAnimationFrame(animateNotch);
         } else {
             currentCx = targetCx;
-            if (dockBead) dockBead.style.left = `${currentCx}px`;
-            if (dockActiveLabel) dockActiveLabel.style.left = `${currentCx}px`;
-            updateNotchPath(currentCx);
+            updateBeadAndNotch(currentCx);
             animFrameId = null;
         }
     }
@@ -86,11 +114,21 @@ export function initFloatingDock() {
         dockItems.forEach(el => el.classList.remove("is-active"));
         item.classList.add("is-active");
 
-        const itemRect = item.getBoundingClientRect();
-        const dockRect = dockNav.getBoundingClientRect();
-        
+        // Center active item in scrollable wrapper
+        if (itemsWrapper && item) {
+            const itemOffsetLeft = item.offsetLeft;
+            const itemWidth = item.offsetWidth;
+            const wrapperWidth = itemsWrapper.clientWidth;
+            const scrollTarget = itemOffsetLeft - (wrapperWidth / 2) + (itemWidth / 2);
+
+            itemsWrapper.scrollTo({
+                left: Math.max(0, scrollTarget),
+                behavior: immediate ? 'auto' : 'smooth'
+            });
+        }
+
         // Calculate tab center relative to dock container
-        targetCx = itemRect.left + itemRect.width / 2 - dockRect.left;
+        targetCx = calculateTargetCx(item);
 
         // Copy icon content to floating bead
         const iconEl = item.querySelector(".dock-icon");
@@ -105,24 +143,35 @@ export function initFloatingDock() {
             dockActiveLabel.textContent = labelText;
         }
 
-        // Ensure active item is visible in scrollable container if on mobile
-        if (itemsWrapper) {
-            const wrapperRect = itemsWrapper.getBoundingClientRect();
-            if (itemRect.left < wrapperRect.left || itemRect.right > wrapperRect.right) {
-                item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
-        }
-
         if (immediate || currentCx === 0) {
             currentCx = targetCx;
-            if (dockBead) dockBead.style.left = `${currentCx}px`;
-            if (dockActiveLabel) dockActiveLabel.style.left = `${currentCx}px`;
-            updateNotchPath(currentCx);
+            updateBeadAndNotch(currentCx);
         } else {
             if (!animFrameId) {
                 animFrameId = requestAnimationFrame(animateNotch);
             }
         }
+    }
+
+    // Handle horizontal scrolling of itemsWrapper to keep bead & socket aligned live
+    if (itemsWrapper) {
+        let scrollTicking = false;
+        itemsWrapper.addEventListener("scroll", () => {
+            if (!scrollTicking) {
+                requestAnimationFrame(() => {
+                    const activeItem = dockNav.querySelector(".dock-item.is-active");
+                    if (activeItem) {
+                        targetCx = calculateTargetCx(activeItem);
+                        if (!animFrameId) {
+                            currentCx = targetCx;
+                            updateBeadAndNotch(currentCx);
+                        }
+                    }
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
     }
 
     // Click handler for links/buttons in dock
@@ -177,6 +226,14 @@ export function initFloatingDock() {
         setActiveTab(activeItem, true);
     });
 
+    // Update position on orientation change (mobile)
+    window.addEventListener("orientationchange", () => {
+        setTimeout(() => {
+            const activeItem = dockNav.querySelector(".dock-item.is-active") || dockItems[0];
+            setActiveTab(activeItem, true);
+        }, 150);
+    });
+
     // Watch for theme toggle changes on #theme-toggle button
     const themeBtn = dockNav.querySelector("#theme-toggle");
     if (themeBtn) {
@@ -194,3 +251,4 @@ export function initFloatingDock() {
         observer.observe(themeBtn, { childList: true, subtree: true, attributes: true });
     }
 }
+

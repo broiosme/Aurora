@@ -4,7 +4,7 @@
 
 .cosmic-dock {
     position: fixed;
-    bottom: 22px;
+    bottom: max(22px, env(safe-area-inset-bottom, 22px));
     left: 50%;
     transform: translateX(-50%);
     z-index: 900;
@@ -16,7 +16,9 @@
     user-select: none;
     touch-action: manipulation;
     filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.55));
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease, bottom 0.3s ease;
+    max-width: calc(100vw - 24px);
+    width: auto;
 }
 
 /* SVG Track Background & Meniscus Socket Skin */
@@ -68,7 +70,7 @@
     justify-content: center;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     box-shadow: 0 8px 24px rgba(255, 94, 168, 0.6), 0 0 15px rgba(124, 92, 255, 0.4);
-    transition: left 0.35s cubic-bezier(0.34, 1.45, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+    transition: left 0.35s cubic-bezier(0.34, 1.45, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
 .dock-bead-glow {
@@ -114,10 +116,14 @@
     gap: 6px;
     padding: 18px 16px 10px 16px;
     border-radius: 40px;
-    max-width: 94vw;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
 }
 
 .dock-items-wrapper::-webkit-scrollbar {
@@ -142,6 +148,7 @@
     -webkit-tap-highlight-color: transparent;
     transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
     flex-shrink: 0;
+    scroll-snap-align: center;
 }
 
 .dock-icon {
@@ -170,6 +177,11 @@
 .dock-item:hover .dock-icon svg {
     stroke-width: 2.2px;
     filter: drop-shadow(0 0 6px var(--primary));
+}
+
+.dock-item:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
 }
 
 /* Active Dock Item in Track */
@@ -201,6 +213,7 @@
     pointer-events: none;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 20;
 }
 
 .dock-item:hover .dock-item__tooltip {
@@ -248,6 +261,9 @@
     text-shadow: 0 0 10px rgba(255, 94, 168, 0.6);
     pointer-events: none;
     white-space: nowrap;
+    max-width: 80vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: left 0.35s cubic-bezier(0.34, 1.45, 0.64, 1), opacity 0.2s ease, color 0.3s ease;
 }
 
@@ -294,15 +310,90 @@
     text-shadow: 0 0 8px rgba(255, 107, 138, 0.5);
 }
 
-/* RESPONSIVE MOBILE STYLES */
-@media (max-width: 600px) {
+/* RESPONSIVE BREAKPOINTS */
+
+/* Large Tablets & Laptops (<= 992px) */
+@media (max-width: 992px) {
     .cosmic-dock {
-        bottom: 14px;
+        bottom: max(18px, env(safe-area-inset-bottom, 18px));
+        max-width: calc(100vw - 24px);
+    }
+
+    .dock-items-wrapper {
+        gap: 5px;
+        padding: 17px 14px 9px 14px;
+    }
+}
+
+/* Tablets (<= 768px) */
+@media (max-width: 768px) {
+    .cosmic-dock {
+        bottom: max(14px, env(safe-area-inset-bottom, 14px));
+        max-width: calc(100vw - 20px);
+    }
+
+    .dock-track-bg {
+        top: 10px;
+        height: 50px;
+    }
+
+    .dock-items-wrapper {
+        gap: 4px;
+        padding: 15px 12px 8px 12px;
+    }
+
+    .dock-item {
+        width: 38px;
+        height: 38px;
+    }
+
+    .dock-icon {
+        width: 19px;
+        height: 19px;
+    }
+
+    .dock-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .dock-bead {
+        width: 44px;
+        height: 44px;
+        top: -1px;
+    }
+
+    .dock-bead-icon {
+        width: 21px;
+        height: 21px;
+    }
+
+    .dock-bead-icon svg {
+        width: 21px;
+        height: 21px;
+    }
+
+    .dock-active-label {
+        font-size: 0.7rem;
+        bottom: -16px;
+    }
+}
+
+/* Mobile Screens (<= 576px) */
+@media (max-width: 576px) {
+    .cosmic-dock {
+        bottom: max(12px, env(safe-area-inset-bottom, 12px));
+        max-width: calc(100vw - 16px);
+    }
+
+    .dock-track-bg {
+        top: 8px;
+        height: 48px;
     }
 
     .dock-items-wrapper {
         gap: 3px;
-        padding: 16px 10px 8px 10px;
+        padding: 13px 10px 7px 10px;
     }
 
     .dock-item {
@@ -321,22 +412,95 @@
     }
 
     .dock-bead {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
         top: -1px;
     }
 
     .dock-bead-icon {
-        width: 20px;
-        height: 20px;
+        width: 19px;
+        height: 19px;
     }
 
     .dock-bead-icon svg {
-        width: 20px;
-        height: 20px;
+        width: 19px;
+        height: 19px;
+    }
+
+    .dock-divider {
+        height: 18px;
+        margin: 0 2px;
+    }
+
+    .dock-active-label {
+        font-size: 0.66rem;
+        bottom: -15px;
+        letter-spacing: 0.4px;
     }
 
     .dock-item__tooltip {
         display: none !important;
     }
 }
+
+/* Small Mobile Screens (<= 380px) */
+@media (max-width: 380px) {
+    .cosmic-dock {
+        bottom: max(10px, env(safe-area-inset-bottom, 10px));
+        max-width: calc(100vw - 12px);
+    }
+
+    .dock-track-bg {
+        top: 6px;
+        height: 44px;
+    }
+
+    .dock-items-wrapper {
+        gap: 2px;
+        padding: 11px 8px 6px 8px;
+    }
+
+    .dock-item {
+        width: 33px;
+        height: 33px;
+    }
+
+    .dock-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .dock-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .dock-bead {
+        width: 36px;
+        height: 36px;
+        top: -2px;
+    }
+
+    .dock-bead-icon {
+        width: 17px;
+        height: 17px;
+    }
+
+    .dock-bead-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .dock-active-label {
+        font-size: 0.62rem;
+        bottom: -14px;
+    }
+}
+
+/* Touch active interaction polish */
+@media (hover: none) and (pointer: coarse) {
+    .dock-item:active {
+        transform: scale(0.90);
+    }
+}
+
