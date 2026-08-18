@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/pages/tickets.css">
+    <link rel="stylesheet" href="css/pages/date-planner.css">
     <link rel="stylesheet" href="css/effects/light-bg.css">
 
     <!-- Theme Initializer -->
@@ -72,8 +73,8 @@
         </h1>
 
         <div class="tickets-nav-header__actions">
-            <button type="button" class="tickets-action-btn" id="open-create-ticket-modal" title="Buat Tiket Baru">
-                <span>✨</span> <span class="btn-label">Buat Tiket</span>
+            <button type="button" class="tickets-action-btn" id="open-create-ticket-modal" title="Buat Tiket Manual">
+                <span>✨</span> <span class="btn-label">Buat Manual</span>
             </button>
             <button type="button" class="tickets-action-btn tickets-action-btn--theme" id="theme-toggle" title="Mode Pantai">
                 <span>☀️</span> <span class="btn-label">Mode Pantai</span>
@@ -96,25 +97,46 @@
             <h2 class="tickets-hero__title">
                 Tiket Jalan-Jalan & Kencan Kita<span>.</span>
             </h2>
-            <p class="tickets-hero__subtitle">
-                Voucher istimewa untuk setiap agenda kencan, piknik pantai, berburu kuliner,<br>hingga tiket bebas pilih mau jalan ke mana saja berdua!
-            </p>
-        </div>
 
-        <!-- Actions Bar & Category Filter -->
-        <div class="tickets-actions-bar">
-            <div class="tickets-filter">
-                <button type="button" class="tickets-filter-btn is-active" data-filter="all">Semua Tiket</button>
-                <button type="button" class="tickets-filter-btn" data-filter="kencan">Kencan Romantis</button>
-                <button type="button" class="tickets-filter-btn" data-filter="jalan">Jalan-Jalan</button>
-                <button type="button" class="tickets-filter-btn" data-filter="kuliner">Wisata Kuliner</button>
-                <button type="button" class="tickets-filter-btn" data-filter="bebas">Voucher Bebas</button>
+            <!-- Mode Switcher Tabs -->
+            <div class="planner-mode-switch">
+                <button type="button" class="planner-tab-btn is-active" id="tab-planner">
+                    <span>✨</span> Perencana Kencan Romantis
+                </button>
+                <button type="button" class="planner-tab-btn" id="tab-collection">
+                    <span>🎫</span> Koleksi Tiket Kita
+                </button>
             </div>
         </div>
 
-        <!-- Ticket Cards Container -->
-        <div class="tickets-container" id="tickets-container">
-            <!-- Ticket Cards dynamically rendered via JS -->
+        <!-- STAGE A: INTERACTIVE DATE PLANNER WIZARD -->
+        <div class="date-planner-stage" id="date-planner-stage">
+            <div class="planner-card" id="planner-card-container">
+                <!-- Dynamically rendered via js/sections/datePlanner.js -->
+            </div>
+        </div>
+
+        <!-- STAGE B: TICKETS COLLECTION VAULT -->
+        <div id="tickets-container-stage" style="display: none;">
+            <p class="tickets-hero__subtitle" style="margin-bottom: 24px;">
+                Voucher istimewa untuk setiap agenda kencan, piknik pantai, berburu kuliner,<br>hingga tiket bebas pilih mau jalan ke mana saja berdua!
+            </p>
+
+            <!-- Actions Bar & Category Filter -->
+            <div class="tickets-actions-bar">
+                <div class="tickets-filter">
+                    <button type="button" class="tickets-filter-btn is-active" data-filter="all">Semua Tiket</button>
+                    <button type="button" class="tickets-filter-btn" data-filter="kencan">Kencan Romantis</button>
+                    <button type="button" class="tickets-filter-btn" data-filter="jalan">Jalan-Jalan</button>
+                    <button type="button" class="tickets-filter-btn" data-filter="kuliner">Wisata Kuliner</button>
+                    <button type="button" class="tickets-filter-btn" data-filter="bebas">Voucher Bebas</button>
+                </div>
+            </div>
+
+            <!-- Ticket Cards Container -->
+            <div class="tickets-container" id="tickets-container">
+                <!-- Ticket Cards dynamically rendered via JS -->
+            </div>
         </div>
 
     </main>

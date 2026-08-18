@@ -5,11 +5,13 @@
 
 import { initThemeToggle } from './theme-toggle.js';
 import { initTicketsSection } from './sections/tickets.js';
+import { initDatePlanner } from './sections/datePlanner.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initThemeToggle();
     initStars();
     initTicketsSection();
+    initDatePlanner();
 });
 
 // Canvas stars background initializer for tickets.html
