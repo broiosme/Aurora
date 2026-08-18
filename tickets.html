@@ -7,9 +7,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Tiket Perjalanan Kita — Aurora</title>
+    <title>Tiket Perjalanan & Kencan Kita — Aurora</title>
 
-    <meta name="description" content="Kumpulan tiket kencan, paspor penerbangan, dan kenangan indah perjalanan cinta kita.">
+    <meta name="description" content="Kumpulan tiket voucher kencan, piknik, dan jalan-jalan seru kita bersama.">
 
     <!-- Google Fonts -->
 
@@ -60,7 +60,7 @@
         </a>
 
         <h1 class="tickets-nav-header__title">
-            Tiket Perjalanan 🎫
+            Tiket Kita 🎫
         </h1>
 
         <div class="tickets-nav-header__actions">
@@ -84,12 +84,12 @@
 
         <!-- Hero Header -->
         <div class="tickets-hero">
-            <p class="tickets-hero__eyebrow">COSMIC PASSPORTS & ROMANCE STUBS</p>
+            <p class="tickets-hero__eyebrow">OUR SPECIAL DATE & OUTING COUPONS</p>
             <h2 class="tickets-hero__title">
-                Tiket Perjalanan Kita<span>.</span>
+                Tiket Jalan-Jalan & Kencan Kita<span>.</span>
             </h2>
             <p class="tickets-hero__subtitle">
-                Tiket istimewa untuk setiap petualangan, kencan malam, dan momen berharga<br>yang kita lewati bersama dari dulu hingga selamanya.
+                Voucher istimewa untuk setiap agenda kencan, piknik pantai, berburu kuliner,<br>hingga tiket bebas pilih mau jalan ke mana saja berdua!
             </p>
         </div>
 
@@ -97,9 +97,10 @@
         <div class="tickets-actions-bar">
             <div class="tickets-filter">
                 <button type="button" class="tickets-filter-btn is-active" data-filter="all">Semua Tiket</button>
-                <button type="button" class="tickets-filter-btn" data-filter="flight">Penerbangan</button>
-                <button type="button" class="tickets-filter-btn" data-filter="date">Kencan Spesial</button>
-                <button type="button" class="tickets-filter-btn" data-filter="future">Masa Depan</button>
+                <button type="button" class="tickets-filter-btn" data-filter="kencan">Kencan Romantis</button>
+                <button type="button" class="tickets-filter-btn" data-filter="jalan">Jalan-Jalan</button>
+                <button type="button" class="tickets-filter-btn" data-filter="kuliner">Wisata Kuliner</button>
+                <button type="button" class="tickets-filter-btn" data-filter="bebas">Voucher Bebas</button>
             </div>
         </div>
 
@@ -118,67 +119,46 @@
             <button type="button" class="ticket-modal__close" id="close-ticket-modal">&times;</button>
             <h3 class="ticket-modal__title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;color:var(--gold);"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/><path d="M13 5v2"/><path d="M13 11v2"/><path d="M13 17v2"/></svg>
-                Buat Tiket Perjalanan Baru
+                Buat Tiket Jalan-Jalan Baru
             </h3>
             <form id="create-ticket-form" class="ticket-form">
                 <div class="ticket-form-group">
-                    <label>Judul Tiket / Momen</label>
-                    <input type="text" id="ticket-title-input" class="ticket-input" placeholder="Contoh: ROMANTIC BOARDING PASS" required>
+                    <label>Judul Aktivitas / Kencan</label>
+                    <input type="text" id="ticket-title-input" class="ticket-input" placeholder="Contoh: Nonton Bioskop & Popcorn" required>
                 </div>
                 <div class="ticket-form-row">
                     <div class="ticket-form-group">
                         <label>Kategori Tiket</label>
                         <select id="ticket-category-select" class="ticket-select">
-                            <option value="flight">Penerbangan</option>
-                            <option value="date">Kencan Spesial</option>
-                            <option value="future">Masa Depan</option>
+                            <option value="kencan">Kencan Romantis</option>
+                            <option value="jalan">Jalan-Jalan</option>
+                            <option value="kuliner">Wisata Kuliner</option>
+                            <option value="bebas">Voucher Bebas Request</option>
                         </select>
                     </div>
                     <div class="ticket-form-group">
-                        <label>Maskapai / Nama Pass</label>
-                        <input type="text" id="ticket-airline-input" class="ticket-input" placeholder="Contoh: AURORA AIRWAYS">
+                        <label>Tema Warna Tiket</label>
+                        <select id="ticket-theme-select" class="ticket-select">
+                            <option value="rose">Romance Rose 💖</option>
+                            <option value="purple">Cosmic Purple 🌌</option>
+                            <option value="gold">Sunset Gold ✨</option>
+                            <option value="cyan">Ocean Cyan 🌊</option>
+                        </select>
                     </div>
                 </div>
                 <div class="ticket-form-group">
-                    <label>Nama Penumpang</label>
-                    <input type="text" id="ticket-pass-name-input" class="ticket-input" value="MAZYYATUL & RAFI" required>
-                </div>
-                <div class="ticket-form-row">
-                    <div class="ticket-form-group">
-                        <label>Dari (Kode / Tempat)</label>
-                        <input type="text" id="ticket-from-code-input" class="ticket-input" placeholder="BUMI" required>
-                        <input type="text" id="ticket-from-city-input" class="ticket-input" placeholder="Awal Pertemuan" style="margin-top:4px;">
-                    </div>
-                    <div class="ticket-form-group">
-                        <label>Tujuan (Kode / Tempat)</label>
-                        <input type="text" id="ticket-to-code-input" class="ticket-input" placeholder="BINTANG" required>
-                        <input type="text" id="ticket-to-city-input" class="ticket-input" placeholder="Hati Kamu" style="margin-top:4px;">
-                    </div>
-                </div>
-                <div class="ticket-form-row">
-                    <div class="ticket-form-group">
-                        <label>Tanggal & Waktu</label>
-                        <input type="text" id="ticket-date-input" class="ticket-input" placeholder="13 Juli • Malam Syahdu" required>
-                    </div>
-                    <div class="ticket-form-group">
-                        <label>Tempat / Kursi (Seat)</label>
-                        <input type="text" id="ticket-seat-input" class="ticket-input" placeholder="SEAT 01A VIP">
-                    </div>
+                    <label>Lokasi / Tempat Tujuan</label>
+                    <input type="text" id="ticket-location-input" class="ticket-input" placeholder="Contoh: Bioskop XXI / Pantai Sunset" required>
                 </div>
                 <div class="ticket-form-group">
-                    <label>Catatan Kenangan (Pesan Singkat)</label>
-                    <input type="text" id="ticket-note-input" class="ticket-input" placeholder="Pesan indah di tiket...">
+                    <label>Tanggal & Waktu</label>
+                    <input type="text" id="ticket-date-input" class="ticket-input" placeholder="Contoh: Sabtu Malam Ini • 19:30 WIB" required>
                 </div>
                 <div class="ticket-form-group">
-                    <label>Tema Warna Tiket</label>
-                    <select id="ticket-theme-select" class="ticket-select">
-                        <option value="purple">Cosmic Purple 🌌</option>
-                        <option value="rose">Romance Rose 💖</option>
-                        <option value="gold">Sunset Gold ✨</option>
-                        <option value="cyan">Ocean Cyan 🌊</option>
-                    </select>
+                    <label>Catatan Romantis / Janji Manis</label>
+                    <input type="text" id="ticket-note-input" class="ticket-input" placeholder="Contoh: Aku yang traktir es krim rasa vailla ya! 🍦">
                 </div>
-                <button type="submit" class="ticket-submit-btn">Terbitkan Tiket ✈️</button>
+                <button type="submit" class="ticket-submit-btn">Terbitkan Tiket Kencan ✨</button>
             </form>
         </div>
     </div>

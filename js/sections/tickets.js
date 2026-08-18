@@ -1,93 +1,91 @@
 // =========================================
-// TIKET PERJALANAN KITA (ROMANTIC BOARDING PASS & STUBS)
+// TIKET JALAN-JALAN & KENCAN KITA (DATE COUPON PASSES)
 // =========================================
 
 const DEFAULT_TICKETS = [
     {
         id: "ticket-1",
-        category: "flight",
-        title: "FLIGHT TO LOVE",
-        airline: "AURORA AIRWAYS",
-        passName: "MAZYYATUL & RAFI",
-        passNo: "AU-777-ROMANCE",
-        fromCode: "BUMI",
-        fromCity: "Awal Pertemuan",
-        toCode: "BINTANG",
-        toCity: "Hati Kamu",
-        date: "13 Juli • Hari Pertama",
-        seat: "01A VIP",
-        gate: "GATE 07",
-        note: "Awal dari semua cerita manis dan perjalanan tak terlupakan.",
+        category: "kencan",
+        title: "Tiket Nonton Bioskop Bareng",
+        location: "Bioskop XXI Favorit Kita",
+        date: "Sabtu Malam Ini • 19:30 WIB",
+        code: "COUPON-MOVIE-01",
+        note: "Aku yang traktir popcorn rasa karamel & minuman favoritmu ya! 🍿",
         theme: "purple",
-        stamped: true
+        used: false
     },
     {
         id: "ticket-2",
-        category: "date",
-        title: "SPECIAL NIGHT DATE",
-        airline: "COSMIC NIGHTS",
-        passName: "RAFI & MAZYYATUL",
-        passNo: "CN-888-DATE",
-        fromCode: "RUTINITAS",
-        fromCity: "Keseharian",
-        toCode: "SYAHDU",
-        toCity: "Kencan Bintang",
-        date: "Setiap Malam Minggu",
-        seat: "FRONT ROW",
-        gate: "GATE 12",
-        note: "Tiket khusus kencan makan malam & bincang di bawah aurora.",
+        category: "kuliner",
+        title: "Voucher Berburu Kuliner & Ngopi",
+        location: "Kafe Senja & Night Market",
+        date: "Kapan Pun Kamu Laper",
+        code: "COUPON-FOOD-02",
+        note: "Bebas milih makanan apa aja sampai kenyang, gak usah mikirin diet! 🍰",
         theme: "rose",
-        stamped: false
+        used: true
     },
     {
         id: "ticket-3",
-        category: "future",
-        title: "FUTURE DISCOVERY PASS",
-        airline: "DESTINY EXPRESS",
-        passName: "MAZYYATUL & RAFI",
-        passNo: "DE-999-FOREVER",
-        fromCode: "HARI INI",
-        fromCity: "Saat Ini",
-        toCode: "SELAMANYA",
-        toCity: "Masa Depan",
-        date: "Forever & Always",
-        seat: "INFINITY A1",
-        gate: "GATE 99",
-        note: "Paspor menuju kebahagiaan abadi dan mimpi yang akan kita raih.",
+        category: "jalan",
+        title: "Tiket Piknik Sore Ke Pantai",
+        location: "Pantai Sunset Aurora",
+        date: "Weekend Depan • 16:30 WIB",
+        code: "COUPON-BEACH-03",
+        note: "Duduk santai sambil menikmati deru ombak & angin sore berdua. 🌅",
+        theme: "cyan",
+        used: false
+    },
+    {
+        id: "ticket-4",
+        category: "bebas",
+        title: "Voucher Bebas Request (Wildcard)",
+        location: "Terserah Kamu!",
+        date: "Bebas Kapan Saja",
+        code: "COUPON-FREE-04",
+        note: "Kamu yang tentukan mau ke mana dan ngapain, aku siap nganterin! 🚗✨",
         theme: "gold",
-        stamped: true
+        used: false
     }
 ];
 
 function getStoredTickets() {
     try {
-        const data = localStorage.getItem("aurora_tickets");
+        const data = localStorage.getItem("aurora_date_tickets");
         if (data) {
             return JSON.parse(data);
         }
     } catch (e) {
-        console.warn("Could not read tickets from localStorage:", e);
+        console.warn("Could not read date tickets from localStorage:", e);
     }
     return DEFAULT_TICKETS;
 }
 
 function saveTickets(tickets) {
     try {
-        localStorage.setItem("aurora_tickets", JSON.stringify(tickets));
+        localStorage.setItem("aurora_date_tickets", JSON.stringify(tickets));
     } catch (e) {
-        console.warn("Could not save tickets to localStorage:", e);
+        console.warn("Could not save date tickets to localStorage:", e);
     }
 }
 
-// Clean human-crafted Lucide / Feather inline SVG templates
+// Clean human-crafted Lucide / Feather inline SVG icons (No AI artifacts)
 const ICONS = {
-    plane: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.7-.1-1.3.3-1.5 1-.2.7.1 1.4.7 1.7l5.4 3.6-3 3-2.3-.8c-.4-.1-.8 0-1.1.3l-.9.9c-.3.3-.3.8 0 1.1l2.8 2.8c.3.3.8.3 1.1 0l.9-.9c.3-.3.4-.7.3-1.1l-.8-2.3 3-3 3.6 5.4c.3.6 1 .9 1.7.7.7-.2 1.1-.8 1-1.5z"/></svg>`,
     ticket: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/><path d="M13 5v2"/><path d="M13 11v2"/><path d="M13 17v2"/></svg>`,
+    heart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`,
+    pin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    calendar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>`,
     sparkle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/></svg>`,
-    stamp: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M19.2 16.8A2 2 0 0 0 21 15v-2a2 2 0 0 0-2-2h-3.4a2 2 0 0 1-1.8-1.1l-1.3-2.6A2 2 0 0 0 10.7 6H9.3a2 2 0 0 0-1.8 1.3L6.2 9.9A2 2 0 0 1 4.4 11H3a2 2 0 0 0-2 2v2a2 2 0 0 0 1.8 1.8"/><circle cx="12" cy="3" r="1"/></svg>`,
+    check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
     trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`,
-    qr: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>`,
-    barcode: `<svg viewBox="0 0 100 30" fill="currentColor"><rect x="0" y="0" width="3" height="30"/><rect x="5" y="0" width="1" height="30"/><rect x="8" y="0" width="4" height="30"/><rect x="14" y="0" width="2" height="30"/><rect x="18" y="0" width="1" height="30"/><rect x="21" y="0" width="5" height="30"/><rect x="28" y="0" width="2" height="30"/><rect x="32" y="0" width="1" height="30"/><rect x="35" y="0" width="3" height="30"/><rect x="40" y="0" width="4" height="30"/><rect x="46" y="0" width="1" height="30"/><rect x="49" y="0" width="2" height="30"/><rect x="53" y="0" width="5" height="30"/><rect x="60" y="0" width="1" height="30"/><rect x="63" y="0" width="3" height="30"/><rect x="68" y="0" width="2" height="30"/><rect x="72" y="0" width="4" height="30"/><rect x="78" y="0" width="1" height="30"/><rect x="81" y="0" width="3" height="30"/><rect x="86" y="0" width="2" height="30"/><rect x="90" y="0" width="5" height="30"/><rect x="97" y="0" width="3" height="30"/></svg>`
+    plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`
+};
+
+const CATEGORY_NAMES = {
+    kencan: "KENCAN ROMANTIS",
+    jalan: "JALAN-JALAN",
+    kuliner: "WISATA KULINER",
+    bebas: "VOUCHER BEBAS"
 };
 
 export function initTicketsSection() {
@@ -107,9 +105,10 @@ export function initTicketsSection() {
 
         if (filtered.length === 0) {
             container.innerHTML = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--muted);">
-                    <p style="font-size: 1.1rem; margin-bottom: 8px;">Belum ada tiket untuk kategori ini.</p>
-                    <p style="font-size: 0.85rem;">Klik "Buat Tiket Baru" untuk menambah tiket kenangan kalian!</p>
+                <div class="tickets-empty">
+                    <div class="tickets-empty-icon">${ICONS.ticket}</div>
+                    <p class="tickets-empty-title">Belum ada tiket untuk kategori ini.</p>
+                    <p class="tickets-empty-desc">Klik "Buat Tiket Baru" untuk menambah tiket jalan-jalan kalian!</p>
                 </div>
             `;
             return;
@@ -117,99 +116,88 @@ export function initTicketsSection() {
 
         filtered.forEach(ticket => {
             const card = document.createElement("div");
-            card.className = `ticket-card ticket-card--${ticket.theme || 'purple'} ${ticket.stamped ? 'is-stamped' : ''}`;
+            card.className = `ticket-card ticket-card--${ticket.theme || 'purple'} ${ticket.used ? 'is-used' : ''}`;
             card.setAttribute("data-id", ticket.id);
 
+            const categoryLabel = CATEGORY_NAMES[ticket.category] || "TIKET JALAN";
+
             card.innerHTML = `
-                <!-- Main Stub -->
+                <!-- Left Stub -->
                 <div class="ticket-stub-main">
-                    <div class="ticket-airline-bar">
-                        <div class="ticket-airline-logo">
-                            ${ICONS.plane}
-                            <span>${ticket.airline || 'AURORA AIRWAYS'}</span>
-                        </div>
-                        <span class="ticket-class-badge">${ticket.title || 'BOARDING PASS'}</span>
+                    <div class="ticket-top-bar">
+                        <span class="ticket-category-tag">${categoryLabel}</span>
+                        <div class="ticket-heart-icon">${ICONS.heart}</div>
                     </div>
 
-                    <div class="ticket-route">
-                        <div class="ticket-route-point">
-                            <span class="ticket-route-code">${ticket.fromCode || 'ORIGIN'}</span>
-                            <span class="ticket-route-name">${ticket.fromCity || ''}</span>
-                        </div>
-                        <div class="ticket-route-flight">
-                            <span class="ticket-flight-icon">${ICONS.plane}</span>
-                            <div class="ticket-flight-line"></div>
-                        </div>
-                        <div class="ticket-route-point" style="text-align: right;">
-                            <span class="ticket-route-code">${ticket.toCode || 'DEST'}</span>
-                            <span class="ticket-route-name">${ticket.toCity || ''}</span>
-                        </div>
-                    </div>
+                    <h3 class="ticket-title">${ticket.title}</h3>
 
-                    <div class="ticket-info-grid">
-                        <div class="ticket-info-item">
-                            <span class="ticket-info-label">PASSENGER</span>
-                            <span class="ticket-info-value">${ticket.passName || 'MAZYYATUL & RAFI'}</span>
+                    <div class="ticket-details-list">
+                        <div class="ticket-detail-item">
+                            <span class="ticket-detail-icon">${ICONS.pin}</span>
+                            <span class="ticket-detail-text"><strong>Lokasi:</strong> ${ticket.location || 'Terserah Kamu'}</span>
                         </div>
-                        <div class="ticket-info-item">
-                            <span class="ticket-info-label">DATE & TIME</span>
-                            <span class="ticket-info-value">${ticket.date || 'ALWAYS'}</span>
-                        </div>
-                        <div class="ticket-info-item">
-                            <span class="ticket-info-label">SEAT / GATE</span>
-                            <span class="ticket-info-value">${ticket.seat || 'VIP'} • ${ticket.gate || 'GATE 07'}</span>
+                        <div class="ticket-detail-item">
+                            <span class="ticket-detail-icon">${ICONS.calendar}</span>
+                            <span class="ticket-detail-text"><strong>Waktu:</strong> ${ticket.date || 'Bebas Kapan Aja'}</span>
                         </div>
                     </div>
 
                     ${ticket.note ? `
-                    <div class="ticket-memory-note">
-                        ${ICONS.sparkle}
-                        <span>${ticket.note}</span>
+                    <div class="ticket-note-box">
+                        <span class="ticket-note-icon">${ICONS.sparkle}</span>
+                        <span class="ticket-note-text">${ticket.note}</span>
                     </div>` : ''}
                 </div>
 
-                <!-- Perforated Tear Line -->
+                <!-- Perforated Divider Edge -->
                 <div class="ticket-divider"></div>
 
                 <!-- Right Stub -->
                 <div class="ticket-stub-side">
-                    <div class="ticket-stub-side-header">
-                        <span class="ticket-stub-side-title">PASS NO.</span>
-                        <div class="ticket-stub-pass-no">${ticket.passNo || 'AU-2026'}</div>
+                    <div class="ticket-code-label">TICKET PASS</div>
+                    <div class="ticket-code-val">${ticket.code || 'COUPON-LOVE'}</div>
+
+                    <!-- Stamp Badge -->
+                    <div class="ticket-stamp-badge">
+                        ${ticket.used ? 'TERPAKAI 💕' : 'SIAP PAKAI ✨'}
                     </div>
 
-                    <div class="ticket-barcode-wrap">
-                        <div class="ticket-barcode-svg">${ICONS.barcode}</div>
-                        <div class="ticket-qr-svg">${ICONS.qr}</div>
-                    </div>
-
-                    <div class="ticket-stamp">
-                        CONFIRMED • VALID
-                    </div>
-
-                    <div class="ticket-actions">
-                        <button type="button" class="ticket-action-icon-btn ticket-action-icon-btn--stamp" title="Stempel Tiket">
-                            ${ICONS.stamp}
+                    <div class="ticket-actions-group">
+                        <button type="button" class="ticket-use-btn ${ticket.used ? 'is-used' : ''}" title="${ticket.used ? 'Batalkan Status Terpakai' : 'Gunakan Tiket Ini'}">
+                            <span class="ticket-use-icon">${ICONS.check}</span>
+                            <span>${ticket.used ? 'Sudah Kepakai' : 'Gunakan Tiket'}</span>
                         </button>
-                        <button type="button" class="ticket-action-icon-btn ticket-action-icon-btn--delete" title="Hapus Tiket">
+                        <button type="button" class="ticket-delete-btn" title="Hapus Tiket">
                             ${ICONS.trash}
                         </button>
                     </div>
                 </div>
             `;
 
-            // Handle stamp click
-            const stampBtn = card.querySelector(".ticket-action-icon-btn--stamp");
-            if (stampBtn) {
-                stampBtn.addEventListener("click", () => {
-                    ticket.stamped = !ticket.stamped;
-                    card.classList.toggle("is-stamped", ticket.stamped);
+            // Toggle used / stamp status
+            const useBtn = card.querySelector(".ticket-use-btn");
+            if (useBtn) {
+                useBtn.addEventListener("click", () => {
+                    ticket.used = !ticket.used;
+                    card.classList.toggle("is-used", ticket.used);
+                    useBtn.classList.toggle("is-used", ticket.used);
+                    
+                    const badge = card.querySelector(".ticket-stamp-badge");
+                    if (badge) {
+                        badge.textContent = ticket.used ? 'TERPAKAI 💕' : 'SIAP PAKAI ✨';
+                    }
+
+                    const label = useBtn.querySelector("span:last-child");
+                    if (label) {
+                        label.textContent = ticket.used ? 'Sudah Kepakai' : 'Gunakan Tiket';
+                    }
+
                     saveTickets(tickets);
                 });
             }
 
-            // Handle delete click
-            const deleteBtn = card.querySelector(".ticket-action-icon-btn--delete");
+            // Delete ticket
+            const deleteBtn = card.querySelector(".ticket-delete-btn");
             if (deleteBtn) {
                 deleteBtn.addEventListener("click", () => {
                     if (confirm(`Hapus tiket "${ticket.title}"?`)) {
@@ -265,16 +253,10 @@ export function initTicketsSection() {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            const title = document.getElementById("ticket-title-input")?.value || "BOARDING PASS";
-            const category = document.getElementById("ticket-category-select")?.value || "flight";
-            const airline = document.getElementById("ticket-airline-input")?.value || "AURORA AIRWAYS";
-            const passName = document.getElementById("ticket-pass-name-input")?.value || "MAZYYATUL & RAFI";
-            const fromCode = (document.getElementById("ticket-from-code-input")?.value || "BUMI").toUpperCase();
-            const fromCity = document.getElementById("ticket-from-city-input")?.value || "";
-            const toCode = (document.getElementById("ticket-to-code-input")?.value || "BINTANG").toUpperCase();
-            const toCity = document.getElementById("ticket-to-city-input")?.value || "";
-            const date = document.getElementById("ticket-date-input")?.value || "Hari Ini";
-            const seat = document.getElementById("ticket-seat-input")?.value || "VIP 01";
+            const title = document.getElementById("ticket-title-input")?.value || "Tiket Jalan-Jalan";
+            const category = document.getElementById("ticket-category-select")?.value || "kencan";
+            const location = document.getElementById("ticket-location-input")?.value || "Terserah Kamu";
+            const date = document.getElementById("ticket-date-input")?.value || "Bebas Kapan Aja";
             const note = document.getElementById("ticket-note-input")?.value || "";
             const theme = document.getElementById("ticket-theme-select")?.value || "purple";
 
@@ -282,19 +264,12 @@ export function initTicketsSection() {
                 id: "ticket-" + Date.now(),
                 category,
                 title,
-                airline,
-                passName,
-                passNo: "AU-" + Math.floor(100 + Math.random() * 900) + "-LOVE",
-                fromCode,
-                fromCity,
-                toCode,
-                toCity,
+                location,
                 date,
-                seat,
-                gate: "GATE 07",
+                code: "COUPON-" + Math.floor(1000 + Math.random() * 9000),
                 note,
                 theme,
-                stamped: true
+                used: false
             };
 
             tickets.unshift(newTicket);
