@@ -1,75 +1,206 @@
 /* =========================================
-   COSMIC FLOATING DOCK NAVBAR
+   COSMIC FLOATING DOCK NAVBAR (MENISCUS SOCKET)
 ========================================== */
 
 .cosmic-dock {
     position: fixed;
-    bottom: 24px;
+    bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 900;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    background: rgba(16, 23, 45, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 8px 16px;
-    border-radius: 40px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124, 92, 255, 0.25);
-    transition: all 0.3s ease;
+    padding: 0;
+    background: transparent;
+    user-select: none;
     touch-action: manipulation;
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.55));
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
+/* SVG Track Background & Meniscus Socket Skin */
+.dock-track-bg {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    width: 100%;
+    height: 52px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.dock-skin-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.dock-skin-fill {
+    fill: rgba(16, 23, 45, 0.88);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition: fill 0.4s ease;
+}
+
+.dock-skin-rim {
+    fill: none;
+    stroke: url(#dockRimGradDark);
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 6px rgba(124, 92, 255, 0.5));
+}
+
+/* Meniscus Floating Active Bead */
+.dock-bead {
+    position: absolute;
+    top: -2px; /* Elevated above the socket notch */
+    left: 0px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    z-index: 10;
+    transform: translateX(-50%);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 8px 24px rgba(255, 94, 168, 0.6), 0 0 15px rgba(124, 92, 255, 0.4);
+    transition: left 0.35s cubic-bezier(0.34, 1.45, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dock-bead-glow {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    opacity: 0.5;
+    filter: blur(8px);
+    z-index: -1;
+    animation: beadGlowPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes beadGlowPulse {
+    0% { transform: scale(0.95); opacity: 0.4; }
+    100% { transform: scale(1.15); opacity: 0.7; }
+}
+
+.dock-bead-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    width: 22px;
+    height: 22px;
+}
+
+.dock-bead-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.2px;
+    stroke: currentColor;
+    fill: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Items Wrapper */
+.dock-items-wrapper {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 18px 16px 10px 16px;
+    border-radius: 40px;
+    max-width: 94vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.dock-items-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual Dock Item */
 .dock-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     color: var(--muted);
     text-decoration: none;
-    font-size: 1.2rem;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     background: transparent;
     border: none;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    user-select: none;
+    transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    flex-shrink: 0;
 }
 
-.dock-item:hover,
-.dock-item:active {
+.dock-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.25s ease;
+}
+
+.dock-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2px;
+    stroke: currentColor;
+    fill: none;
+    transition: all 0.25s ease;
+}
+
+.dock-item:hover {
     color: var(--text);
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-4px) scale(1.1);
+    transform: translateY(-2px) scale(1.12);
 }
 
+.dock-item:hover .dock-icon svg {
+    stroke-width: 2.2px;
+    filter: drop-shadow(0 0 6px var(--primary));
+}
+
+/* Active Dock Item in Track */
 .dock-item.is-active {
-    color: white;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    box-shadow: 0 0 20px rgba(255, 94, 168, 0.6);
+    color: transparent; /* Hide inner icon inside track because floating bead displays it elevated */
+    pointer-events: auto;
+    opacity: 0.15;
 }
 
+.dock-item.is-active .dock-icon {
+    visibility: hidden;
+}
+
+/* Tooltip */
 .dock-item__tooltip {
     position: absolute;
-    top: -40px;
+    top: -38px;
     left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    background: rgba(10, 15, 30, 0.95);
+    transform: translateX(-50%) translateY(6px);
+    background: rgba(10, 15, 30, 0.94);
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--text);
     padding: 4px 10px;
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 0.75rem;
+    font-weight: 500;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .dock-item:hover .dock-item__tooltip {
@@ -77,137 +208,135 @@
     transform: translateX(-50%) translateY(0);
 }
 
+/* Hide tooltips on active tab because active label is shown under dock */
+.dock-item.is-active .dock-item__tooltip {
+    display: none !important;
+}
+
+/* Dividers & Special Buttons */
 .dock-divider {
     width: 1px;
-    height: 24px;
+    height: 22px;
     background: rgba(255, 255, 255, 0.15);
     margin: 0 4px;
+    flex-shrink: 0;
 }
 
 .dock-item--book {
-    background: rgba(124, 92, 255, 0.2);
     color: var(--secondary);
-    border: 1px solid rgba(124, 92, 255, 0.4);
-}
-
-.dock-item--book:hover,
-.dock-item--book:active {
-    background: var(--secondary);
-    color: white;
 }
 
 .dock-item--add {
-    background: rgba(255, 209, 102, 0.25);
     color: var(--gold);
-    border: 1px solid rgba(255, 209, 102, 0.5);
 }
 
-.dock-item--add:hover,
-.dock-item--add:active {
-    background: var(--gold);
-    color: #050816;
-}
-
-@media (max-width: 600px) {
-    .cosmic-dock {
-        bottom: 16px;
-        padding: 6px 10px;
-        gap: 4px;
-    }
-
-    .dock-item {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-    }
-
-    /* Hide tooltips on touch screen to avoid clutter */
-    .dock-item__tooltip {
-        display: none;
-    }
-}
-
-/* Theme Toggle Button */
 .dock-item--theme {
-    background: rgba(255, 183, 77, 0.2);
     color: var(--gold);
-    border: 1px solid rgba(255, 183, 77, 0.4);
 }
 
-.dock-item--theme:hover,
-.dock-item--theme:active {
-    background: linear-gradient(135deg, #FFB74D, #FFA726);
-    color: #1B2A4A;
+/* Active Label Underneath Dock */
+.dock-active-label {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    transform: translateX(-50%);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(255, 94, 168, 0.6);
+    pointer-events: none;
+    white-space: nowrap;
+    transition: left 0.35s cubic-bezier(0.34, 1.45, 0.64, 1), opacity 0.2s ease, color 0.3s ease;
 }
 
-/* =========================================
-   LIGHT MODE — DOCK
-========================================== */
+/* LIGHT MODE / BEACH THEME OVERRIDES */
+[data-theme="light"] .dock-skin-fill {
+    fill: rgba(255, 255, 255, 0.88);
+}
+
+[data-theme="light"] .dock-skin-rim {
+    stroke: url(#dockRimGradLight);
+    filter: drop-shadow(0 0 6px rgba(59, 164, 207, 0.4));
+}
 
 [data-theme="light"] .cosmic-dock {
-    background: rgba(255, 255, 255, 0.80);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.10), 0 0 20px rgba(59, 164, 207, 0.08);
+    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.12));
+}
+
+[data-theme="light"] .dock-bead {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 8px 24px rgba(255, 107, 138, 0.5), 0 0 15px rgba(59, 164, 207, 0.3);
 }
 
 [data-theme="light"] .dock-item {
     color: var(--muted);
 }
 
-[data-theme="light"] .dock-item:hover,
-[data-theme="light"] .dock-item:active {
+[data-theme="light"] .dock-item:hover {
     color: var(--text);
-    background: rgba(0, 0, 0, 0.06);
-}
-
-[data-theme="light"] .dock-item.is-active {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    box-shadow: 0 0 15px rgba(255, 107, 138, 0.4);
 }
 
 [data-theme="light"] .dock-item__tooltip {
     background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.12);
     color: var(--text);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="light"] .dock-divider {
     background: rgba(0, 0, 0, 0.10);
 }
 
-[data-theme="light"] .dock-item--book {
-    background: rgba(59, 164, 207, 0.15);
-    color: var(--secondary);
-    border: 1px solid rgba(59, 164, 207, 0.3);
+[data-theme="light"] .dock-active-label {
+    color: var(--primary);
+    text-shadow: 0 0 8px rgba(255, 107, 138, 0.5);
 }
 
-[data-theme="light"] .dock-item--book:hover,
-[data-theme="light"] .dock-item--book:active {
-    background: var(--secondary);
-    color: white;
-}
+/* RESPONSIVE MOBILE STYLES */
+@media (max-width: 600px) {
+    .cosmic-dock {
+        bottom: 14px;
+    }
 
-[data-theme="light"] .dock-item--add {
-    background: rgba(245, 166, 35, 0.15);
-    color: var(--gold);
-    border: 1px solid rgba(245, 166, 35, 0.3);
-}
+    .dock-items-wrapper {
+        gap: 3px;
+        padding: 16px 10px 8px 10px;
+    }
 
-[data-theme="light"] .dock-item--add:hover,
-[data-theme="light"] .dock-item--add:active {
-    background: var(--gold);
-    color: white;
-}
+    .dock-item {
+        width: 36px;
+        height: 36px;
+    }
 
-[data-theme="light"] .dock-item--theme {
-    background: rgba(100, 100, 130, 0.12);
-    color: #5E7290;
-    border: 1px solid rgba(100, 100, 130, 0.25);
-}
+    .dock-icon {
+        width: 18px;
+        height: 18px;
+    }
 
-[data-theme="light"] .dock-item--theme:hover,
-[data-theme="light"] .dock-item--theme:active {
-    background: linear-gradient(135deg, #3d3d6b, #1B2A4A);
-    color: white;
+    .dock-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .dock-bead {
+        width: 42px;
+        height: 42px;
+        top: -1px;
+    }
+
+    .dock-bead-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .dock-bead-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .dock-item__tooltip {
+        display: none !important;
+    }
 }
