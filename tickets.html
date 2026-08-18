@@ -29,6 +29,14 @@
     <link rel="stylesheet" href="css/pages/tickets.css">
     <link rel="stylesheet" href="css/effects/light-bg.css">
 
+    <!-- Theme Initializer -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('aurora-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
 </head>
 
 <body class="tickets-body">
