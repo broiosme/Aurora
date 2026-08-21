@@ -1,116 +1,164 @@
 // =========================================
 // PLAYLIST DATA — Our Love Soundtrack
 // =========================================
-// Untuk mengganti lagu: ubah spotifyId dengan ID track Spotify.
-// Cara dapat ID: Buka Spotify → klik kanan lagu → Share → Copy Song Link
-// Link terlihat seperti: https://open.spotify.com/track/XXXXXXXXXXXXXXXX
-// XXXXXXXXXXXXXXXX itulah yang dimasukkan ke spotifyId.
 
-const PLAYLIST_STORAGE_KEY = "aurora_playlist_songs";
+const PLAYLIST_STORAGE_KEY = "aurora_playlist_songs_v2";
 
 export const initialPlaylist = [
     {
         id: "song_1",
-        title: "Lagu Pertama Kita",
-        artist: "Nama Artis",
-        spotifyId: "https://open.spotify.com/track/6lzzVdbjMSBgXvCPoXSBUT?si=cucXVxI6Rmiw41U6BbFgbg&utm_source=copy-link&sci=spotify%3Acard-config%3A1J7YK85eqSgt3uFTcHYYJF", // Ganti dengan ID lagu asli
+        title: "Penjaga Hati",
+        artist: "Nadhif Basalamah",
+        spotifyId: "2takcwOaAZWiXQijPHIx7B",
         color: "#FF5EA8",
-        memory: "Lagu yang pertama kali kita dengar bersama. Setiap kali lagu ini mengalun, aku selalu teringat momen itu.",
+        memory: "Lagu yang pertama kali kita dengar bersama saat malam tenang. Setiap liriknya selalu mengingatkanku betapa bahagianya memiliki kamu sebagai rumahku.",
         date: "13 Juli 2024",
         emoji: "✨",
-        tag: "Pertama Kali"
+        tag: "Pertama Kali",
+        isFavorite: true
     },
     {
         id: "song_2",
-        title: "Soundtrack Kencan Kita",
-        artist: "Nama Artis",
-        spotifyId: "https://open.spotify.com/track/2NHiy6rZOvm7XFMAIN7jxT?si=hfwlQc7jSIm_Z4aWn9QnJA&utm_source=copy-link&sci=spotify%3Acard-config%3A3mJzYd7xwtROEDzCliXruT", // Ganti dengan ID lagu asli
+        title: "Anugerah Terindah Yang Pernah Ku Miliki",
+        artist: "Sheila On 7",
+        spotifyId: "2NHiy6rZOvm7XFMAIN7jxT",
         color: "#7C5CFF",
-        memory: "Lagu yang menemani kencan pertama kita. Masih ingat saat kamu tersenyum mendengarnya.",
+        memory: "Soundtrack kencan pertama kita. Masih teringat senyuman manismu di dalam mobil saat lagu ini diputar.",
         date: "15 September 2024",
         emoji: "☕",
-        tag: "First Date"
+        tag: "First Date",
+        isFavorite: true
     },
     {
         id: "song_3",
-        title: "Lagu Malam Favoritku",
-        artist: "Nama Artis",
-        spotifyId: "7qiZfU4dY1lWllzX7mPBI3", // Ganti dengan ID lagu asli
+        title: "Satu Bulan",
+        artist: "Bernadya",
+        spotifyId: "7qiZfU4dY1lWllzX7mPBI3",
         color: "#6FAEFF",
-        memory: "Kalau lagi kangen kamu di malam hari, ini lagu yang selalu kuputar sambil menatap bintang.",
+        memory: "Lagu tenang yang selalu kuputar saat rindu menyerang di malam hari sambil melihat bintang-bintang di langit.",
         date: "November 2024",
         emoji: "🌙",
-        tag: "Malam Kita"
+        tag: "Malam Kita",
+        isFavorite: false
     },
     {
         id: "song_4",
-        title: "Lagu Yang Mengingatkanku Padamu",
-        artist: "Nama Artis",
-        spotifyId: "2takcwOaAZWiXQijPHIx7B", // Ganti dengan ID lagu asli
+        title: "Die With A Smile",
+        artist: "Lady Gaga & Bruno Mars",
+        spotifyId: "2takcwOaAZWiXQijPHIx7B",
         color: "#FFD166",
-        memory: "Setiap kali lagu ini muncul di playlist acak, rasanya seperti semesta mengingatkanku untuk tersenyum.",
+        memory: "Setiap kali mendengarkan melodi indahnya, rasanya seperti semesta merayakan kisah cinta kita berdua.",
         date: "Desember 2024",
         emoji: "💛",
-        tag: "Selalu Ingat"
+        tag: "Cinta",
+        isFavorite: true
     },
     {
         id: "song_5",
-        title: "Lagu Impian Kita",
-        artist: "Nama Artis",
-        spotifyId: "5ghIJDpPoe3CfHMGu71E6T", // Ganti dengan ID lagu asli
+        title: "To The Bone",
+        artist: "Pamungkas",
+        spotifyId: "5ghIJDpPoe3CfHMGu71E6T",
         color: "#C084FC",
-        memory: "Lagu ini adalah soundtrack dari semua impian yang ingin kita wujudkan bersama.",
+        memory: "Lagu impian masa depan kita. Janji untuk saling menyayangi dan tumbuh bersama hingga tua nanti.",
         date: "2025",
         emoji: "🚀",
-        tag: "Masa Depan"
+        tag: "Masa Depan",
+        isFavorite: false
     }
 ];
 
-const CUSTOM_PLAYLIST_KEY = "aurora_custom_songs";
+/**
+ * Memproses link atau URI Spotify untuk mengambil 22 karakter Spotify Track ID
+ */
+export function extractSpotifyId(input) {
+    if (!input) return "";
+    const str = input.trim();
+    
+    // Check URL format: https://open.spotify.com/track/XXXXXXXXXXXXXXXXXXXXXX
+    const urlMatch = str.match(/track\/([a-zA-Z0-9]{22})/);
+    if (urlMatch && urlMatch[1]) return urlMatch[1];
+    
+    // Check URI format: spotify:track:XXXXXXXXXXXXXXXXXXXXXX
+    const uriMatch = str.match(/spotify:track:([a-zA-Z0-9]{22})/);
+    if (uriMatch && uriMatch[1]) return uriMatch[1];
+    
+    // Check if raw 22-char ID
+    if (/^[a-zA-Z0-9]{22}$/.test(str)) {
+        return str;
+    }
+    
+    // Fallback: extract substring if query params exist
+    const cleaned = str.split("?")[0].split("/").pop();
+    return cleaned || str;
+}
 
-export function getStoredPlaylist() {
+/**
+ * Mengambil daftar lagu dari localStorage atau default initialPlaylist
+ */
+export function getAllSongs() {
     try {
         const stored = localStorage.getItem(PLAYLIST_STORAGE_KEY);
         if (stored !== null) {
             const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed)) return parsed;
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                return parsed;
+            }
         }
     } catch (e) {
-        console.warn("Error reading stored playlist", e);
+        console.warn("Gagal membaca playlist dari localStorage", e);
     }
+    
+    // Simpan initial list ke localStorage pertama kali
+    saveSongs(initialPlaylist);
     return [...initialPlaylist];
 }
 
-export function getCustomSongs() {
+/**
+ * Menyimpan array lagu ke localStorage
+ */
+function saveSongs(songs) {
     try {
-        const stored = localStorage.getItem(CUSTOM_PLAYLIST_KEY);
-        return stored ? JSON.parse(stored) : [];
+        localStorage.setItem(PLAYLIST_STORAGE_KEY, JSON.stringify(songs));
     } catch (e) {
-        return [];
+        console.warn("Gagal menyimpan playlist", e);
     }
 }
 
-export function getAllSongs() {
-    return [...getStoredPlaylist(), ...getCustomSongs()];
-}
-
+/**
+ * Menambahkan lagu kustom baru ke dalam playlist
+ */
 export function addCustomSong(song) {
-    const songs = getCustomSongs();
-    songs.push(song);
-    try {
-        localStorage.setItem(CUSTOM_PLAYLIST_KEY, JSON.stringify(songs));
-    } catch (e) {
-        console.warn("Error saving custom song", e);
-    }
-    return getAllSongs();
+    const songs = getAllSongs();
+    songs.unshift(song); // Tambah di paling depan
+    saveSongs(songs);
+    return songs;
 }
 
+/**
+ * Menghapus lagu dari playlist berdasarkan ID
+ */
+export function deleteSong(songId) {
+    const songs = getAllSongs().filter(s => s.id !== songId);
+    saveSongs(songs);
+    return songs;
+}
+
+/**
+ * Menghapus lagu kustom (alias untuk deleteSong demi kompatibilitas)
+ */
 export function deleteCustomSong(songId) {
-    const songs = getCustomSongs().filter(s => s.id !== songId);
-    try {
-        localStorage.setItem(CUSTOM_PLAYLIST_KEY, JSON.stringify(songs));
-    } catch (e) {
-        console.warn("Error deleting custom song", e);
+    return deleteSong(songId);
+}
+
+/**
+ * Mengubah status favorit pada lagu
+ */
+export function toggleFavorite(songId) {
+    const songs = getAllSongs();
+    const song = songs.find(s => s.id === songId);
+    if (song) {
+        song.isFavorite = !song.isFavorite;
+        saveSongs(songs);
     }
-    return getAllSongs();
+    return songs;
 }

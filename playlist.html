@@ -102,22 +102,42 @@
                     <span class="playlist-stat__value" id="stat-memories">0</span>
                     <span class="playlist-stat__label">Kenangan Tersimpan</span>
                 </div>
+                <div class="playlist-stat">
+                    <span class="playlist-stat__value" id="stat-favorites">0</span>
+                    <span class="playlist-stat__label">Lagu Favorit ❤️</span>
+                </div>
             </div>
         </div>
 
         <!-- Featured Player -->
         <div class="playlist-featured">
-            <p class="playlist-featured__label">🎧 Now Playing</p>
+            <div class="playlist-featured__header-row">
+                <p class="playlist-featured__label">🎧 Now Playing</p>
+                <div class="playlist-featured__eq-visualizer" id="eq-visualizer">
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                </div>
+            </div>
+            
             <div class="playlist-featured__card">
                 <div class="playlist-featured__top">
 
                     <!-- Info Side -->
                     <div class="playlist-featured__info">
-                        <div>
+                        <div class="playlist-featured__top-meta">
                             <div class="playlist-featured__tag">
                                 <span id="featured-emoji">🎵</span>
                                 <span id="featured-tag">Kenangan</span>
                             </div>
+                            <div class="playlist-vinyl-disc" id="vinyl-disc" title="Vinyl Player">
+                                <div class="vinyl-groove"></div>
+                                <div class="vinyl-center" id="vinyl-center">🎵</div>
+                            </div>
+                        </div>
+
+                        <div>
                             <h3 class="playlist-featured__song-title" id="featured-title">Pilih Lagu</h3>
                             <p class="playlist-featured__artist" id="featured-artist">–</p>
                         </div>
@@ -126,7 +146,21 @@
                             <blockquote class="playlist-featured__memory" id="featured-memory-block">
                                 <span id="featured-memory">Klik salah satu lagu di bawah untuk memilih dan memutar lagu kenangan kita.</span>
                             </blockquote>
-                            <p class="playlist-featured__date" id="featured-date"></p>
+                            
+                            <div class="playlist-featured__footer-meta">
+                                <p class="playlist-featured__date" id="featured-date"></p>
+                                <div class="playlist-featured__quick-actions">
+                                    <button type="button" class="playlist-fav-toggle-btn" id="featured-fav-btn" title="Suka Lagu Ini">
+                                        <span class="fav-icon">🤍</span>
+                                    </button>
+                                    <button type="button" class="playlist-quick-btn" id="featured-copy-btn" title="Salin Link Spotify">
+                                        🔗
+                                    </button>
+                                    <a href="#" target="_blank" rel="noopener" class="playlist-quick-btn" id="featured-spotify-link" title="Buka di Spotify">
+                                        🟢
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -142,9 +176,23 @@
             </div>
         </div>
 
-        <!-- Song List -->
+        <!-- Song List Grid & Filters -->
         <div class="playlist-grid-section">
-            <p class="playlist-grid-section__label">🎶 Semua Lagu Kita</p>
+            <div class="playlist-grid-header">
+                <p class="playlist-grid-section__label">🎶 Semua Lagu Kita</p>
+                <div class="playlist-search-wrap">
+                    <span class="playlist-search-icon">🔍</span>
+                    <input type="text" id="playlist-search" placeholder="Cari lagu atau artis..." autocomplete="off">
+                    <button type="button" id="playlist-search-clear" class="playlist-search-clear" style="display: none;">&times;</button>
+                </div>
+            </div>
+
+            <!-- Tag Filters -->
+            <div class="playlist-tags-filter" id="playlist-tags-filter">
+                <!-- Dynamically populated by JS -->
+            </div>
+
+            <!-- Song List -->
             <div class="playlist-song-list" id="song-list">
                 <!-- Songs rendered via JS -->
             </div>
@@ -181,7 +229,7 @@
                     <label for="song-spotify-id">Spotify Link / Track ID</label>
                     <div class="spotify-link-wrap">
                         <input type="text" id="song-spotify-id" placeholder="https://open.spotify.com/track/XXXXXXXX atau paste ID saja">
-                        <a href="https://open.spotify.com" target="_blank" class="spotify-link-open" title="Buka Spotify">
+                        <a href="https://open.spotify.com" target="_blank" rel="noopener" class="spotify-link-open" title="Buka Spotify">
                             🎵
                         </a>
                     </div>
@@ -236,6 +284,9 @@
             </form>
         </div>
     </div>
+
+    <!-- Toast Notification Container -->
+    <div id="playlist-toast-container" class="playlist-toast-container"></div>
 
     <!-- Theme Transition Overlay -->
     <div class="theme-transition-overlay" aria-hidden="true"></div>

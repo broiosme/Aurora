@@ -11,7 +11,7 @@ export function initSecretVault() {
     const hintPopup = vaultSection.querySelector(".vault-hint-popup");
 
     // Correct Passcodes (supports multiples like "1307", "130724", "13072024", or custom)
-    const VALID_PINS = ["1307", "130724", "13072024", "13", "137"];
+    const VALID_PINS = ["2804", "130724", "13072024", "13", "137"];
 
     function attemptUnlock() {
         const value = (pinInput ? pinInput.value : "").trim();
@@ -23,7 +23,7 @@ export function initSecretVault() {
         if (VALID_PINS.includes(value)) {
             // Success
             showFeedback("PIN Benar! Membuka Kubah Rahasia...", "success");
-            
+
             if (typeof gsap !== "undefined") {
                 gsap.to(".vault-lock-icon", {
                     scale: 1.3,
@@ -34,7 +34,7 @@ export function initSecretVault() {
                         lockScreen.classList.add("is-hidden");
                         contentScreen.classList.remove("is-hidden");
 
-                        gsap.fromTo(contentScreen, 
+                        gsap.fromTo(contentScreen,
                             { opacity: 0, y: 30, scale: 0.95 },
                             { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out" }
                         );
@@ -48,7 +48,7 @@ export function initSecretVault() {
             // Wrong PIN
             showFeedback("PIN Salah! Coba tanggal momen spesial pertama (Contoh: 1307)", "error");
             if (pinInput) pinInput.value = "";
-            
+
             if (typeof gsap !== "undefined") {
                 gsap.fromTo(lockScreen,
                     { x: -10 },
